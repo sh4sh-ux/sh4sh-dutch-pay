@@ -1754,8 +1754,18 @@ function loadState() {
 }
 
 function normalizeState(nextState) {
-  const expenses = Array.isArray(nextState.expenses) ? nextState.expenses : [];
-  const roundList = normalizeRoundList(nextState.rounds, expenses);
+  const people = Array.isArray(nextState.people) ? nextState.people : [];
+  const peopleIds = new Set(people.map((person) => person.id));
+  const expenses = Array.isArray(nextState.expenses)
+    ? nextState.expenses.map((expense) => ({
+        ...expense,
+        round: String(expense.round || "").trim(),
+        type: expense.type === "deduction" ? "deduction" : "expense",
+        payer: peopleIds.has(expense.payer) ? expense.payer : "",
+        participants: (expense.participants || []).filter((id) => peopleIds.has(id)),
+      }))
+    : [];
+  const roundList = normalizeRoundList([], expenses);
   const activeRound = nextState.activeRound === overallRound || roundList.includes(nextState.activeRound) ? nextState.activeRound : overallRound;
 
   return {
@@ -1763,11 +1773,10 @@ function normalizeState(nextState) {
     meetingDate: nextState.meetingDate || "",
     activeRound,
     rounds: roundList,
-    people: Array.isArray(nextState.people) ? nextState.people : [],
+    people,
     expenses: expenses.map((expense) => ({
       ...expense,
-      round: roundList.includes(expense.round) ? expense.round : roundList[0],
-      type: expense.type === "deduction" ? "deduction" : "expense",
+      round: roundList.includes(expense.round) ? expense.round : roundList[0] || "",
     })),
   };
 }
@@ -1803,6 +1812,14 @@ function saveState() {
   saveState.timer = window.setTimeout(() => {
     saveStatus.textContent = "저장됨";
   }, 350);
+}
+
+function syncRoundsFromExpenses() {
+  const roundList = normalizeRoundList([], state.expenses);
+  state.rounds = roundList;
+  if (state.activeRound !== overallRound && !roundList.includes(state.activeRound)) {
+    state.activeRound = overallRound;
+  }
 }
 
 function money(value) {
@@ -1854,7 +1871,8 @@ function calculate() {
   const people = activePeople();
   const peopleMap = new Map(people.map((person) => [person.id, person]));
   const balances = new Map();
-  const roundTotals = new Map(state.rounds.map((round) => [round, { amount: 0, entries: 0 }]));
+  const rounds = normalizeRoundList([], state.expenses);
+  const roundTotals = new Map(rounds.map((round) => [round, { amount: 0, entries: 0 }]));
   const roundOwed = new Map();
   const uniqueParticipants = new Set();
   const splitGroups = new Map();
@@ -1866,7 +1884,7 @@ function calculate() {
       paid: 0,
       owed: 0,
       balance: 0,
-      byRound: Object.fromEntries(state.rounds.map((round) => [round, 0])),
+      byRound: Object.fromEntries(rounds.map((round) => [round, 0])),
     });
   });
 
@@ -1875,7 +1893,8 @@ function calculate() {
     const participants = orderedParticipantIds(expense.participants, people, peopleMap);
     if (!amount || !participants.length) return;
 
-    const round = state.rounds.includes(expense.round) ? expense.round : state.rounds[0];
+    const round = rounds.includes(expense.round) ? expense.round : rounds[0];
+    if (!round) return;
     if (!roundTotals.has(round)) roundTotals.set(round, { amount: 0, entries: 0 });
     roundTotals.get(round).amount += amount;
     roundTotals.get(round).entries += 1;
@@ -1908,7 +1927,7 @@ function calculate() {
   const transfers = buildTransfers(people, balances);
   const totalExpense = grossExpense + deductionTotal;
 
-  return { people, balances, roundTotals, roundOwed, transfers, totalExpense, grossExpense, deductionTotal, uniqueParticipants };
+  return { people, balances, roundTotals, roundOwed, rounds, transfers, totalExpense, grossExpense, deductionTotal, uniqueParticipants };
 }
 
 function expenseAmount(expense) {
@@ -2067,8 +2086,8 @@ function renderSummary() {
   $("#averagePerPerson").textContent = money(average);
   $("#transferCount").textContent = `${result.transfers.length}건`;
 
-  $("#roundSummary").innerHTML = state.rounds.length
-    ? state.rounds
+  $("#roundSummary").innerHTML = result.rounds.length
+    ? result.rounds
         .map((round) => {
           const total = result.roundTotals.get(round);
           const placeLabel = roundPlaceLabel(round);
@@ -2151,7 +2170,7 @@ function renderReport() {
       .join("") || '<div class="report-empty">인원을 추가하세요</div>';
 
   $("#reportRounds").innerHTML =
-    state.rounds
+    result.rounds
       .map((round) => {
         const total = result.roundTotals.get(round) || { amount: 0, entries: 0 };
         const placeLabel = roundPlaceLabel(round);
@@ -2256,7 +2275,6 @@ function addExpense() {
   const people = activePeople();
   const round = nextRoundLabel();
   const expenseId = newId("e");
-  if (!state.rounds.includes(round)) state.rounds.push(round);
   state.activeRound = round;
   state.expenses.push({
     id: expenseId,
@@ -2267,6 +2285,7 @@ function addExpense() {
     payer: people[0]?.id || "",
     participants: people.map((person) => person.id),
   });
+  syncRoundsFromExpenses();
   saveAndRender();
   focusExpenseField(expenseId, "place");
 }
@@ -2283,7 +2302,6 @@ function addDeduction() {
   const people = activePeople();
   const recentPayer = [...state.expenses].reverse().find((expense) => expense.payer)?.payer;
   const expenseId = newId("e");
-  if (!state.rounds.includes("공제")) state.rounds.push("공제");
   state.expenses.push({
     id: expenseId,
     type: "deduction",
@@ -2294,6 +2312,7 @@ function addDeduction() {
     payer: recentPayer || people[0]?.id || "",
     participants: people.map((person) => person.id),
   });
+  syncRoundsFromExpenses();
   saveAndRender();
   focusExpenseField(expenseId, "place");
 }
@@ -2309,15 +2328,18 @@ function deletePerson(personId) {
 
 function deleteExpense(expenseId) {
   state.expenses = state.expenses.filter((expense) => expense.id !== expenseId);
+  syncRoundsFromExpenses();
   saveAndRender();
 }
 
 function saveAndRender() {
+  syncRoundsFromExpenses();
   saveState();
   render();
 }
 
 function saveInputProgress() {
+  syncRoundsFromExpenses();
   saveState();
   renderSummary();
 }
