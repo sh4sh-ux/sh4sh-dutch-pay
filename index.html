@@ -997,6 +997,7 @@ body.guide-open {
 .report-toolbar {
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
   padding: 4px 0 10px;
 }
 
@@ -1656,6 +1657,7 @@ body.guide-open {
 
     <div id="reportOverlay" class="report-overlay" hidden>
       <div class="report-toolbar">
+        <button class="ghost-button" id="downloadReportButton" type="button" aria-label="최종 리포트 이미지 저장">이미지 저장</button>
         <button class="ghost-button" id="closeReportButton" type="button" aria-label="최종 리포트 닫기">닫기</button>
       </div>
       <article class="final-report" aria-label="최종 리포트">
@@ -2244,6 +2246,323 @@ function closeReport() {
   document.body.classList.remove("report-open");
 }
 
+function imageFileName() {
+  const title = (state.meetingTitle || "더치페이-정산").trim().replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "-");
+  const date = state.meetingDate || today;
+  return `${title || "더치페이-정산"}-${date}.png`;
+}
+
+function canvasFont(size, weight = 700) {
+  return `${weight} ${size}px -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif`;
+}
+
+function roundRectPath(context, x, y, width, height, radius) {
+  const nextRadius = Math.min(radius, width / 2, height / 2);
+  context.beginPath();
+  context.moveTo(x + nextRadius, y);
+  context.lineTo(x + width - nextRadius, y);
+  context.quadraticCurveTo(x + width, y, x + width, y + nextRadius);
+  context.lineTo(x + width, y + height - nextRadius);
+  context.quadraticCurveTo(x + width, y + height, x + width - nextRadius, y + height);
+  context.lineTo(x + nextRadius, y + height);
+  context.quadraticCurveTo(x, y + height, x, y + height - nextRadius);
+  context.lineTo(x, y + nextRadius);
+  context.quadraticCurveTo(x, y, x + nextRadius, y);
+  context.closePath();
+}
+
+function drawRoundBox(context, x, y, width, height, radius, fill, stroke) {
+  roundRectPath(context, x, y, width, height, radius);
+  if (fill) {
+    context.fillStyle = fill;
+    context.fill();
+  }
+  if (stroke) {
+    context.strokeStyle = stroke;
+    context.lineWidth = 1;
+    context.stroke();
+  }
+}
+
+function wrappedLines(context, text, maxWidth) {
+  const value = String(text || "");
+  if (!value) return [""];
+  const lines = [];
+  let line = "";
+
+  Array.from(value).forEach((char) => {
+    const nextLine = line + char;
+    if (line && context.measureText(nextLine).width > maxWidth) {
+      lines.push(line);
+      line = char.trimStart();
+    } else {
+      line = nextLine;
+    }
+  });
+
+  if (line) lines.push(line);
+  return lines;
+}
+
+function drawText(context, text, x, y, options = {}) {
+  const {
+    size = 13,
+    weight = 700,
+    color = "#171719",
+    maxWidth,
+    lineHeight = Math.round(size * 1.35),
+    align = "left",
+  } = options;
+  context.font = canvasFont(size, weight);
+  context.fillStyle = color;
+  context.textAlign = align;
+  context.textBaseline = "top";
+
+  if (!maxWidth) {
+    context.fillText(String(text || ""), x, y);
+    return y + lineHeight;
+  }
+
+  const lines = wrappedLines(context, text, maxWidth);
+  lines.forEach((line, index) => {
+    context.fillText(line, x, y + index * lineHeight);
+  });
+  return y + lines.length * lineHeight;
+}
+
+function measureWrappedHeight(context, text, maxWidth, size, weight, lineHeight) {
+  context.font = canvasFont(size, weight);
+  return wrappedLines(context, text, maxWidth).length * lineHeight;
+}
+
+function drawReportImageContent(context, width, draw = true) {
+  const result = calculate();
+  const peopleCount = result.people.length;
+  const average = peopleCount ? result.totalExpense / peopleCount : 0;
+  const meetingTitle = state.meetingTitle.trim() || "더치페이 정산";
+  const meetingDate = formatDateForDisplay(state.meetingDate) || "일자 미입력";
+  const reportPad = 18;
+  const cardPad = 14;
+  const sectionGap = 9;
+  let y = 0;
+
+  const drawSeparator = () => {
+    if (!draw) return;
+    context.strokeStyle = "rgba(0, 0, 0, 0.06)";
+    context.beginPath();
+    context.moveTo(0, y + 0.5);
+    context.lineTo(width, y + 0.5);
+    context.stroke();
+  };
+
+  context.font = canvasFont(31, 850);
+  const titleLinesHeight = measureWrappedHeight(context, meetingTitle, width - 48, 31, 850, 37);
+  const heroHeight = 24 + 24 + 8 + titleLinesHeight + 8 + 18 + 20 + 94 + 24;
+
+  if (draw) {
+    const gradient = context.createLinearGradient(0, y, width, y + heroHeight);
+    gradient.addColorStop(0, "#111216");
+    gradient.addColorStop(0.58, "#202a37");
+    gradient.addColorStop(1, "#0f6fcf");
+    context.fillStyle = gradient;
+    context.fillRect(0, y, width, heroHeight);
+
+    drawText(context, "Dutch Pay Report", 24, y + 24, { size: 11, weight: 850, color: "rgba(255, 255, 255, 0.68)", lineHeight: 14 });
+    drawRoundBox(context, width - 82, y + 23, 58, 24, 12, "rgba(255, 255, 255, 0.12)", "rgba(255, 255, 255, 0.16)");
+    drawText(context, "공유용", width - 53, y + 28, { size: 11, weight: 850, color: "#dff0ff", align: "center", lineHeight: 12 });
+
+    const titleBottom = drawText(context, meetingTitle, 24, y + 64, {
+      size: 31,
+      weight: 850,
+      color: "#ffffff",
+      maxWidth: width - 48,
+      lineHeight: 37,
+    });
+    drawText(context, meetingDate, 24, titleBottom + 8, { size: 13, weight: 700, color: "rgba(255, 255, 255, 0.72)", lineHeight: 18 });
+
+    const totalY = heroHeight - 118;
+    drawRoundBox(context, 24, totalY, width - 48, 94, 8, "rgba(255, 255, 255, 0.1)", "rgba(255, 255, 255, 0.16)");
+    drawText(context, "총 지출", 41, totalY + 17, { size: 12, weight: 750, color: "rgba(255, 255, 255, 0.72)", lineHeight: 16 });
+    drawText(context, money(result.grossExpense), 41, totalY + 48, { size: 36, weight: 850, color: "#ffffff", lineHeight: 40 });
+    if (result.deductionTotal) {
+      drawText(context, `(공제금액 ${money(result.deductionTotal)})`, width - 41, totalY + 62, {
+        size: 12,
+        weight: 750,
+        color: "rgba(223, 240, 255, 0.78)",
+        align: "right",
+        lineHeight: 15,
+      });
+    }
+  }
+  y += heroHeight;
+
+  const statHeight = 102;
+  if (draw) {
+    context.fillStyle = "#f7f8fb";
+    context.fillRect(0, y, width, statHeight);
+    const statWidth = (width - 36 - 20) / 3;
+    [
+      ["참여자", `${peopleCount}명`],
+      ["1인 평균", money(average)],
+      ["송금", `${result.transfers.length}건`],
+    ].forEach(([label, value], index) => {
+      const x = 18 + index * (statWidth + 10);
+      drawRoundBox(context, x, y + 16, statWidth, 70, 8, "#ffffff", "rgba(0, 0, 0, 0.08)");
+      drawText(context, label, x + 12, y + 28, { size: 12, weight: 750, color: "#6e6e73", lineHeight: 15 });
+      drawText(context, value, x + 12, y + 55, { size: 18, weight: 830, color: "#171719", lineHeight: 21 });
+    });
+  }
+  y += statHeight;
+
+  const section = (title, subtitle, itemCount, drawItems) => {
+    drawSeparator();
+    y += 20;
+    if (draw) {
+      drawText(context, title, 18, y, { size: 16, weight: 830, color: "#171719", lineHeight: 20 });
+      drawText(context, subtitle, width - 18, y + 3, { size: 11, weight: 400, color: "#6e6e73", align: "right", lineHeight: 15 });
+    }
+    y += 31;
+    if (!itemCount) {
+      if (draw) {
+        drawRoundBox(context, 18, y, width - 36, 50, 8, "#f7f7f8", "rgba(0, 0, 0, 0.06)");
+        drawText(context, title === "송금" ? "송금할 금액이 없습니다" : "표시할 내용이 없습니다", width / 2, y + 16, {
+          size: 13,
+          weight: 700,
+          color: "#6e6e73",
+          align: "center",
+          lineHeight: 16,
+        });
+      }
+      y += 50;
+    } else {
+      drawItems();
+    }
+    y += 20;
+  };
+
+  section("송금", "보낼 금액", result.transfers.length, () => {
+    result.transfers.forEach((transfer, index) => {
+      const itemHeight = 62;
+      if (draw) {
+        drawRoundBox(context, 18, y, width - 36, itemHeight, 8, "#ffffff", "rgba(0, 113, 227, 0.14)");
+        drawRoundBox(context, 31, y + 16, 30, 30, 15, "#e8f2ff", "rgba(0, 113, 227, 0.14)");
+        drawText(context, String(index + 1).padStart(2, "0"), 46, y + 25, { size: 11, weight: 900, color: "#0071e3", align: "center", lineHeight: 12 });
+        drawText(context, `${transfer.from} → ${transfer.to}`, 71, y + 14, { size: 16, weight: 820, color: "#171719", maxWidth: width - 190, lineHeight: 20 });
+        drawText(context, "송금", 71, y + 39, { size: 12, weight: 750, color: "#6e6e73", lineHeight: 15 });
+        drawText(context, money(transfer.amount), width - 31, y + 22, { size: 18, weight: 850, color: "#171719", align: "right", lineHeight: 22 });
+      }
+      y += itemHeight + sectionGap;
+    });
+    y -= sectionGap;
+  });
+
+  section("사람별 정산", "부담 · 결제", result.people.length, () => {
+    result.people.forEach((person) => {
+      const balanceData = result.balances.get(person.id);
+      const balance = Math.round(balanceData.balance);
+      const paid = paidExpenseAmount(person.id);
+      const deduction = paidDeductionAmount(person.id);
+      const statusLabel = balance > 0 ? "받을 금액" : balance < 0 ? "낼 금액" : "완료";
+      const statusColor = balance > 0 ? "#0071e3" : balance < 0 ? "#d70015" : "#6e6e73";
+      const statusBg = balance > 0 ? "#e8f2ff" : balance < 0 ? "#fff0f1" : "#f2f2f7";
+      const itemHeight = deduction ? 104 : 90;
+      if (draw) {
+        drawRoundBox(context, 18, y, width - 36, itemHeight, 8, "#ffffff", "rgba(0, 0, 0, 0.08)");
+        drawText(context, person.name, 34, y + 16, { size: 18, weight: 860, color: "#171719", maxWidth: width - 180, lineHeight: 22 });
+        drawText(context, `부담 ${money(balanceData.owed)}`, 34, y + 48, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
+        drawText(context, `결제 ${money(paid)}`, 34, y + 65, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
+        if (deduction) {
+          const deductionX = 92;
+          drawText(context, "(공제 ", deductionX, y + 65, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
+          drawText(context, money(deduction), deductionX + 30, y + 65, { size: 11, weight: 720, color: "#d70015", lineHeight: 15 });
+          drawText(context, ")", deductionX + 30 + context.measureText(money(deduction)).width, y + 65, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
+        }
+        drawRoundBox(context, width - 105, y + 17, 72, 30, 15, statusBg, null);
+        drawText(context, statusLabel, width - 69, y + 25, { size: 12, weight: 900, color: statusColor, align: "center", lineHeight: 13 });
+        drawText(context, money(Math.abs(balance)), width - 34, y + 56, { size: 22, weight: 900, color: "#171719", align: "right", lineHeight: 26 });
+      }
+      y += itemHeight + sectionGap;
+    });
+    y -= sectionGap;
+  });
+
+  section("차수별", "전체 내역", result.rounds.length, () => {
+    result.rounds.forEach((round) => {
+      const total = result.roundTotals.get(round) || { amount: 0 };
+      const placeLabel = roundPlaceLabel(round);
+      const placeHeight = measureWrappedHeight(context, placeLabel, width - 190, 11, 400, 15);
+      const itemHeight = Math.max(62, 31 + placeHeight);
+      if (draw) {
+        drawRoundBox(context, 18, y, width - 36, itemHeight, 8, "#ffffff", "rgba(0, 0, 0, 0.08)");
+        drawText(context, round, 34, y + 14, { size: 16, weight: 820, color: "#171719", lineHeight: 20 });
+        drawText(context, placeLabel, 34, y + 38, { size: 11, weight: 400, color: "#6e6e73", maxWidth: width - 190, lineHeight: 15 });
+        drawText(context, money(total.amount), width - 34, y + 22, { size: 18, weight: 850, color: "#171719", align: "right", lineHeight: 22 });
+      }
+      y += itemHeight + sectionGap;
+    });
+    y -= sectionGap;
+  });
+
+  return Math.ceil(y);
+}
+
+function createReportCanvas() {
+  const width = 460;
+  const probe = document.createElement("canvas").getContext("2d");
+  const height = drawReportImageContent(probe, width, false);
+  const scale = Math.min(3, Math.max(2, window.devicePixelRatio || 1));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.ceil(width * scale);
+  canvas.height = Math.ceil(height * scale);
+  const context = canvas.getContext("2d");
+  context.scale(scale, scale);
+  context.fillStyle = "#ffffff";
+  context.fillRect(0, 0, width, height);
+  drawReportImageContent(context, width, true);
+  return canvas;
+}
+
+function saveBlob(blob, filename) {
+  const file = new File([blob], filename, { type: "image/png" });
+  if (navigator.canShare?.({ files: [file] })) {
+    return navigator.share({ files: [file], title: "더치페이 정산" });
+  }
+
+  const imageUrl = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = imageUrl;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(imageUrl), 1000);
+  return Promise.resolve();
+}
+
+async function downloadReportImage() {
+  const button = $("#downloadReportButton");
+  if (!button) return;
+
+  const originalText = button.textContent;
+  button.textContent = "저장 중";
+  button.disabled = true;
+
+  try {
+    renderReport();
+    await document.fonts?.ready;
+    const canvas = createReportCanvas();
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png", 1));
+    if (!blob) throw new Error("이미지를 만들 수 없습니다.");
+    await saveBlob(blob, imageFileName());
+  } catch (error) {
+    console.error("Report image could not be saved.", error);
+    alert("이미지 저장에 실패했습니다. 브라우저 권한을 확인한 뒤 다시 시도해 주세요.");
+  } finally {
+    button.textContent = originalText;
+    button.disabled = false;
+  }
+}
+
 function openGuide() {
   $("#guideOverlay").hidden = false;
   document.body.classList.add("guide-open");
@@ -2558,6 +2877,7 @@ document.addEventListener("click", (event) => {
   if (button.id === "openGuideButton") openGuide();
   if (button.id === "closeGuideButton") closeGuide();
   if (button.id === "openReportButton") openReport();
+  if (button.id === "downloadReportButton") downloadReportImage();
   if (button.id === "closeReportButton") closeReport();
   if (button.id === "resetButton") {
     state = clone(sampleState);
