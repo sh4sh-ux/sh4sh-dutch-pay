@@ -1,5 +1,4 @@
 
-
 <!doctype html>
 <html lang="ko">
   <head>
@@ -608,9 +607,18 @@ select:focus {
 .report-total-line small {
   color: rgba(110, 110, 115, 0.78);
   font-size: 11px;
-  font-weight: 750;
+  font-weight: 600;
   line-height: 1.25;
   white-space: nowrap;
+}
+
+.total-line small strong {
+  display: inline;
+  color: var(--danger);
+  margin-top: 0;
+  font-size: inherit;
+  font-weight: 650;
+  line-height: inherit;
 }
 
 .round-summary,
@@ -649,26 +657,10 @@ select:focus {
 }
 
 .row-meta {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.round-place {
-  max-width: min(46vw, 220px);
+  color: rgba(110, 110, 115, 0.58);
   font-size: 11px;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-}
-
-.report-round-place {
-  display: block;
-  margin-top: 3px;
-  max-width: min(52vw, 260px);
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
+  font-weight: 480;
+  line-height: 1.25;
 }
 
 .deduction-inline {
@@ -707,17 +699,15 @@ select:focus {
   align-items: start;
   gap: 4px;
   margin-top: 9px;
-  color: var(--muted);
+  color: rgba(110, 110, 115, 0.58);
   font-size: 11px;
-  font-weight: 400;
-  line-height: 1.35;
+  font-weight: 480;
 }
 
 .settlement-meta strong {
-  color: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
+  color: rgba(110, 110, 115, 0.64);
+  font-size: 13px;
+  font-weight: 620;
 }
 
 .settlement-meta i {
@@ -734,26 +724,16 @@ select:focus {
   align-items: baseline;
   margin-left: 5px;
   color: rgba(110, 110, 115, 0.64);
-  font-size: 10.5px;
-  font-weight: 520;
+  font-size: 11px;
+  font-weight: 480;
   white-space: nowrap;
 }
 
 .settlement-deduction strong {
   color: rgba(215, 0, 21, 0.9);
-  font-weight: 720;
-}
-
-.settlement-paid-line {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0 5px;
-  min-width: 0;
-}
-
-.settlement-paid-line .settlement-deduction {
-  margin-left: 0;
+  font-size: inherit;
+  font-weight: 620;
+  line-height: inherit;
 }
 
 .settlement-result {
@@ -1008,9 +988,19 @@ body.guide-open {
 
 .report-toolbar {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 8px;
   padding: 4px 0 10px;
+}
+
+.report-save-button {
+  color: #ffffff;
+  background: var(--ink);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.report-save-button:hover {
+  background: #2f2f35;
 }
 
 .final-report {
@@ -1083,8 +1073,8 @@ body.guide-open {
 
 .report-total {
   display: grid;
-  gap: 7px;
-  padding: 17px;
+  gap: 13px;
+  padding: 18px 18px 20px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 8px;
@@ -1099,38 +1089,46 @@ body.guide-open {
   font-weight: 750;
 }
 
-.report-item small.report-round-place {
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 1.35;
-}
-
 .report-total span {
   color: rgba(255, 255, 255, 0.72);
 }
 
-.report-total strong {
+.report-total-line > strong {
   color: #ffffff;
-  font-size: 36px;
-  font-weight: 850;
-  line-height: 1.08;
+  font-size: 33px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .report-total-line {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 6px;
+  flex-wrap: nowrap;
+  min-height: 46px;
 }
 
-.report-total-line strong {
+.report-total-line > strong {
   display: block;
 }
 
 .report-total-line small {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
   color: rgba(223, 240, 255, 0.78);
-  font-size: 12px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.report-total-line small strong {
+  color: #ff453a;
+  display: inline;
+  font-size: inherit;
+  font-weight: 560;
+  line-height: inherit;
 }
 
 .report-stats {
@@ -1186,8 +1184,7 @@ body.guide-open {
 .report-section-heading span {
   color: var(--muted);
   font-size: 11px;
-  font-weight: 400;
-  line-height: 1.35;
+  font-weight: 800;
 }
 
 .report-list {
@@ -1296,6 +1293,13 @@ body.guide-open {
   font-size: 18px;
   font-weight: 850;
   white-space: nowrap;
+}
+
+.report-transfer-item .amount {
+  color: #111216;
+  font-size: 22px;
+  font-weight: 950;
+  letter-spacing: 0;
 }
 
 .report-person-item .amount {
@@ -1414,8 +1418,8 @@ body.guide-open {
     font-size: 29px;
   }
 
-  .report-total strong {
-    font-size: 34px;
+  .report-total-line > strong {
+    font-size: 31px;
   }
 
   .report-stats {
@@ -1464,42 +1468,6 @@ body.guide-open {
   .settlement-result strong {
     font-size: 22px;
   }
-}
-
-.round-place,
-.settlement-meta,
-.settlement-meta span,
-.settlement-meta strong,
-.report-section-heading span,
-.report-item small.report-round-place {
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 1.35;
-}
-
-.settlement-meta strong {
-  color: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-}
-
-.settlement-meta .settlement-deduction strong {
-  color: var(--danger);
-  font-weight: 720;
-}
-
-.settlement-paid-line {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0 5px;
-  min-width: 0;
-}
-
-.settlement-paid-line .settlement-deduction {
-  margin-left: 0;
 }
 
     </style>
@@ -1681,7 +1649,7 @@ body.guide-open {
 
     <div id="reportOverlay" class="report-overlay" hidden>
       <div class="report-toolbar">
-        <button class="ghost-button" id="downloadReportButton" type="button" aria-label="최종 리포트 이미지 저장">이미지 저장</button>
+        <button class="ghost-button report-save-button" id="saveReportImageButton" type="button" aria-label="최종 리포트 이미지 저장">이미지 저장</button>
         <button class="ghost-button" id="closeReportButton" type="button" aria-label="최종 리포트 닫기">닫기</button>
       </div>
       <article class="final-report" aria-label="최종 리포트">
@@ -1725,22 +1693,6 @@ body.guide-open {
           </div>
           <div id="reportTransfers" class="report-list"></div>
         </section>
-
-        <section class="report-section">
-          <div class="report-section-heading">
-            <h3>사람별 정산</h3>
-            <span>부담 · 결제</span>
-          </div>
-          <div id="reportPeople" class="report-list"></div>
-        </section>
-
-        <section class="report-section">
-          <div class="report-section-heading">
-            <h3>차수별</h3>
-            <span>전체 내역</span>
-          </div>
-          <div id="reportRounds" class="report-list"></div>
-        </section>
       </article>
     </div>
 
@@ -1780,18 +1732,8 @@ function loadState() {
 }
 
 function normalizeState(nextState) {
-  const people = Array.isArray(nextState.people) ? nextState.people : [];
-  const peopleIds = new Set(people.map((person) => person.id));
-  const expenses = Array.isArray(nextState.expenses)
-    ? nextState.expenses.map((expense) => ({
-        ...expense,
-        round: String(expense.round || "").trim(),
-        type: expense.type === "deduction" ? "deduction" : "expense",
-        payer: peopleIds.has(expense.payer) ? expense.payer : "",
-        participants: (expense.participants || []).filter((id) => peopleIds.has(id)),
-      }))
-    : [];
-  const roundList = normalizeRoundList([], expenses);
+  const expenses = Array.isArray(nextState.expenses) ? nextState.expenses : [];
+  const roundList = normalizeRoundList(nextState.rounds, expenses);
   const activeRound = nextState.activeRound === overallRound || roundList.includes(nextState.activeRound) ? nextState.activeRound : overallRound;
 
   return {
@@ -1799,10 +1741,11 @@ function normalizeState(nextState) {
     meetingDate: nextState.meetingDate || "",
     activeRound,
     rounds: roundList,
-    people,
+    people: Array.isArray(nextState.people) ? nextState.people : [],
     expenses: expenses.map((expense) => ({
       ...expense,
-      round: roundList.includes(expense.round) ? expense.round : roundList[0] || "",
+      round: roundList.includes(expense.round) ? expense.round : roundList[0],
+      type: expense.type === "deduction" ? "deduction" : "expense",
     })),
   };
 }
@@ -1840,14 +1783,6 @@ function saveState() {
   }, 350);
 }
 
-function syncRoundsFromExpenses() {
-  const roundList = normalizeRoundList([], state.expenses);
-  state.rounds = roundList;
-  if (state.activeRound !== overallRound && !roundList.includes(state.activeRound)) {
-    state.activeRound = overallRound;
-  }
-}
-
 function money(value) {
   return `${formatter.format(Math.round(Number(value) || 0))}원`;
 }
@@ -1871,20 +1806,6 @@ function formattedInputNumber(value, allowNegative = false) {
   return amount ? formatter.format(amount) : "";
 }
 
-function roundPlaceLabel(round) {
-  const places = [
-    ...new Set(
-      state.expenses
-        .filter((expense) => expense.round === round)
-        .map((expense) => String(expense.place || "").trim())
-        .filter(Boolean),
-    ),
-  ];
-
-  if (places.length) return places.join(", ");
-  return round === "공제" ? "공제 사유 미입력" : "장소 미입력";
-}
-
 function activePeople() {
   return state.people.filter((person) => person.name.trim());
 }
@@ -1897,8 +1818,7 @@ function calculate() {
   const people = activePeople();
   const peopleMap = new Map(people.map((person) => [person.id, person]));
   const balances = new Map();
-  const rounds = normalizeRoundList([], state.expenses);
-  const roundTotals = new Map(rounds.map((round) => [round, { amount: 0, entries: 0 }]));
+  const roundTotals = new Map(state.rounds.map((round) => [round, { amount: 0, entries: 0 }]));
   const roundOwed = new Map();
   const uniqueParticipants = new Set();
   const splitGroups = new Map();
@@ -1910,7 +1830,7 @@ function calculate() {
       paid: 0,
       owed: 0,
       balance: 0,
-      byRound: Object.fromEntries(rounds.map((round) => [round, 0])),
+      byRound: Object.fromEntries(state.rounds.map((round) => [round, 0])),
     });
   });
 
@@ -1919,8 +1839,7 @@ function calculate() {
     const participants = orderedParticipantIds(expense.participants, people, peopleMap);
     if (!amount || !participants.length) return;
 
-    const round = rounds.includes(expense.round) ? expense.round : rounds[0];
-    if (!round) return;
+    const round = state.rounds.includes(expense.round) ? expense.round : state.rounds[0];
     if (!roundTotals.has(round)) roundTotals.set(round, { amount: 0, entries: 0 });
     roundTotals.get(round).amount += amount;
     roundTotals.get(round).entries += 1;
@@ -1953,7 +1872,7 @@ function calculate() {
   const transfers = buildTransfers(people, balances);
   const totalExpense = grossExpense + deductionTotal;
 
-  return { people, balances, roundTotals, roundOwed, rounds, transfers, totalExpense, grossExpense, deductionTotal, uniqueParticipants };
+  return { people, balances, roundTotals, roundOwed, transfers, totalExpense, grossExpense, deductionTotal, uniqueParticipants };
 }
 
 function expenseAmount(expense) {
@@ -2112,16 +2031,16 @@ function renderSummary() {
   $("#averagePerPerson").textContent = money(average);
   $("#transferCount").textContent = `${result.transfers.length}건`;
 
-  $("#roundSummary").innerHTML = result.rounds.length
-    ? result.rounds
+  $("#roundSummary").innerHTML = state.rounds.length
+    ? state.rounds
         .map((round) => {
           const total = result.roundTotals.get(round);
           const placeLabel = roundPlaceLabel(round);
           return `
             <div class="summary-row">
               <div>
-                <strong>${escapeHtml(round)}</strong>
-                <div class="row-meta round-place">${escapeHtml(placeLabel)}</div>
+                <strong>${round}</strong>
+                <div class="row-meta">${escapeHtml(placeLabel)}</div>
               </div>
               <strong>${money(total.amount)}</strong>
             </div>
@@ -2152,6 +2071,17 @@ function renderSummary() {
         `,
       )
       .join("") || '<div class="empty-state">송금할 금액이 없습니다</div>';
+}
+
+function roundPlaceLabel(round) {
+  const places = state.expenses
+    .filter((expense) => expense.round === round && expenseAmount(expense))
+    .map((expense) => String(expense.place || "").trim())
+    .filter(Boolean);
+  if (!places.length) return round === "공제" ? "공제" : "장소 미입력";
+  const uniquePlaces = [...new Set(places)];
+  if (uniquePlaces.length <= 2) return uniquePlaces.join(", ");
+  return `${uniquePlaces[0]} 외 ${uniquePlaces.length - 1}곳`;
 }
 
 function renderReport() {
@@ -2186,31 +2116,6 @@ function renderReport() {
         `,
       )
       .join("") || '<div class="report-empty">송금할 금액이 없습니다</div>';
-
-  $("#reportPeople").innerHTML =
-    result.people
-      .map((person) => {
-        const balanceData = result.balances.get(person.id);
-        return renderSettlementCard(person, balanceData, "report-settlement-card");
-      })
-      .join("") || '<div class="report-empty">인원을 추가하세요</div>';
-
-  $("#reportRounds").innerHTML =
-    result.rounds
-      .map((round) => {
-        const total = result.roundTotals.get(round) || { amount: 0, entries: 0 };
-        const placeLabel = roundPlaceLabel(round);
-        return `
-          <div class="report-item report-round-item">
-            <div>
-              <strong>${escapeHtml(round)}</strong>
-              <small class="report-round-place">${escapeHtml(placeLabel)}</small>
-            </div>
-            <div class="amount">${money(total.amount)}</div>
-          </div>
-        `;
-      })
-      .join("") || '<div class="report-empty">지출을 추가하세요</div>';
 }
 
 function renderSettlementCard(person, balanceData, extraClass = "") {
@@ -2228,7 +2133,7 @@ function renderSettlementCard(person, balanceData, extraClass = "") {
         <div class="settlement-meta">
           <span>부담 <strong>${money(balanceData.owed)}</strong></span>
           <i></i>
-          <span class="settlement-paid-line"><span>결제 <strong>${money(paid)}</strong></span>${deductionNote}</span>
+          <span>결제 <strong>${money(paid)}</strong>${deductionNote}</span>
         </div>
       </div>
       <div class="settlement-result ${statusClass}">
@@ -2256,7 +2161,7 @@ function paidDeductionAmount(personId) {
 function renderDeductionNote(selector, deductionTotal) {
   const note = $(selector);
   if (!note) return;
-  note.textContent = deductionTotal ? `(공제금액 ${money(deductionTotal)})` : "";
+  note.innerHTML = deductionTotal ? `(공제금액 <strong>${money(deductionTotal)}</strong>)` : "";
 }
 
 function openReport() {
@@ -2268,359 +2173,6 @@ function openReport() {
 function closeReport() {
   $("#reportOverlay").hidden = true;
   document.body.classList.remove("report-open");
-}
-
-function imageFileName() {
-  const title = (state.meetingTitle || "더치페이-정산").trim().replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "-");
-  const date = state.meetingDate || today;
-  return `${title || "더치페이-정산"}-${date}.png`;
-}
-
-function canvasFont(size, weight = 700) {
-  return `${weight} ${size}px -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif`;
-}
-
-function roundRectPath(context, x, y, width, height, radius) {
-  const nextRadius = Math.min(radius, width / 2, height / 2);
-  context.beginPath();
-  context.moveTo(x + nextRadius, y);
-  context.lineTo(x + width - nextRadius, y);
-  context.quadraticCurveTo(x + width, y, x + width, y + nextRadius);
-  context.lineTo(x + width, y + height - nextRadius);
-  context.quadraticCurveTo(x + width, y + height, x + width - nextRadius, y + height);
-  context.lineTo(x + nextRadius, y + height);
-  context.quadraticCurveTo(x, y + height, x, y + height - nextRadius);
-  context.lineTo(x, y + nextRadius);
-  context.quadraticCurveTo(x, y, x + nextRadius, y);
-  context.closePath();
-}
-
-function drawRoundBox(context, x, y, width, height, radius, fill, stroke) {
-  roundRectPath(context, x, y, width, height, radius);
-  if (fill) {
-    context.fillStyle = fill;
-    context.fill();
-  }
-  if (stroke) {
-    context.strokeStyle = stroke;
-    context.lineWidth = 1;
-    context.stroke();
-  }
-}
-
-function wrappedLines(context, text, maxWidth) {
-  const value = String(text || "");
-  if (!value) return [""];
-  const lines = [];
-  let line = "";
-
-  Array.from(value).forEach((char) => {
-    const nextLine = line + char;
-    if (line && context.measureText(nextLine).width > maxWidth) {
-      lines.push(line);
-      line = char.trimStart();
-    } else {
-      line = nextLine;
-    }
-  });
-
-  if (line) lines.push(line);
-  return lines;
-}
-
-function drawText(context, text, x, y, options = {}) {
-  const {
-    size = 13,
-    weight = 700,
-    color = "#171719",
-    maxWidth,
-    lineHeight = Math.round(size * 1.35),
-    align = "left",
-  } = options;
-  context.font = canvasFont(size, weight);
-  context.fillStyle = color;
-  context.textAlign = align;
-  context.textBaseline = "top";
-
-  if (!maxWidth) {
-    context.fillText(String(text || ""), x, y);
-    return y + lineHeight;
-  }
-
-  const lines = wrappedLines(context, text, maxWidth);
-  lines.forEach((line, index) => {
-    context.fillText(line, x, y + index * lineHeight);
-  });
-  return y + lines.length * lineHeight;
-}
-
-function measureWrappedHeight(context, text, maxWidth, size, weight, lineHeight) {
-  context.font = canvasFont(size, weight);
-  return wrappedLines(context, text, maxWidth).length * lineHeight;
-}
-
-function measureCanvasText(context, text, size = 11, weight = 400) {
-  context.font = canvasFont(size, weight);
-  return context.measureText(String(text || "")).width;
-}
-
-function getPaymentLineLayout(context, paid, deduction, maxWidth) {
-  const paidText = `결제 ${money(paid)}`;
-  const deductionPrefix = "(공제 ";
-  const deductionAmount = money(deduction);
-  const deductionSuffix = ")";
-  const gap = 6;
-  const paidWidth = measureCanvasText(context, paidText, 11, 400);
-  const deductionWidth = deduction
-    ? measureCanvasText(context, deductionPrefix, 11, 400) + measureCanvasText(context, deductionAmount, 11, 720) + measureCanvasText(context, deductionSuffix, 11, 400)
-    : 0;
-  const wrapsDeduction = Boolean(deduction && paidWidth + gap + deductionWidth > maxWidth);
-
-  return {
-    paidText,
-    paidWidth,
-    deductionPrefix,
-    deductionAmount,
-    deductionSuffix,
-    gap,
-    wrapsDeduction,
-    itemHeight: wrapsDeduction ? 118 : deduction ? 104 : 90,
-  };
-}
-
-function drawReportImageContent(context, width, draw = true) {
-  const result = calculate();
-  const peopleCount = result.people.length;
-  const average = peopleCount ? result.totalExpense / peopleCount : 0;
-  const meetingTitle = state.meetingTitle.trim() || "더치페이 정산";
-  const meetingDate = formatDateForDisplay(state.meetingDate) || "일자 미입력";
-  const reportPad = 18;
-  const cardPad = 14;
-  const sectionGap = 9;
-  let y = 0;
-
-  const drawSeparator = () => {
-    if (!draw) return;
-    context.strokeStyle = "rgba(0, 0, 0, 0.06)";
-    context.beginPath();
-    context.moveTo(0, y + 0.5);
-    context.lineTo(width, y + 0.5);
-    context.stroke();
-  };
-
-  context.font = canvasFont(31, 850);
-  const titleLinesHeight = measureWrappedHeight(context, meetingTitle, width - 48, 31, 850, 37);
-  const heroHeight = 24 + 24 + 8 + titleLinesHeight + 8 + 18 + 20 + 94 + 24;
-
-  if (draw) {
-    const gradient = context.createLinearGradient(0, y, width, y + heroHeight);
-    gradient.addColorStop(0, "#111216");
-    gradient.addColorStop(0.58, "#202a37");
-    gradient.addColorStop(1, "#0f6fcf");
-    context.fillStyle = gradient;
-    context.fillRect(0, y, width, heroHeight);
-
-    drawText(context, "Dutch Pay Report", 24, y + 24, { size: 11, weight: 850, color: "rgba(255, 255, 255, 0.68)", lineHeight: 14 });
-    drawRoundBox(context, width - 82, y + 23, 58, 24, 12, "rgba(255, 255, 255, 0.12)", "rgba(255, 255, 255, 0.16)");
-    drawText(context, "공유용", width - 53, y + 28, { size: 11, weight: 850, color: "#dff0ff", align: "center", lineHeight: 12 });
-
-    const titleBottom = drawText(context, meetingTitle, 24, y + 64, {
-      size: 31,
-      weight: 850,
-      color: "#ffffff",
-      maxWidth: width - 48,
-      lineHeight: 37,
-    });
-    drawText(context, meetingDate, 24, titleBottom + 8, { size: 13, weight: 700, color: "rgba(255, 255, 255, 0.72)", lineHeight: 18 });
-
-    const totalY = heroHeight - 118;
-    drawRoundBox(context, 24, totalY, width - 48, 94, 8, "rgba(255, 255, 255, 0.1)", "rgba(255, 255, 255, 0.16)");
-    drawText(context, "총 지출", 41, totalY + 17, { size: 12, weight: 750, color: "rgba(255, 255, 255, 0.72)", lineHeight: 16 });
-    drawText(context, money(result.grossExpense), 41, totalY + 48, { size: 36, weight: 850, color: "#ffffff", lineHeight: 40 });
-    if (result.deductionTotal) {
-      drawText(context, `(공제금액 ${money(result.deductionTotal)})`, width - 41, totalY + 62, {
-        size: 12,
-        weight: 750,
-        color: "rgba(223, 240, 255, 0.78)",
-        align: "right",
-        lineHeight: 15,
-      });
-    }
-  }
-  y += heroHeight;
-
-  const statHeight = 102;
-  if (draw) {
-    context.fillStyle = "#f7f8fb";
-    context.fillRect(0, y, width, statHeight);
-    const statWidth = (width - 36 - 20) / 3;
-    [
-      ["참여자", `${peopleCount}명`],
-      ["1인 평균", money(average)],
-      ["송금", `${result.transfers.length}건`],
-    ].forEach(([label, value], index) => {
-      const x = 18 + index * (statWidth + 10);
-      drawRoundBox(context, x, y + 16, statWidth, 70, 8, "#ffffff", "rgba(0, 0, 0, 0.08)");
-      drawText(context, label, x + 12, y + 28, { size: 12, weight: 750, color: "#6e6e73", lineHeight: 15 });
-      drawText(context, value, x + 12, y + 55, { size: 18, weight: 830, color: "#171719", lineHeight: 21 });
-    });
-  }
-  y += statHeight;
-
-  const section = (title, subtitle, itemCount, drawItems) => {
-    drawSeparator();
-    y += 20;
-    if (draw) {
-      drawText(context, title, 18, y, { size: 16, weight: 830, color: "#171719", lineHeight: 20 });
-      drawText(context, subtitle, width - 18, y + 3, { size: 11, weight: 400, color: "#6e6e73", align: "right", lineHeight: 15 });
-    }
-    y += 31;
-    if (!itemCount) {
-      if (draw) {
-        drawRoundBox(context, 18, y, width - 36, 50, 8, "#f7f7f8", "rgba(0, 0, 0, 0.06)");
-        drawText(context, title === "송금" ? "송금할 금액이 없습니다" : "표시할 내용이 없습니다", width / 2, y + 16, {
-          size: 13,
-          weight: 700,
-          color: "#6e6e73",
-          align: "center",
-          lineHeight: 16,
-        });
-      }
-      y += 50;
-    } else {
-      drawItems();
-    }
-    y += 20;
-  };
-
-  section("송금", "보낼 금액", result.transfers.length, () => {
-    result.transfers.forEach((transfer, index) => {
-      const itemHeight = 62;
-      if (draw) {
-        drawRoundBox(context, 18, y, width - 36, itemHeight, 8, "#ffffff", "rgba(0, 113, 227, 0.14)");
-        drawRoundBox(context, 31, y + 16, 30, 30, 15, "#e8f2ff", "rgba(0, 113, 227, 0.14)");
-        drawText(context, String(index + 1).padStart(2, "0"), 46, y + 25, { size: 11, weight: 900, color: "#0071e3", align: "center", lineHeight: 12 });
-        drawText(context, `${transfer.from} → ${transfer.to}`, 71, y + 14, { size: 16, weight: 820, color: "#171719", maxWidth: width - 190, lineHeight: 20 });
-        drawText(context, "송금", 71, y + 39, { size: 12, weight: 750, color: "#6e6e73", lineHeight: 15 });
-        drawText(context, money(transfer.amount), width - 31, y + 22, { size: 18, weight: 850, color: "#171719", align: "right", lineHeight: 22 });
-      }
-      y += itemHeight + sectionGap;
-    });
-    y -= sectionGap;
-  });
-
-  section("사람별 정산", "부담 · 결제", result.people.length, () => {
-    result.people.forEach((person) => {
-      const balanceData = result.balances.get(person.id);
-      const balance = Math.round(balanceData.balance);
-      const paid = paidExpenseAmount(person.id);
-      const deduction = paidDeductionAmount(person.id);
-      const statusLabel = balance > 0 ? "받을 금액" : balance < 0 ? "낼 금액" : "완료";
-      const statusColor = balance > 0 ? "#0071e3" : balance < 0 ? "#d70015" : "#6e6e73";
-      const statusBg = balance > 0 ? "#e8f2ff" : balance < 0 ? "#fff0f1" : "#f2f2f7";
-      const leftX = 34;
-      const leftMaxWidth = width - 190;
-      const paymentLayout = getPaymentLineLayout(context, paid, deduction, leftMaxWidth);
-      const itemHeight = paymentLayout.itemHeight;
-      if (draw) {
-        drawRoundBox(context, 18, y, width - 36, itemHeight, 8, "#ffffff", "rgba(0, 0, 0, 0.08)");
-        drawText(context, person.name, leftX, y + 16, { size: 18, weight: 860, color: "#171719", maxWidth: width - 180, lineHeight: 22 });
-        drawText(context, `부담 ${money(balanceData.owed)}`, leftX, y + 48, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
-        drawText(context, paymentLayout.paidText, leftX, y + 65, { size: 11, weight: 400, color: "#6e6e73", maxWidth: leftMaxWidth, lineHeight: 15 });
-        if (deduction) {
-          const deductionX = paymentLayout.wrapsDeduction ? leftX : leftX + paymentLayout.paidWidth + paymentLayout.gap;
-          const deductionY = paymentLayout.wrapsDeduction ? y + 82 : y + 65;
-          const prefixWidth = measureCanvasText(context, paymentLayout.deductionPrefix, 11, 400);
-          const amountWidth = measureCanvasText(context, paymentLayout.deductionAmount, 11, 720);
-
-          drawText(context, paymentLayout.deductionPrefix, deductionX, deductionY, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
-          drawText(context, paymentLayout.deductionAmount, deductionX + prefixWidth, deductionY, { size: 11, weight: 720, color: "#d70015", lineHeight: 15 });
-          drawText(context, paymentLayout.deductionSuffix, deductionX + prefixWidth + amountWidth, deductionY, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
-        }
-        drawRoundBox(context, width - 105, y + 17, 72, 30, 15, statusBg, null);
-        drawText(context, statusLabel, width - 69, y + 25, { size: 12, weight: 900, color: statusColor, align: "center", lineHeight: 13 });
-        drawText(context, money(Math.abs(balance)), width - 34, y + 56, { size: 22, weight: 900, color: "#171719", align: "right", lineHeight: 26 });
-      }
-      y += itemHeight + sectionGap;
-    });
-    y -= sectionGap;
-  });
-
-  section("차수별", "전체 내역", result.rounds.length, () => {
-    result.rounds.forEach((round) => {
-      const total = result.roundTotals.get(round) || { amount: 0 };
-      const placeLabel = roundPlaceLabel(round);
-      const placeHeight = measureWrappedHeight(context, placeLabel, width - 190, 11, 400, 15);
-      const itemHeight = Math.max(62, 31 + placeHeight);
-      if (draw) {
-        drawRoundBox(context, 18, y, width - 36, itemHeight, 8, "#ffffff", "rgba(0, 0, 0, 0.08)");
-        drawText(context, round, 34, y + 14, { size: 16, weight: 820, color: "#171719", lineHeight: 20 });
-        drawText(context, placeLabel, 34, y + 38, { size: 11, weight: 400, color: "#6e6e73", maxWidth: width - 190, lineHeight: 15 });
-        drawText(context, money(total.amount), width - 34, y + 22, { size: 18, weight: 850, color: "#171719", align: "right", lineHeight: 22 });
-      }
-      y += itemHeight + sectionGap;
-    });
-    y -= sectionGap;
-  });
-
-  return Math.ceil(y);
-}
-
-function createReportCanvas() {
-  const width = 460;
-  const probe = document.createElement("canvas").getContext("2d");
-  const height = drawReportImageContent(probe, width, false);
-  const scale = Math.min(3, Math.max(2, window.devicePixelRatio || 1));
-  const canvas = document.createElement("canvas");
-  canvas.width = Math.ceil(width * scale);
-  canvas.height = Math.ceil(height * scale);
-  const context = canvas.getContext("2d");
-  context.scale(scale, scale);
-  context.fillStyle = "#ffffff";
-  context.fillRect(0, 0, width, height);
-  drawReportImageContent(context, width, true);
-  return canvas;
-}
-
-function saveBlob(blob, filename) {
-  const file = new File([blob], filename, { type: "image/png" });
-  if (navigator.canShare?.({ files: [file] })) {
-    return navigator.share({ files: [file], title: "더치페이 정산" });
-  }
-
-  const imageUrl = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = imageUrl;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  window.setTimeout(() => URL.revokeObjectURL(imageUrl), 1000);
-  return Promise.resolve();
-}
-
-async function downloadReportImage() {
-  const button = $("#downloadReportButton");
-  if (!button) return;
-
-  const originalText = button.textContent;
-  button.textContent = "저장 중";
-  button.disabled = true;
-
-  try {
-    renderReport();
-    await document.fonts?.ready;
-    const canvas = createReportCanvas();
-    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png", 1));
-    if (!blob) throw new Error("이미지를 만들 수 없습니다.");
-    await saveBlob(blob, imageFileName());
-  } catch (error) {
-    console.error("Report image could not be saved.", error);
-    alert("이미지 저장에 실패했습니다. 브라우저 권한을 확인한 뒤 다시 시도해 주세요.");
-  } finally {
-    button.textContent = originalText;
-    button.disabled = false;
-  }
 }
 
 function openGuide() {
@@ -2654,6 +2206,7 @@ function addExpense() {
   const people = activePeople();
   const round = nextRoundLabel();
   const expenseId = newId("e");
+  if (!state.rounds.includes(round)) state.rounds.push(round);
   state.activeRound = round;
   state.expenses.push({
     id: expenseId,
@@ -2664,7 +2217,6 @@ function addExpense() {
     payer: people[0]?.id || "",
     participants: people.map((person) => person.id),
   });
-  syncRoundsFromExpenses();
   saveAndRender();
   focusExpenseField(expenseId, "place");
 }
@@ -2681,6 +2233,7 @@ function addDeduction() {
   const people = activePeople();
   const recentPayer = [...state.expenses].reverse().find((expense) => expense.payer)?.payer;
   const expenseId = newId("e");
+  if (!state.rounds.includes("공제")) state.rounds.push("공제");
   state.expenses.push({
     id: expenseId,
     type: "deduction",
@@ -2691,7 +2244,6 @@ function addDeduction() {
     payer: recentPayer || people[0]?.id || "",
     participants: people.map((person) => person.id),
   });
-  syncRoundsFromExpenses();
   saveAndRender();
   focusExpenseField(expenseId, "place");
 }
@@ -2707,18 +2259,15 @@ function deletePerson(personId) {
 
 function deleteExpense(expenseId) {
   state.expenses = state.expenses.filter((expense) => expense.id !== expenseId);
-  syncRoundsFromExpenses();
   saveAndRender();
 }
 
 function saveAndRender() {
-  syncRoundsFromExpenses();
   saveState();
   render();
 }
 
 function saveInputProgress() {
-  syncRoundsFromExpenses();
   saveState();
   renderSummary();
 }
@@ -2805,6 +2354,117 @@ function copySummary() {
   ];
   navigator.clipboard?.writeText(lines.join("\n"));
   $("#saveStatus").textContent = "복사됨";
+}
+
+async function saveReportImage(button) {
+  renderReport();
+  const report = $(".final-report");
+  if (!report) return;
+
+  const originalText = button?.textContent || "이미지 저장";
+  if (button) {
+    button.disabled = true;
+    button.textContent = "저장 중";
+  }
+
+  try {
+    const blob = await reportToImageBlob(report);
+    const fileName = reportImageFileName();
+    const file = typeof File !== "undefined" ? new File([blob], fileName, { type: "image/png" }) : null;
+
+    if (file && navigator.canShare?.({ files: [file] })) {
+      await navigator.share({ files: [file], title: "더치페이 정산" });
+    } else {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1500);
+    }
+
+    if (button) {
+      button.textContent = "저장됨";
+      window.setTimeout(() => {
+        button.disabled = false;
+        button.textContent = originalText;
+      }, 1000);
+    }
+  } catch (error) {
+    if (error?.name !== "AbortError") {
+      console.warn("Report image could not be saved.", error);
+      window.alert("이미지 저장이 어려워요. 화면 캡처로 저장해주세요.");
+    }
+    if (button) {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
+}
+
+function reportToImageBlob(report) {
+  const width = Math.ceil(report.getBoundingClientRect().width);
+  const height = Math.ceil(report.scrollHeight);
+  const scale = Math.min(3, Math.max(2, window.devicePixelRatio || 2));
+  const clone = report.cloneNode(true);
+  clone.style.width = `${width}px`;
+  clone.style.margin = "0";
+  clone.style.boxShadow = "none";
+
+  const styles = Array.from(document.styleSheets)
+    .map((sheet) => {
+      try {
+        return Array.from(sheet.cssRules || []).map((rule) => rule.cssText).join("\n");
+      } catch (error) {
+        return "";
+      }
+    })
+    .join("\n");
+
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+      <foreignObject width="100%" height="100%">
+        <div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px; min-height:${height}px; background:#ffffff;">
+          <style>${styles}</style>
+          ${clone.outerHTML}
+        </div>
+      </foreignObject>
+    </svg>
+  `;
+
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml;charset=utf-8" }));
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = width * scale;
+      canvas.height = height * scale;
+      const context = canvas.getContext("2d");
+      context.fillStyle = "#ffffff";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      canvas.toBlob((blob) => {
+        if (blob) resolve(blob);
+        else reject(new Error("이미지를 만들 수 없습니다."));
+      }, "image/png");
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("이미지를 불러올 수 없습니다."));
+    };
+    image.src = url;
+  });
+}
+
+function reportImageFileName() {
+  const title = (state.meetingTitle.trim() || "dutch-pay-report")
+    .replace(/[\\/:*?"<>|]/g, "-")
+    .slice(0, 40)
+    .trim();
+  return `${title || "dutch-pay-report"}.png`;
 }
 
 function escapeHtml(value) {
@@ -2937,7 +2597,7 @@ document.addEventListener("click", (event) => {
   if (button.id === "openGuideButton") openGuide();
   if (button.id === "closeGuideButton") closeGuide();
   if (button.id === "openReportButton") openReport();
-  if (button.id === "downloadReportButton") downloadReportImage();
+  if (button.id === "saveReportImageButton") saveReportImage(button);
   if (button.id === "closeReportButton") closeReport();
   if (button.id === "resetButton") {
     state = clone(sampleState);
