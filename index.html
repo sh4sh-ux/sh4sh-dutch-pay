@@ -744,6 +744,18 @@ select:focus {
   font-weight: 720;
 }
 
+.settlement-paid-line {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 5px;
+  min-width: 0;
+}
+
+.settlement-paid-line .settlement-deduction {
+  margin-left: 0;
+}
+
 .settlement-result {
   display: grid;
   justify-items: end;
@@ -1478,6 +1490,18 @@ body.guide-open {
   font-weight: 720;
 }
 
+.settlement-paid-line {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 5px;
+  min-width: 0;
+}
+
+.settlement-paid-line .settlement-deduction {
+  margin-left: 0;
+}
+
     </style>
   </head>
   <body>
@@ -2204,7 +2228,7 @@ function renderSettlementCard(person, balanceData, extraClass = "") {
         <div class="settlement-meta">
           <span>부담 <strong>${money(balanceData.owed)}</strong></span>
           <i></i>
-          <span>결제 <strong>${money(paid)}</strong>${deductionNote}</span>
+          <span class="settlement-paid-line"><span>결제 <strong>${money(paid)}</strong></span>${deductionNote}</span>
         </div>
       </div>
       <div class="settlement-result ${statusClass}">
@@ -2333,6 +2357,35 @@ function drawText(context, text, x, y, options = {}) {
 function measureWrappedHeight(context, text, maxWidth, size, weight, lineHeight) {
   context.font = canvasFont(size, weight);
   return wrappedLines(context, text, maxWidth).length * lineHeight;
+}
+
+function measureCanvasText(context, text, size = 11, weight = 400) {
+  context.font = canvasFont(size, weight);
+  return context.measureText(String(text || "")).width;
+}
+
+function getPaymentLineLayout(context, paid, deduction, maxWidth) {
+  const paidText = `결제 ${money(paid)}`;
+  const deductionPrefix = "(공제 ";
+  const deductionAmount = money(deduction);
+  const deductionSuffix = ")";
+  const gap = 6;
+  const paidWidth = measureCanvasText(context, paidText, 11, 400);
+  const deductionWidth = deduction
+    ? measureCanvasText(context, deductionPrefix, 11, 400) + measureCanvasText(context, deductionAmount, 11, 720) + measureCanvasText(context, deductionSuffix, 11, 400)
+    : 0;
+  const wrapsDeduction = Boolean(deduction && paidWidth + gap + deductionWidth > maxWidth);
+
+  return {
+    paidText,
+    paidWidth,
+    deductionPrefix,
+    deductionAmount,
+    deductionSuffix,
+    gap,
+    wrapsDeduction,
+    itemHeight: wrapsDeduction ? 118 : deduction ? 104 : 90,
+  };
 }
 
 function drawReportImageContent(context, width, draw = true) {
@@ -2465,17 +2518,24 @@ function drawReportImageContent(context, width, draw = true) {
       const statusLabel = balance > 0 ? "받을 금액" : balance < 0 ? "낼 금액" : "완료";
       const statusColor = balance > 0 ? "#0071e3" : balance < 0 ? "#d70015" : "#6e6e73";
       const statusBg = balance > 0 ? "#e8f2ff" : balance < 0 ? "#fff0f1" : "#f2f2f7";
-      const itemHeight = deduction ? 104 : 90;
+      const leftX = 34;
+      const leftMaxWidth = width - 190;
+      const paymentLayout = getPaymentLineLayout(context, paid, deduction, leftMaxWidth);
+      const itemHeight = paymentLayout.itemHeight;
       if (draw) {
         drawRoundBox(context, 18, y, width - 36, itemHeight, 8, "#ffffff", "rgba(0, 0, 0, 0.08)");
-        drawText(context, person.name, 34, y + 16, { size: 18, weight: 860, color: "#171719", maxWidth: width - 180, lineHeight: 22 });
-        drawText(context, `부담 ${money(balanceData.owed)}`, 34, y + 48, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
-        drawText(context, `결제 ${money(paid)}`, 34, y + 65, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
+        drawText(context, person.name, leftX, y + 16, { size: 18, weight: 860, color: "#171719", maxWidth: width - 180, lineHeight: 22 });
+        drawText(context, `부담 ${money(balanceData.owed)}`, leftX, y + 48, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
+        drawText(context, paymentLayout.paidText, leftX, y + 65, { size: 11, weight: 400, color: "#6e6e73", maxWidth: leftMaxWidth, lineHeight: 15 });
         if (deduction) {
-          const deductionX = 92;
-          drawText(context, "(공제 ", deductionX, y + 65, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
-          drawText(context, money(deduction), deductionX + 30, y + 65, { size: 11, weight: 720, color: "#d70015", lineHeight: 15 });
-          drawText(context, ")", deductionX + 30 + context.measureText(money(deduction)).width, y + 65, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
+          const deductionX = paymentLayout.wrapsDeduction ? leftX : leftX + paymentLayout.paidWidth + paymentLayout.gap;
+          const deductionY = paymentLayout.wrapsDeduction ? y + 82 : y + 65;
+          const prefixWidth = measureCanvasText(context, paymentLayout.deductionPrefix, 11, 400);
+          const amountWidth = measureCanvasText(context, paymentLayout.deductionAmount, 11, 720);
+
+          drawText(context, paymentLayout.deductionPrefix, deductionX, deductionY, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
+          drawText(context, paymentLayout.deductionAmount, deductionX + prefixWidth, deductionY, { size: 11, weight: 720, color: "#d70015", lineHeight: 15 });
+          drawText(context, paymentLayout.deductionSuffix, deductionX + prefixWidth + amountWidth, deductionY, { size: 11, weight: 400, color: "#6e6e73", lineHeight: 15 });
         }
         drawRoundBox(context, width - 105, y + 17, 72, 30, 15, statusBg, null);
         drawText(context, statusLabel, width - 69, y + 25, { size: 12, weight: 900, color: statusColor, align: "center", lineHeight: 13 });
