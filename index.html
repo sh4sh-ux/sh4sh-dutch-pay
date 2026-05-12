@@ -666,7 +666,7 @@ select:focus {
   max-width: min(52vw, 260px);
   color: var(--muted);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.35;
   overflow-wrap: anywhere;
 }
@@ -707,15 +707,17 @@ select:focus {
   align-items: start;
   gap: 4px;
   margin-top: 9px;
-  color: rgba(110, 110, 115, 0.58);
+  color: var(--muted);
   font-size: 11px;
-  font-weight: 480;
+  font-weight: 400;
+  line-height: 1.35;
 }
 
 .settlement-meta strong {
-  color: rgba(110, 110, 115, 0.64);
-  font-size: 13px;
-  font-weight: 620;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
 }
 
 .settlement-meta i {
@@ -1084,6 +1086,13 @@ body.guide-open {
   font-weight: 750;
 }
 
+.report-item small.report-round-place {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
 .report-total span {
   color: rgba(255, 255, 255, 0.72);
 }
@@ -1164,7 +1173,8 @@ body.guide-open {
 .report-section-heading span {
   color: var(--muted);
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 400;
+  line-height: 1.35;
 }
 
 .report-list {
