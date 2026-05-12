@@ -1157,9 +1157,12 @@ body.guide-open {
 
 .report-stats div {
   display: grid;
+  align-content: center;
+  justify-items: center;
   gap: 6px;
   min-height: 70px;
   padding: 12px;
+  text-align: center;
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 8px;
@@ -1340,11 +1343,6 @@ body.guide-open {
   color: rgba(29, 29, 31, 0.82);
   font-size: 14px;
   font-weight: 720;
-}
-
-.report-transfer-item .report-item-main small {
-  color: rgba(110, 110, 115, 0.58);
-  font-weight: 600;
 }
 
 .report-settlement-card .settlement-result strong {
@@ -1767,6 +1765,7 @@ body.guide-open {
     <script>
 const STORAGE_KEY = "dutch-pay-app-v4";
 const overallRound = "전체";
+const deductionRound = "공제";
 const defaultRounds = [];
 const today = new Date().toISOString().slice(0, 10);
 
@@ -1800,8 +1799,12 @@ function loadState() {
 }
 
 function normalizeState(nextState) {
-  const expenses = Array.isArray(nextState.expenses) ? nextState.expenses : [];
-  const roundList = normalizeRoundList(nextState.rounds, expenses);
+  const expenses = (Array.isArray(nextState.expenses) ? nextState.expenses : []).map((expense) => ({
+    ...expense,
+    type: expense.type === "deduction" ? "deduction" : "expense",
+    round: expense.type === "deduction" ? deductionRound : expense.round,
+  }));
+  const roundList = normalizeRoundList([], expenses);
   const activeRound = nextState.activeRound === overallRound || roundList.includes(nextState.activeRound) ? nextState.activeRound : overallRound;
 
   return {
@@ -1812,8 +1815,7 @@ function normalizeState(nextState) {
     people: Array.isArray(nextState.people) ? nextState.people : [],
     expenses: expenses.map((expense) => ({
       ...expense,
-      round: roundList.includes(expense.round) ? expense.round : roundList[0],
-      type: expense.type === "deduction" ? "deduction" : "expense",
+      round: expense.type === "deduction" ? deductionRound : roundList.includes(expense.round) ? expense.round : roundList.find((round) => round !== deductionRound),
     })),
   };
 }
@@ -1831,6 +1833,8 @@ function normalizeRoundList(roundList, expenses = []) {
   expenses.forEach((expense) => add(expense.round));
 
   return labels.sort((a, b) => {
+    if (a === deductionRound && b !== deductionRound) return 1;
+    if (b === deductionRound && a !== deductionRound) return -1;
     const aNumber = Number(a.match(/^(\d+)차$/)?.[1]);
     const bNumber = Number(b.match(/^(\d+)차$/)?.[1]);
     if (Number.isFinite(aNumber) && Number.isFinite(bNumber)) return aNumber - bNumber;
@@ -1840,7 +1844,26 @@ function normalizeRoundList(roundList, expenses = []) {
   });
 }
 
+function syncRoundsFromExpenses() {
+  state.expenses.forEach((expense) => {
+    if (expense.type === "deduction") expense.round = deductionRound;
+  });
+  state.rounds = normalizeRoundList([], state.expenses);
+  if (state.activeRound !== overallRound && !state.rounds.includes(state.activeRound)) {
+    state.activeRound = overallRound;
+  }
+}
+
+function orderedExpenses() {
+  return [...state.expenses].sort((a, b) => {
+    if (a.type === "deduction" && b.type !== "deduction") return 1;
+    if (b.type === "deduction" && a.type !== "deduction") return -1;
+    return state.expenses.indexOf(a) - state.expenses.indexOf(b);
+  });
+}
+
 function saveState() {
+  syncRoundsFromExpenses();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   const saveStatus = $("#saveStatus");
   saveStatus.textContent = "저장됨";
@@ -1883,6 +1906,7 @@ function newId(prefix) {
 }
 
 function calculate() {
+  syncRoundsFromExpenses();
   const people = activePeople();
   const peopleMap = new Map(people.map((person) => [person.id, person]));
   const balances = new Map();
@@ -1907,7 +1931,7 @@ function calculate() {
     const participants = orderedParticipantIds(expense.participants, people, peopleMap);
     if (!amount || !participants.length) return;
 
-    const round = state.rounds.includes(expense.round) ? expense.round : state.rounds[0];
+    const round = expense.type === "deduction" ? deductionRound : state.rounds.includes(expense.round) ? expense.round : state.rounds[0];
     if (!roundTotals.has(round)) roundTotals.set(round, { amount: 0, entries: 0 });
     roundTotals.get(round).amount += amount;
     roundTotals.get(round).entries += 1;
@@ -2008,6 +2032,7 @@ function buildTransfers(people, balances) {
 }
 
 function render() {
+  syncRoundsFromExpenses();
   $("#meetingTitle").value = state.meetingTitle;
   $("#meetingDate").value = state.meetingDate;
   renderMeetingDateDisplay();
@@ -2039,7 +2064,7 @@ function renderPeople() {
 
 function renderExpenses() {
   const people = activePeople();
-  const visibleExpenses = state.expenses;
+  const visibleExpenses = orderedExpenses();
 
   $("#expenseRows").innerHTML = visibleExpenses
     .map((expense) => {
@@ -2067,7 +2092,7 @@ function renderExpenses() {
                 ? '<span class="deduction-label">공제</span>'
                 : `<select data-action="edit-expense" data-field="round" data-expense-id="${expense.id}" aria-label="차수">
                     ${state.rounds
-                      .filter((round) => round !== "공제")
+                      .filter((round) => round !== deductionRound)
                       .map((round) => `<option value="${round}" ${expense.round === round ? "selected" : ""}>${round}</option>`)
                       .join("")}
                   </select>`
@@ -2146,7 +2171,7 @@ function roundPlaceLabel(round) {
     .filter((expense) => expense.round === round && expenseAmount(expense))
     .map((expense) => String(expense.place || "").trim())
     .filter(Boolean);
-  if (!places.length) return round === "공제" ? "공제" : "장소 미입력";
+  if (!places.length) return round === deductionRound ? "공제" : "장소 미입력";
   const uniquePlaces = [...new Set(places)];
   if (uniquePlaces.length <= 2) return uniquePlaces.join(", ");
   return `${uniquePlaces[0]} 외 ${uniquePlaces.length - 1}곳`;
@@ -2176,7 +2201,6 @@ function renderReport() {
               <span class="report-index">${String(index + 1).padStart(2, "0")}</span>
               <div>
                 <strong>${escapeHtml(transfer.from)} → ${escapeHtml(transfer.to)}</strong>
-                <small>송금</small>
               </div>
             </div>
             <div class="amount">${money(transfer.amount)}</div>
@@ -2326,11 +2350,11 @@ function addDeduction() {
   const people = activePeople();
   const recentPayer = [...state.expenses].reverse().find((expense) => expense.payer)?.payer;
   const expenseId = newId("e");
-  if (!state.rounds.includes("공제")) state.rounds.push("공제");
+  if (!state.rounds.includes(deductionRound)) state.rounds.push(deductionRound);
   state.expenses.push({
     id: expenseId,
     type: "deduction",
-    round: "공제",
+    round: deductionRound,
     date: state.meetingDate || today,
     place: "",
     amount: suggestedDeductionAmount(),
@@ -2476,7 +2500,7 @@ async function saveReportImage(button) {
         button.textContent = "공유창 확인";
       }
       navigator
-        .share({ files: [file], title: "더치페이 정산" })
+        .share({ files: [file] })
         .then(() => resetButton("저장됨", 0))
         .catch((error) => {
           if (error?.name !== "AbortError") downloadBlob(blob, fileName);
@@ -2595,8 +2619,6 @@ function drawReportImageHero(context, data) {
 
   setCanvasText(context, 20, 800, "rgba(255, 255, 255, 0.72)");
   context.fillText("총 지출", cardX + 26, cardY + 45);
-  context.fillStyle = "rgba(128, 190, 255, 0.96)";
-  context.fillRect(cardX + 26, cardY + 63, 42, 3);
 
   const amountX = cardX + 26;
   const amountY = cardY + 103;
@@ -2635,11 +2657,14 @@ function drawReportImageStats(context, data) {
 
   cards.forEach(([label, value], index) => {
     const x = left + index * (cardWidth + gap);
+    const centerX = x + cardWidth / 2;
     drawRoundRect(context, x, y + 26, cardWidth, 96, 8, "#ffffff", "rgba(0, 0, 0, 0.08)");
+    context.textAlign = "center";
     setCanvasText(context, 18, 720, "rgba(110, 110, 115, 0.68)");
-    context.fillText(label, x + 20, y + 65);
+    context.fillText(label, centerX, y + 65);
     setCanvasText(context, 30, 780, "rgba(29, 29, 31, 0.82)");
-    drawFittedText(context, value, x + 20, y + 106, cardWidth - 40, 30);
+    drawFittedText(context, value, centerX, y + 106, cardWidth - 40, 30, "center");
+    context.textAlign = "left";
   });
 }
 
@@ -2676,9 +2701,7 @@ function drawReportImageTransfers(context, data) {
     context.textAlign = "left";
 
     setCanvasText(context, 24, 760, "rgba(29, 29, 31, 0.84)");
-    drawFittedText(context, `${transfer.from} → ${transfer.to}`, rowX + 86, rowY + 43, rowW - 250, 24);
-    setCanvasText(context, 16, 680, "rgba(110, 110, 115, 0.72)");
-    context.fillText("송금", rowX + 86, rowY + 72);
+    drawFittedText(context, `${transfer.from} → ${transfer.to}`, rowX + 86, rowY + 58, rowW - 250, 24);
 
     setCanvasText(context, 31, 780, "rgba(29, 29, 31, 0.88)");
     context.textAlign = "right";
