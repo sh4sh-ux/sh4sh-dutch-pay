@@ -5,7 +5,1524 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>더치페이 계산기</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <style>
+:root {
+  --bg: #f5f5f7;
+  --surface: rgba(255, 255, 255, 0.86);
+  --surface-solid: #ffffff;
+  --surface-soft: #f2f2f7;
+  --surface-raised: rgba(255, 255, 255, 0.72);
+  --ink: #1d1d1f;
+  --muted: #6e6e73;
+  --line: rgba(0, 0, 0, 0.12);
+  --line-soft: rgba(0, 0, 0, 0.07);
+  --primary: #0071e3;
+  --primary-dark: #005bb5;
+  --primary-soft: #e8f2ff;
+  --accent: #ff9500;
+  --accent-soft: #fff4e5;
+  --danger: #d70015;
+  --danger-soft: #fff0f1;
+  --good: #248a3d;
+  --good-soft: #edf9f0;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 18px 50px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  min-width: 0;
+}
+
+button {
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 20px clamp(18px, 3vw, 44px) 18px;
+  background: rgba(245, 245, 247, 0.78);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: saturate(180%) blur(24px);
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1,
+h2 {
+  margin: 0;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 17px;
+  font-weight: 760;
+}
+
+.top-actions,
+.panel-heading,
+.split-heading,
+.round-controls,
+.person-row,
+.participant-list,
+.summary-row,
+.transfer-row {
+  display: flex;
+  align-items: center;
+}
+
+.top-actions {
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.top-actions .report-button {
+  margin-left: auto;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 390px);
+  gap: 16px;
+  padding: 18px clamp(18px, 3vw, 44px) 44px;
+}
+
+.workspace,
+.summary {
+  display: grid;
+  min-width: 0;
+  gap: 16px;
+  align-content: start;
+}
+
+.panel {
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  backdrop-filter: saturate(180%) blur(18px);
+}
+
+.panel-heading {
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 18px 16px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.summary .panel {
+  padding: 18px;
+}
+
+.summary .panel h2,
+.kpi-panel h2 {
+  margin-bottom: 14px;
+}
+
+.save-status {
+  min-width: 54px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+  text-align: right;
+}
+
+.meeting-grid {
+  display: grid;
+  width: 100%;
+  max-width: 420px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  padding: 18px;
+}
+
+label {
+  display: block;
+  min-width: 0;
+}
+
+.meeting-grid label,
+.meeting-grid input {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-inline-size: 0;
+}
+
+.meeting-grid .date-field {
+  width: 100%;
+  max-width: 100%;
+}
+
+.date-control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  min-height: 40px;
+  padding: 9px 11px;
+  overflow: hidden;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.date-control:focus-within {
+  border-color: var(--primary);
+  background: var(--surface-solid);
+  box-shadow: 0 0 0 4px var(--primary-soft);
+}
+
+.date-display {
+  display: block;
+  width: 100%;
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.date-display.empty {
+  color: var(--muted);
+}
+
+.date-control .native-date-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+label span,
+.field-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.date-control .date-display {
+  display: block;
+  width: 100%;
+  margin: 0;
+  color: var(--ink);
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.date-control .date-display.empty {
+  color: var(--muted);
+}
+
+input,
+select {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  padding: 9px 11px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  outline: none;
+  transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--primary);
+  background: var(--surface-solid);
+  box-shadow: 0 0 0 4px var(--primary-soft);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .date-control {
+    min-height: 0;
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .date-control:focus-within {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .date-control .date-display {
+    display: none;
+  }
+
+  .date-control .native-date-input {
+    position: static;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    min-height: 40px;
+    padding: 9px 11px;
+    opacity: 1;
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.86);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    cursor: text;
+  }
+
+  .date-control .native-date-input:focus {
+    border-color: var(--primary);
+    background: var(--surface-solid);
+    box-shadow: 0 0 0 4px var(--primary-soft);
+  }
+}
+
+.ghost-button,
+.primary-button,
+.icon-button,
+.delete-button {
+  min-height: 38px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.ghost-button {
+  padding: 0 14px;
+  color: var(--primary);
+  background: rgba(255, 255, 255, 0.74);
+  border-color: var(--line);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.03);
+}
+
+.ghost-button.danger,
+.delete-button {
+  color: var(--danger);
+}
+
+.primary-button {
+  padding: 0 16px;
+  color: white;
+  background: var(--primary);
+  box-shadow: 0 8px 20px rgba(0, 113, 227, 0.18);
+}
+
+.report-button {
+  min-height: 38px;
+  padding: 0 14px;
+  color: white;
+  background: var(--ink);
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 999px;
+  font-weight: 800;
+  box-shadow: 0 8px 22px rgba(29, 29, 31, 0.14);
+}
+
+.deduction-button {
+  min-height: 34px;
+  padding: 0 14px;
+  color: var(--danger);
+  background: var(--danger-soft);
+  border: 1px solid rgba(215, 0, 21, 0.12);
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.primary-button:hover {
+  background: var(--primary-dark);
+}
+
+.report-button:hover {
+  background: #2f2f35;
+}
+
+.ghost-button:hover,
+.icon-button:hover,
+.delete-button:hover {
+  transform: translateY(-1px);
+}
+
+.primary-button:active,
+.report-button:active,
+.ghost-button:active,
+.icon-button:active,
+.delete-button:active {
+  transform: translateY(0);
+}
+
+.icon-button {
+  width: 36px;
+  color: white;
+  background: var(--primary);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.people-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  padding: 18px;
+}
+
+.person-row {
+  gap: 8px;
+}
+
+.delete-button {
+  width: 36px;
+  flex: 0 0 36px;
+  background: var(--danger-soft);
+}
+
+.split-heading {
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.expense-actions {
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+}
+
+.section-note {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  margin-top: 8px;
+  padding: 0 10px;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.expense-scroll {
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.expense-table {
+  width: 100%;
+  min-width: 790px;
+  border-collapse: collapse;
+  background: var(--surface-solid);
+}
+
+.expense-table th,
+.expense-table td {
+  padding: 11px;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: top;
+}
+
+.expense-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  color: var(--muted);
+  background: var(--surface-soft);
+  font-size: 11px;
+  font-weight: 750;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.expense-table tbody tr:hover {
+  background: #fbfbfd;
+}
+
+.deduction-row {
+  background: #fffafa;
+}
+
+.deduction-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  color: var(--danger);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.negative-input {
+  color: var(--danger);
+  font-weight: 750;
+}
+
+.expense-table td:nth-child(1) {
+  width: 80px;
+}
+
+.expense-table td:nth-child(2) {
+  width: 180px;
+}
+
+.expense-table td:nth-child(3),
+.expense-table td:nth-child(4) {
+  width: 130px;
+}
+
+.participant-list {
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 260px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 4px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-solid);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.chip input {
+  width: 14px;
+  min-height: 14px;
+  padding: 0;
+  accent-color: var(--primary);
+}
+
+.chip.checked {
+  color: var(--primary);
+  background: var(--primary-soft);
+  border-color: rgba(0, 113, 227, 0.24);
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.metric {
+  min-height: 82px;
+  padding: 14px;
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.metric span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.metric strong {
+  display: block;
+  margin-top: 9px;
+  font-size: 21px;
+  font-weight: 780;
+  line-height: 1.2;
+  word-break: keep-all;
+}
+
+.total-line {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 9px;
+}
+
+.total-line strong {
+  margin-top: 0;
+}
+
+.total-line small,
+.report-total-line small {
+  color: rgba(110, 110, 115, 0.78);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.total-line small strong {
+  display: inline;
+  color: var(--danger);
+  margin-top: 0;
+  font-size: inherit;
+  font-weight: 650;
+  line-height: inherit;
+}
+
+.round-summary,
+.person-summary,
+.transfer-summary {
+  display: grid;
+  gap: 8px;
+}
+
+.person-summary {
+  gap: 10px;
+}
+
+.summary-row,
+.transfer-row {
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 44px;
+  padding: 11px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+}
+
+.summary-row > div:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.summary-row strong,
+.transfer-row strong {
+  white-space: nowrap;
+}
+
+.summary-row > div > strong,
+.report-round-item > div > strong {
+  display: block;
+}
+
+.summary-row > strong,
+.transfer-row > strong,
+.report-item .amount,
+.settlement-result strong,
+.report-settlement-card .settlement-result strong {
+  color: var(--ink);
+  font-size: 21px;
+  font-weight: 780;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.row-meta {
+  color: rgba(110, 110, 115, 0.58);
+  font-size: 11px;
+  font-weight: 480;
+  line-height: 1.25;
+}
+
+.round-summary .row-meta {
+  margin-top: 7px;
+}
+
+.deduction-inline {
+  color: rgba(110, 110, 115, 0.82);
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.settlement-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 90px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(29, 29, 31, 0.04);
+}
+
+.settlement-main {
+  min-width: 0;
+}
+
+.settlement-name {
+  display: block;
+  font-size: 18px;
+  font-weight: 860;
+  line-height: 1.2;
+}
+
+.settlement-meta {
+  display: grid;
+  align-items: start;
+  gap: 4px;
+  margin-top: 9px;
+  color: rgba(110, 110, 115, 0.58);
+  font-size: 11px;
+  font-weight: 480;
+}
+
+.settlement-meta strong {
+  color: rgba(110, 110, 115, 0.64);
+  font-size: 13px;
+  font-weight: 620;
+}
+
+.settlement-meta i {
+  display: none;
+  width: 3px;
+  height: 3px;
+  flex: 0 0 3px;
+  background: rgba(110, 110, 115, 0.42);
+  border-radius: 999px;
+}
+
+.settlement-deduction {
+  display: inline-flex;
+  align-items: baseline;
+  margin-left: 5px;
+  color: rgba(110, 110, 115, 0.64);
+  font-size: 11px;
+  font-weight: 480;
+  white-space: nowrap;
+}
+
+.settlement-deduction strong {
+  color: rgba(215, 0, 21, 0.9);
+  font-size: inherit;
+  font-weight: 620;
+  line-height: inherit;
+}
+
+.settlement-result {
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+  text-align: right;
+}
+
+.settlement-result span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.settlement-result.receive span {
+  color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.settlement-result.pay span {
+  color: var(--danger);
+  background: var(--danger-soft);
+}
+
+.settlement-result.done span {
+  color: var(--muted);
+  background: var(--surface-soft);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.badge.receive {
+  color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.badge.pay {
+  color: var(--danger);
+  background: var(--danger-soft);
+}
+
+.empty-state {
+  padding: 14px;
+  color: var(--muted);
+  background: var(--surface-soft);
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.report-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  overflow-y: auto;
+  padding: 18px;
+  background: linear-gradient(180deg, #f6f7f9 0%, #eef2f7 52%, #f8f8fa 100%);
+}
+
+.guide-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  overflow-y: auto;
+  padding: 18px;
+  background: rgba(245, 245, 247, 0.82);
+  backdrop-filter: saturate(180%) blur(22px);
+}
+
+.report-overlay[hidden] {
+  display: none;
+}
+
+.guide-overlay[hidden] {
+  display: none;
+}
+
+body.report-open {
+  overflow: hidden;
+}
+
+body.guide-open {
+  overflow: hidden;
+}
+
+.guide-shell {
+  display: grid;
+  min-height: calc(100vh - 36px);
+  place-items: center;
+}
+
+.guide-card {
+  width: min(100%, 460px);
+  color: #171719;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 26px 70px rgba(29, 29, 31, 0.16);
+  overflow: hidden;
+}
+
+.guide-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px 72px 24px 24px;
+  color: #f9fbff;
+  background: linear-gradient(135deg, #111216 0%, #223043 62%, #0f6fcf 100%);
+}
+
+.guide-kicker {
+  margin: 0 0 8px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.guide-hero h2 {
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 850;
+}
+
+.guide-hero p {
+  max-width: 300px;
+  margin: 9px 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.guide-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  padding: 0;
+  color: #dff0ff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  font-size: 22px;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.guide-close:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.guide-steps {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+  background: #f7f8fb;
+}
+
+.guide-step {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 8px 22px rgba(29, 29, 31, 0.04);
+}
+
+.guide-step span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border: 1px solid rgba(0, 113, 227, 0.14);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.guide-step strong,
+.guide-tips strong {
+  font-size: 15px;
+  font-weight: 850;
+}
+
+.guide-step p,
+.guide-tips p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.guide-tips {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 0 18px 18px;
+  background: #f7f8fb;
+}
+
+.guide-tips div {
+  min-height: 92px;
+  padding: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+}
+
+.report-toolbar,
+.final-report {
+  width: min(100%, 460px);
+  margin: 0 auto;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 0 10px;
+}
+
+.report-save-button {
+  color: #ffffff;
+  background: var(--ink);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.report-save-button:hover {
+  background: #2f2f35;
+}
+
+.final-report {
+  color: #171719;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 26px 70px rgba(29, 29, 31, 0.16);
+  overflow: hidden;
+}
+
+.report-hero {
+  display: grid;
+  gap: 20px;
+  padding: 24px;
+  color: #f9fbff;
+  background: linear-gradient(135deg, #111216 0%, #202a37 58%, #0f6fcf 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.report-hero-main {
+  min-width: 0;
+}
+
+.report-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.report-kicker {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.report-seal {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 9px;
+  color: #dff0ff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.report-hero h2 {
+  color: #ffffff;
+  font-size: 31px;
+  font-weight: 850;
+  line-height: 1.12;
+  word-break: keep-all;
+}
+
+.report-date {
+  margin: 8px 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.report-total {
+  display: grid;
+  gap: 13px;
+  padding: 18px 18px 20px;
+  background:
+    linear-gradient(#202a38, #202a38) padding-box,
+    linear-gradient(135deg, rgba(122, 194, 255, 0.95), rgba(255, 255, 255, 0.16) 48%, rgba(95, 160, 255, 0.92)) border-box;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 18px rgba(60, 145, 255, 0.14);
+}
+
+.report-total span,
+.report-stats span,
+.report-item small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.report-total span {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.report-total-line > strong {
+  color: #ffffff;
+  font-size: 33px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.report-total-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 6px;
+  flex-wrap: nowrap;
+  min-height: 46px;
+}
+
+.report-total-line > strong {
+  display: block;
+}
+
+.report-total-line small {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  color: rgba(223, 240, 255, 0.78);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.report-total-line small strong {
+  color: #ff9f0a;
+  display: inline;
+  font-size: inherit;
+  font-weight: 560;
+  line-height: inherit;
+}
+
+.report-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 16px 18px;
+  background: #f7f8fb;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.report-stats div {
+  display: grid;
+  gap: 6px;
+  min-height: 70px;
+  padding: 12px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 8px 22px rgba(29, 29, 31, 0.04);
+}
+
+.report-stats strong {
+  color: rgba(29, 29, 31, 0.78);
+  font-size: 21px;
+  font-weight: 780;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.report-stats span {
+  color: rgba(110, 110, 115, 0.64);
+}
+
+.report-section {
+  padding: 20px 18px;
+}
+
+.report-section + .report-section {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.report-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 11px;
+}
+
+.report-section-heading h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 830;
+}
+
+.report-section-heading span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.report-list {
+  display: grid;
+  gap: 9px;
+}
+
+.report-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 62px;
+  padding: 13px;
+  background: #fbfbfd;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(29, 29, 31, 0.04);
+}
+
+.report-transfer-item {
+  background: #ffffff;
+  border-color: rgba(0, 113, 227, 0.14);
+}
+
+.report-round-item {
+  background: #ffffff;
+}
+
+.report-round-item > div:first-child {
+  min-width: 0;
+}
+
+.report-round-item small {
+  display: block;
+  margin-top: 7px;
+  color: rgba(110, 110, 115, 0.58);
+  font-size: 11px;
+  font-weight: 480;
+  line-height: 1.25;
+}
+
+.report-person-item {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 76px;
+  background: #ffffff;
+}
+
+.report-person-name {
+  white-space: nowrap;
+}
+
+.report-person-lines {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.report-person-line {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  flex-wrap: wrap;
+  min-width: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.report-person-line span {
+  font-weight: 760;
+}
+
+.report-person-line strong {
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 850;
+}
+
+.report-person-line em {
+  color: rgba(110, 110, 115, 0.82);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.report-item-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.report-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border: 1px solid rgba(0, 113, 227, 0.14);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.report-item strong {
+  font-size: 16px;
+  font-weight: 820;
+  line-height: 1.25;
+  word-break: keep-all;
+}
+
+.report-item .amount {
+  color: var(--ink);
+  font-size: 21px;
+  font-weight: 780;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.report-transfer-item .amount {
+  color: var(--ink);
+  font-size: 21px;
+  font-weight: 780;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.report-transfer-item .report-item-main strong {
+  color: rgba(29, 29, 31, 0.82);
+  font-size: 14px;
+  font-weight: 720;
+}
+
+.report-transfer-item .report-item-main small {
+  color: rgba(110, 110, 115, 0.58);
+  font-weight: 600;
+}
+
+.report-settlement-card .settlement-result strong {
+  color: var(--ink);
+  font-size: 21px;
+  font-weight: 780;
+  line-height: 1.2;
+}
+
+.report-person-item .amount {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.report-person-item .amount span {
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.report-person-item .amount strong {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.report-item .receive {
+  color: var(--primary);
+}
+
+.report-item .pay {
+  color: var(--danger);
+}
+
+.report-empty {
+  padding: 14px;
+  color: var(--muted);
+  background: #f7f7f8;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 700;
+}
+
+@media (max-width: 1040px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .topbar,
+  .split-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .expense-actions {
+    justify-items: stretch;
+  }
+
+  .top-actions {
+    justify-content: flex-start;
+  }
+
+  .meeting-grid,
+  .summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .meeting-grid {
+    max-width: 100%;
+    padding: 16px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .meeting-panel {
+    overflow: visible;
+  }
+
+  .guide-overlay {
+    padding: 12px;
+  }
+
+  .guide-shell {
+    min-height: calc(100vh - 24px);
+    place-items: start center;
+  }
+
+  .guide-hero {
+    padding: 22px 64px 22px 20px;
+  }
+
+  .guide-hero h2 {
+    font-size: 29px;
+  }
+
+  .guide-tips {
+    grid-template-columns: 1fr;
+  }
+
+  .report-overlay {
+    padding: 12px;
+  }
+
+  .report-toolbar,
+  .final-report {
+    width: 100%;
+  }
+
+  .report-hero {
+    padding: 22px 20px;
+  }
+
+  .report-hero h2 {
+    font-size: 29px;
+  }
+
+  .report-total-line > strong {
+    font-size: 31px;
+  }
+
+  .report-stats {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .report-stats div {
+    min-height: 64px;
+    padding: 10px;
+  }
+
+  .report-stats strong {
+    font-size: 21px;
+  }
+
+  .report-section {
+    padding: 17px 14px;
+  }
+
+  .report-item {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .settlement-card {
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .settlement-meta {
+    display: grid;
+    gap: 4px;
+  }
+
+  .settlement-meta i {
+    display: none;
+  }
+
+  .settlement-result span {
+    min-height: 28px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .settlement-result strong {
+    font-size: 21px;
+  }
+}
+
+    </style>
   </head>
   <body>
     <div class="app-shell">
@@ -247,6 +1764,970 @@
       </article>
     </div>
 
-    <script src="./app.js"></script>
+    <script>
+const STORAGE_KEY = "dutch-pay-app-v4";
+const overallRound = "전체";
+const defaultRounds = [];
+const today = new Date().toISOString().slice(0, 10);
+
+const sampleState = {
+  meetingTitle: "",
+  meetingDate: "",
+  activeRound: overallRound,
+  rounds: [...defaultRounds],
+  people: [],
+  expenses: [],
+};
+
+let state = loadState();
+const tabHandledTargets = new WeakSet();
+
+const $ = (selector) => document.querySelector(selector);
+const formatter = new Intl.NumberFormat("ko-KR");
+
+function clone(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function loadState() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) return normalizeState(JSON.parse(stored));
+  } catch (error) {
+    console.warn("Saved state could not be loaded.", error);
+  }
+  return clone(sampleState);
+}
+
+function normalizeState(nextState) {
+  const expenses = Array.isArray(nextState.expenses) ? nextState.expenses : [];
+  const roundList = normalizeRoundList(nextState.rounds, expenses);
+  const activeRound = nextState.activeRound === overallRound || roundList.includes(nextState.activeRound) ? nextState.activeRound : overallRound;
+
+  return {
+    meetingTitle: nextState.meetingTitle || "",
+    meetingDate: nextState.meetingDate || "",
+    activeRound,
+    rounds: roundList,
+    people: Array.isArray(nextState.people) ? nextState.people : [],
+    expenses: expenses.map((expense) => ({
+      ...expense,
+      round: roundList.includes(expense.round) ? expense.round : roundList[0],
+      type: expense.type === "deduction" ? "deduction" : "expense",
+    })),
+  };
+}
+
+function normalizeRoundList(roundList, expenses = []) {
+  const labels = [];
+  const add = (label) => {
+    const nextLabel = String(label || "").trim();
+    if (!nextLabel || nextLabel === overallRound || labels.includes(nextLabel)) return;
+    labels.push(nextLabel);
+  };
+
+  defaultRounds.forEach(add);
+  if (Array.isArray(roundList)) roundList.forEach(add);
+  expenses.forEach((expense) => add(expense.round));
+
+  return labels.sort((a, b) => {
+    const aNumber = Number(a.match(/^(\d+)차$/)?.[1]);
+    const bNumber = Number(b.match(/^(\d+)차$/)?.[1]);
+    if (Number.isFinite(aNumber) && Number.isFinite(bNumber)) return aNumber - bNumber;
+    if (Number.isFinite(aNumber)) return -1;
+    if (Number.isFinite(bNumber)) return 1;
+    return a.localeCompare(b, "ko");
+  });
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  const saveStatus = $("#saveStatus");
+  saveStatus.textContent = "저장됨";
+  window.clearTimeout(saveState.timer);
+  saveStatus.textContent = "저장 중";
+  saveState.timer = window.setTimeout(() => {
+    saveStatus.textContent = "저장됨";
+  }, 350);
+}
+
+function money(value) {
+  return `${formatter.format(Math.round(Number(value) || 0))}원`;
+}
+
+function formatDateForDisplay(value) {
+  const match = String(value || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return "";
+  return `${match[1]}. ${Number(match[2])}. ${Number(match[3])}.`;
+}
+
+function numberValue(value) {
+  return Math.max(0, Math.round(Number(String(value).replace(/[^\d.-]/g, "")) || 0));
+}
+
+function signedNumberValue(value) {
+  return Math.round(Number(String(value ?? "").replace(/[^\d.-]/g, "")) || 0);
+}
+
+function formattedInputNumber(value, allowNegative = false) {
+  const amount = allowNegative ? signedNumberValue(value) : numberValue(value);
+  return amount ? formatter.format(amount) : "";
+}
+
+function activePeople() {
+  return state.people.filter((person) => person.name.trim());
+}
+
+function newId(prefix) {
+  return `${prefix}${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+}
+
+function calculate() {
+  const people = activePeople();
+  const peopleMap = new Map(people.map((person) => [person.id, person]));
+  const balances = new Map();
+  const roundTotals = new Map(state.rounds.map((round) => [round, { amount: 0, entries: 0 }]));
+  const roundOwed = new Map();
+  const uniqueParticipants = new Set();
+  const splitGroups = new Map();
+  let grossExpense = 0;
+  let deductionTotal = 0;
+
+  people.forEach((person) => {
+    balances.set(person.id, {
+      paid: 0,
+      owed: 0,
+      balance: 0,
+      byRound: Object.fromEntries(state.rounds.map((round) => [round, 0])),
+    });
+  });
+
+  state.expenses.forEach((expense) => {
+    const amount = expenseAmount(expense);
+    const participants = orderedParticipantIds(expense.participants, people, peopleMap);
+    if (!amount || !participants.length) return;
+
+    const round = state.rounds.includes(expense.round) ? expense.round : state.rounds[0];
+    if (!roundTotals.has(round)) roundTotals.set(round, { amount: 0, entries: 0 });
+    roundTotals.get(round).amount += amount;
+    roundTotals.get(round).entries += 1;
+    if (expense.type === "deduction") {
+      deductionTotal += amount;
+    } else {
+      grossExpense += amount;
+    }
+    if (balances.has(expense.payer)) balances.get(expense.payer).paid += amount;
+
+    participants.forEach((personId) => uniqueParticipants.add(personId));
+    const groupKey = participants.join("|");
+    const group = splitGroups.get(groupKey) || { amount: 0, participants };
+    group.amount += amount;
+    splitGroups.set(groupKey, group);
+  });
+
+  let splitIndex = 0;
+  splitGroups.forEach((group) => {
+    splitAmount(group.amount, group.participants, splitIndex).forEach((share, personId) => {
+      balances.get(personId).owed += share;
+    });
+    splitIndex += 1;
+  });
+
+  balances.forEach((value) => {
+    value.balance = value.paid - value.owed;
+  });
+
+  const transfers = buildTransfers(people, balances);
+  const totalExpense = grossExpense + deductionTotal;
+
+  return { people, balances, roundTotals, roundOwed, transfers, totalExpense, grossExpense, deductionTotal, uniqueParticipants };
+}
+
+function expenseAmount(expense) {
+  if (expense.type === "deduction") return -Math.abs(signedNumberValue(expense.amount));
+  return numberValue(expense.amount);
+}
+
+function orderedParticipantIds(participantIds, people, peopleMap) {
+  const selected = new Set((participantIds || []).filter((id) => peopleMap.has(id)));
+  return people.map((person) => person.id).filter((id) => selected.has(id));
+}
+
+function splitAmount(amount, personIds, offset = 0) {
+  const shares = new Map();
+  if (!personIds.length) return shares;
+
+  const sign = amount < 0 ? -1 : 1;
+  const absoluteAmount = Math.abs(Math.round(Number(amount) || 0));
+  const baseShare = Math.floor(absoluteAmount / personIds.length);
+  const remainder = absoluteAmount % personIds.length;
+  const startIndex = offset % personIds.length;
+
+  personIds.forEach((personId, index) => {
+    const rotatedIndex = (index - startIndex + personIds.length) % personIds.length;
+    const share = baseShare + (rotatedIndex < remainder ? 1 : 0);
+    shares.set(personId, share * sign);
+  });
+
+  return shares;
+}
+
+function buildTransfers(people, balances) {
+  const names = new Map(people.map((person) => [person.id, person.name]));
+  const debtors = [];
+  const creditors = [];
+
+  balances.forEach((value, personId) => {
+    const rounded = Math.round(value.balance);
+    if (rounded < 0) debtors.push({ id: personId, amount: Math.abs(rounded) });
+    if (rounded > 0) creditors.push({ id: personId, amount: rounded });
+  });
+
+  const transfers = [];
+  let debtorIndex = 0;
+  let creditorIndex = 0;
+
+  while (debtorIndex < debtors.length && creditorIndex < creditors.length) {
+    const debtor = debtors[debtorIndex];
+    const creditor = creditors[creditorIndex];
+    const amount = Math.min(debtor.amount, creditor.amount);
+    if (amount > 0) {
+      transfers.push({
+        from: names.get(debtor.id),
+        to: names.get(creditor.id),
+        amount,
+      });
+    }
+    debtor.amount -= amount;
+    creditor.amount -= amount;
+    if (debtor.amount === 0) debtorIndex += 1;
+    if (creditor.amount === 0) creditorIndex += 1;
+  }
+
+  return transfers;
+}
+
+function render() {
+  $("#meetingTitle").value = state.meetingTitle;
+  $("#meetingDate").value = state.meetingDate;
+  renderMeetingDateDisplay();
+  renderPeople();
+  renderExpenses();
+  renderSummary();
+}
+
+function renderMeetingDateDisplay() {
+  const display = $("#meetingDateDisplay");
+  if (!display) return;
+  const formatted = formatDateForDisplay(state.meetingDate);
+  display.textContent = formatted || "연도. 월. 일.";
+  display.classList.toggle("empty", !formatted);
+}
+
+function renderPeople() {
+  $("#peopleList").innerHTML = state.people
+    .map(
+      (person) => `
+        <div class="person-row" data-person-id="${person.id}">
+          <input data-action="edit-person" data-person-id="${person.id}" type="text" value="${escapeHtml(person.name)}" placeholder="이름" aria-label="이름" />
+          <button class="delete-button" data-action="delete-person" data-person-id="${person.id}" type="button" aria-label="${escapeHtml(person.name || "인원")} 삭제">×</button>
+        </div>
+      `,
+    )
+    .join("");
+}
+
+function renderExpenses() {
+  const people = activePeople();
+  const visibleExpenses = state.expenses;
+
+  $("#expenseRows").innerHTML = visibleExpenses
+    .map((expense) => {
+      const isDeduction = expense.type === "deduction";
+      const payerOptions = people
+        .map((person) => `<option value="${person.id}" ${expense.payer === person.id ? "selected" : ""}>${escapeHtml(person.name)}</option>`)
+        .join("");
+      const participants = people
+        .map((person) => {
+          const checked = (expense.participants || []).includes(person.id);
+          return `
+            <label class="chip ${checked ? "checked" : ""}">
+              <input data-action="toggle-participant" data-expense-id="${expense.id}" data-person-id="${person.id}" type="checkbox" ${checked ? "checked" : ""} />
+              ${escapeHtml(person.name)}
+            </label>
+          `;
+        })
+        .join("");
+
+      return `
+        <tr class="${isDeduction ? "deduction-row" : ""}" data-expense-id="${expense.id}">
+          <td>
+            ${
+              isDeduction
+                ? '<span class="deduction-label">공제</span>'
+                : `<select data-action="edit-expense" data-field="round" data-expense-id="${expense.id}" aria-label="차수">
+                    ${state.rounds
+                      .filter((round) => round !== "공제")
+                      .map((round) => `<option value="${round}" ${expense.round === round ? "selected" : ""}>${round}</option>`)
+                      .join("")}
+                  </select>`
+            }
+          </td>
+          <td><input data-action="edit-expense" data-field="place" data-expense-id="${expense.id}" type="text" value="${escapeHtml(expense.place || "")}" placeholder="${isDeduction ? "공제 사유" : "장소"}" aria-label="${isDeduction ? "공제 사유" : "장소"}" /></td>
+          <td><input class="${isDeduction ? "negative-input" : ""}" data-action="edit-expense" data-field="amount" data-expense-id="${expense.id}" inputmode="numeric" type="text" value="${formattedInputNumber(expense.amount, isDeduction)}" placeholder="${isDeduction ? "-금액" : "금액"}" aria-label="${isDeduction ? "공제 금액" : "금액"}" /></td>
+          <td>
+            <select data-action="edit-expense" data-field="payer" data-expense-id="${expense.id}" aria-label="결제자">
+              ${payerOptions}
+            </select>
+          </td>
+          <td><div class="participant-list">${participants || '<span class="row-meta">인원 없음</span>'}</div></td>
+          <td><button class="delete-button" data-action="delete-expense" data-expense-id="${expense.id}" type="button" aria-label="지출 삭제">×</button></td>
+        </tr>
+      `;
+    })
+    .join("");
+}
+
+function renderSummary() {
+  const result = calculate();
+  const peopleCount = result.people.length;
+  const average = peopleCount ? result.totalExpense / peopleCount : 0;
+
+  $("#totalExpense").textContent = money(result.grossExpense);
+  renderDeductionNote("#totalDeductionNote", result.deductionTotal);
+  $("#totalPeople").textContent = `${peopleCount}명`;
+  $("#averagePerPerson").textContent = money(average);
+  $("#transferCount").textContent = `${result.transfers.length}건`;
+
+  $("#roundSummary").innerHTML = state.rounds.length
+    ? state.rounds
+        .map((round) => {
+          const total = result.roundTotals.get(round);
+          const placeLabel = roundPlaceLabel(round);
+          return `
+            <div class="summary-row">
+              <div>
+                <strong>${round}</strong>
+                <div class="row-meta">${escapeHtml(placeLabel)}</div>
+              </div>
+              <strong>${money(total.amount)}</strong>
+            </div>
+          `;
+        })
+        .join("")
+    : '<div class="empty-state">지출을 추가하세요</div>';
+
+  $("#personSummary").innerHTML =
+    result.people
+      .map((person) => {
+        const balanceData = result.balances.get(person.id);
+        return renderSettlementCard(person, balanceData);
+      })
+      .join("") || '<div class="empty-state">인원을 추가하세요</div>';
+
+  $("#transferSummary").innerHTML =
+    result.transfers
+      .map(
+        (transfer) => `
+          <div class="transfer-row">
+            <div>
+              <strong>${escapeHtml(transfer.from)} → ${escapeHtml(transfer.to)}</strong>
+              <div class="row-meta">송금</div>
+            </div>
+            <strong>${money(transfer.amount)}</strong>
+          </div>
+        `,
+      )
+      .join("") || '<div class="empty-state">송금할 금액이 없습니다</div>';
+}
+
+function roundPlaceLabel(round) {
+  const places = state.expenses
+    .filter((expense) => expense.round === round && expenseAmount(expense))
+    .map((expense) => String(expense.place || "").trim())
+    .filter(Boolean);
+  if (!places.length) return round === "공제" ? "공제" : "장소 미입력";
+  const uniquePlaces = [...new Set(places)];
+  if (uniquePlaces.length <= 2) return uniquePlaces.join(", ");
+  return `${uniquePlaces[0]} 외 ${uniquePlaces.length - 1}곳`;
+}
+
+function renderReport() {
+  const result = calculate();
+  const peopleCount = result.people.length;
+  const average = peopleCount ? result.totalExpense / peopleCount : 0;
+  const meetingTitle = state.meetingTitle.trim() || "더치페이 정산";
+  const meetingDate = formatDateForDisplay(state.meetingDate) || "일자 미입력";
+
+  $("#reportTitle").textContent = meetingTitle;
+  $("#reportDate").textContent = meetingDate;
+  $("#reportTotal").textContent = money(result.grossExpense);
+  renderDeductionNote("#reportDeductionNote", result.deductionTotal);
+  $("#reportPeopleCount").textContent = `${peopleCount}명`;
+  $("#reportAverage").textContent = money(average);
+  $("#reportTransferCount").textContent = `${result.transfers.length}건`;
+
+  $("#reportTransfers").innerHTML =
+    result.transfers
+      .map(
+        (transfer, index) => `
+          <div class="report-item report-transfer-item">
+            <div class="report-item-main">
+              <span class="report-index">${String(index + 1).padStart(2, "0")}</span>
+              <div>
+                <strong>${escapeHtml(transfer.from)} → ${escapeHtml(transfer.to)}</strong>
+                <small>송금</small>
+              </div>
+            </div>
+            <div class="amount">${money(transfer.amount)}</div>
+          </div>
+        `,
+      )
+      .join("") || '<div class="report-empty">송금할 금액이 없습니다</div>';
+
+  $("#reportRounds").innerHTML =
+    state.rounds
+      .map((round) => {
+        const total = result.roundTotals.get(round) || { amount: 0, entries: 0 };
+        const placeLabel = roundPlaceLabel(round);
+        return `
+          <div class="report-item report-round-item">
+            <div>
+              <strong>${escapeHtml(round)}</strong>
+              <small>${escapeHtml(placeLabel)}</small>
+            </div>
+            <div class="amount">${money(total.amount)}</div>
+          </div>
+        `;
+      })
+      .join("") || '<div class="report-empty">지출을 추가하세요</div>';
+
+  $("#reportPeople").innerHTML =
+    result.people
+      .map((person) => {
+        const balanceData = result.balances.get(person.id);
+        return renderSettlementCard(person, balanceData, "report-settlement-card");
+      })
+      .join("") || '<div class="report-empty">인원을 추가하세요</div>';
+}
+
+function renderSettlementCard(person, balanceData, extraClass = "") {
+  const balance = Math.round(balanceData.balance);
+  const statusClass = balance > 0 ? "receive" : balance < 0 ? "pay" : "done";
+  const statusLabel = balance > 0 ? "받을 금액" : balance < 0 ? "낼 금액" : "완료";
+  const paid = paidExpenseAmount(person.id);
+  const deduction = paidDeductionAmount(person.id);
+  const deductionNote = deduction ? `<span class="settlement-deduction">(공제 <strong>${money(deduction)}</strong>)</span>` : "";
+
+  return `
+    <div class="settlement-card ${extraClass}">
+      <div class="settlement-main">
+        <strong class="settlement-name">${escapeHtml(person.name)}</strong>
+        <div class="settlement-meta">
+          <span>부담 <strong>${money(balanceData.owed)}</strong></span>
+          <i></i>
+          <span>결제 <strong>${money(paid)}</strong>${deductionNote}</span>
+        </div>
+      </div>
+      <div class="settlement-result ${statusClass}">
+        <span>${statusLabel}</span>
+        <strong>${money(Math.abs(balance))}</strong>
+      </div>
+    </div>
+  `;
+}
+
+function paidExpenseAmount(personId) {
+  return state.expenses.reduce((sum, expense) => {
+    if (expense.payer !== personId || expense.type === "deduction") return sum;
+    return sum + numberValue(expense.amount);
+  }, 0);
+}
+
+function paidDeductionAmount(personId) {
+  return state.expenses.reduce((sum, expense) => {
+    if (expense.payer !== personId || expense.type !== "deduction") return sum;
+    return sum + expenseAmount(expense);
+  }, 0);
+}
+
+function renderDeductionNote(selector, deductionTotal) {
+  const note = $(selector);
+  if (!note) return;
+  note.innerHTML = deductionTotal ? `(공제금액 <strong>${money(deductionTotal)}</strong>)` : "";
+}
+
+function openReport() {
+  renderReport();
+  $("#reportOverlay").hidden = false;
+  document.body.classList.add("report-open");
+}
+
+function closeReport() {
+  $("#reportOverlay").hidden = true;
+  document.body.classList.remove("report-open");
+}
+
+function openGuide() {
+  $("#guideOverlay").hidden = false;
+  document.body.classList.add("guide-open");
+}
+
+function closeGuide() {
+  $("#guideOverlay").hidden = true;
+  document.body.classList.remove("guide-open");
+}
+
+function addPerson() {
+  const person = { id: newId("p"), name: "" };
+  state.people.push(person);
+  state.expenses.forEach((expense) => {
+    if (!expense.payer && state.people.length === 1) expense.payer = person.id;
+  });
+  saveAndRender();
+}
+
+function nextRoundLabel() {
+  const numbers = state.expenses
+    .map((expense) => Number(String(expense.round || "").match(/^(\d+)차$/)?.[1]))
+    .filter((value) => Number.isFinite(value));
+  const nextNumber = numbers.length ? Math.max(...numbers) + 1 : 1;
+  return `${nextNumber}차`;
+}
+
+function addExpense() {
+  const people = activePeople();
+  const round = nextRoundLabel();
+  const expenseId = newId("e");
+  if (!state.rounds.includes(round)) state.rounds.push(round);
+  state.activeRound = round;
+  state.expenses.push({
+    id: expenseId,
+    round,
+    date: state.meetingDate || today,
+    place: "",
+    amount: 0,
+    payer: people[0]?.id || "",
+    participants: people.map((person) => person.id),
+  });
+  saveAndRender();
+  focusExpenseField(expenseId, "place");
+}
+
+function suggestedDeductionAmount() {
+  const peopleCount = activePeople().length;
+  if (!peopleCount) return 0;
+  const total = state.expenses.reduce((sum, expense) => sum + expenseAmount(expense), 0);
+  const remainder = ((total % peopleCount) + peopleCount) % peopleCount;
+  return remainder ? -remainder : 0;
+}
+
+function addDeduction() {
+  const people = activePeople();
+  const recentPayer = [...state.expenses].reverse().find((expense) => expense.payer)?.payer;
+  const expenseId = newId("e");
+  if (!state.rounds.includes("공제")) state.rounds.push("공제");
+  state.expenses.push({
+    id: expenseId,
+    type: "deduction",
+    round: "공제",
+    date: state.meetingDate || today,
+    place: "",
+    amount: suggestedDeductionAmount(),
+    payer: recentPayer || people[0]?.id || "",
+    participants: people.map((person) => person.id),
+  });
+  saveAndRender();
+  focusExpenseField(expenseId, "place");
+}
+
+function deletePerson(personId) {
+  state.people = state.people.filter((person) => person.id !== personId);
+  state.expenses.forEach((expense) => {
+    expense.participants = (expense.participants || []).filter((id) => id !== personId);
+    if (expense.payer === personId) expense.payer = activePeople()[0]?.id || "";
+  });
+  saveAndRender();
+}
+
+function deleteExpense(expenseId) {
+  state.expenses = state.expenses.filter((expense) => expense.id !== expenseId);
+  saveAndRender();
+}
+
+function saveAndRender() {
+  saveState();
+  render();
+}
+
+function saveInputProgress() {
+  saveState();
+  renderSummary();
+}
+
+function updatePersonName(personId, value) {
+  const person = state.people.find((item) => item.id === personId);
+  if (person) person.name = value;
+}
+
+function updateExpenseField(expenseId, field, value) {
+  const expense = state.expenses.find((item) => item.id === expenseId);
+  if (!expense) return;
+  if (field === "amount") {
+    expense[field] = expense.type === "deduction" ? -Math.abs(signedNumberValue(value)) : numberValue(value);
+    return;
+  }
+  expense[field] = value;
+}
+
+function getTabFields() {
+  return Array.from(document.querySelectorAll("#meetingTitle, #meetingDate, [data-action='edit-person'], [data-action='edit-expense']")).filter(
+    (field) => !field.disabled && field.offsetParent !== null,
+  );
+}
+
+function commitField(target) {
+  const action = target.dataset.action;
+
+  if (target.id === "meetingTitle") {
+    state.meetingTitle = target.value;
+    return true;
+  }
+
+  if (target.id === "meetingDate") {
+    state.meetingDate = target.value;
+    return true;
+  }
+
+  if (action === "edit-person") {
+    updatePersonName(target.dataset.personId, target.value);
+    return true;
+  }
+
+  if (action === "edit-expense") {
+    updateExpenseField(target.dataset.expenseId, target.dataset.field, target.value);
+    return true;
+  }
+
+  return false;
+}
+
+function focusFieldByIndex(index) {
+  window.requestAnimationFrame(() => {
+    const fields = getTabFields();
+    if (!fields.length) return;
+    const safeIndex = ((index % fields.length) + fields.length) % fields.length;
+    const nextField = fields[safeIndex];
+    nextField.focus();
+    if (nextField.matches("input[type='text']")) nextField.select();
+  });
+}
+
+function focusExpenseField(expenseId, field) {
+  const canFocus = window.matchMedia?.("(hover: hover) and (pointer: fine)").matches;
+  if (!canFocus) return;
+  window.requestAnimationFrame(() => {
+    const input = document.querySelector(`[data-action="edit-expense"][data-expense-id="${expenseId}"][data-field="${field}"]`);
+    if (!input) return;
+    input.focus();
+    if (input.matches("input[type='text']")) input.select();
+  });
+}
+
+function copySummary() {
+  const result = calculate();
+  const meetingTitle = state.meetingTitle?.trim() || "더치페이 정산";
+  const title = state.meetingDate ? `${meetingTitle} (${state.meetingDate})` : meetingTitle;
+  const lines = [
+    title,
+    `총 지출: ${money(result.grossExpense)}${result.deductionTotal ? ` (공제금액 ${money(result.deductionTotal)})` : ""}`,
+    "",
+    "송금",
+    ...(result.transfers.length ? result.transfers.map((item) => `${item.from} → ${item.to}: ${money(item.amount)}`) : ["송금할 금액 없음"]),
+  ];
+  navigator.clipboard?.writeText(lines.join("\n"));
+  $("#saveStatus").textContent = "복사됨";
+}
+
+async function saveReportImage(button) {
+  renderReport();
+  const report = $(".final-report");
+  if (!report) return;
+  const captureSource = createReportCaptureSource(report);
+
+  const originalText = button?.textContent || "스크린샷 저장";
+  if (button) {
+    button.disabled = true;
+    button.textContent = "캡쳐 중";
+  }
+
+  try {
+    const blob = await reportToImageBlob(captureSource);
+    const fileName = reportImageFileName();
+    const file = typeof File !== "undefined" ? new File([blob], fileName, { type: "image/png" }) : null;
+
+    if (file && navigator.canShare?.({ files: [file] })) {
+      await navigator.share({ files: [file], title: "더치페이 정산" });
+    } else {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1500);
+    }
+
+    if (button) {
+      button.textContent = "저장됨";
+      window.setTimeout(() => {
+        button.disabled = false;
+        button.textContent = originalText;
+      }, 1000);
+    }
+  } catch (error) {
+    if (error?.name !== "AbortError") {
+      console.warn("Report image could not be saved.", error);
+      window.alert("이미지 저장이 어려워요. 화면 캡처로 저장해주세요.");
+    }
+    if (button) {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  } finally {
+    captureSource.remove();
+  }
+}
+
+function createReportCaptureSource(report) {
+  const width = Math.ceil(report.getBoundingClientRect().width || 460);
+  const clone = report.cloneNode(true);
+  clone.querySelectorAll("[data-capture-exclude='true']").forEach((element) => element.remove());
+  clone.style.position = "fixed";
+  clone.style.left = "-10000px";
+  clone.style.top = "0";
+  clone.style.width = `${width}px`;
+  clone.style.margin = "0";
+  clone.style.boxShadow = "none";
+  document.body.append(clone);
+  return clone;
+}
+
+function reportToImageBlob(report) {
+  const width = Math.ceil(report.getBoundingClientRect().width);
+  const height = Math.ceil(report.scrollHeight);
+  const scale = Math.min(3, Math.max(2, window.devicePixelRatio || 2));
+  const clone = report.cloneNode(true);
+  clone.style.width = `${width}px`;
+  clone.style.margin = "0";
+  clone.style.boxShadow = "none";
+  clone.style.position = "static";
+  clone.style.left = "auto";
+  clone.style.top = "auto";
+  clone.style.zIndex = "auto";
+
+  const styles = Array.from(document.styleSheets)
+    .map((sheet) => {
+      try {
+        return Array.from(sheet.cssRules || []).map((rule) => rule.cssText).join("\n");
+      } catch (error) {
+        return "";
+      }
+    })
+    .join("\n");
+
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+      <foreignObject width="100%" height="100%">
+        <div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px; min-height:${height}px; background:#ffffff;">
+          <style>${styles}</style>
+          ${clone.outerHTML}
+        </div>
+      </foreignObject>
+    </svg>
+  `;
+
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml;charset=utf-8" }));
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = width * scale;
+      canvas.height = height * scale;
+      const context = canvas.getContext("2d");
+      context.fillStyle = "#ffffff";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      canvas.toBlob((blob) => {
+        if (blob) resolve(blob);
+        else reject(new Error("이미지를 만들 수 없습니다."));
+      }, "image/png");
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("이미지를 불러올 수 없습니다."));
+    };
+    image.src = url;
+  });
+}
+
+function reportImageFileName() {
+  const title = (state.meetingTitle.trim() || "dutch-pay-report")
+    .replace(/[\\/:*?"<>|]/g, "-")
+    .slice(0, 40)
+    .trim();
+  return `${title || "dutch-pay-report"}.png`;
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+document.addEventListener("input", (event) => {
+  const target = event.target;
+  const action = target.dataset.action;
+
+  if (target.id === "meetingTitle") {
+    state.meetingTitle = target.value;
+    saveInputProgress();
+    return;
+  }
+
+  if (target.id === "meetingDate") {
+    state.meetingDate = target.value;
+    renderMeetingDateDisplay();
+    saveInputProgress();
+    return;
+  }
+
+  if (action === "edit-person") {
+    updatePersonName(target.dataset.personId, target.value);
+    saveInputProgress();
+    return;
+  }
+
+  if (action === "edit-expense") {
+    updateExpenseField(target.dataset.expenseId, target.dataset.field, target.value);
+    saveInputProgress();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Tab") return;
+
+  const target = event.target;
+  if (!target.matches("#meetingTitle, #meetingDate, [data-action='edit-person'], [data-action='edit-expense']")) return;
+
+  const fields = getTabFields();
+  const currentIndex = fields.indexOf(target);
+  if (currentIndex === -1) return;
+
+  event.preventDefault();
+  tabHandledTargets.add(target);
+  commitField(target);
+  saveAndRender();
+  focusFieldByIndex(currentIndex + (event.shiftKey ? -1 : 1));
+});
+
+document.addEventListener("change", (event) => {
+  const target = event.target;
+  const action = target.dataset.action;
+
+  if (tabHandledTargets.has(target)) {
+    tabHandledTargets.delete(target);
+    return;
+  }
+
+  if (target.id === "meetingDate") {
+    state.meetingDate = target.value;
+    renderMeetingDateDisplay();
+    saveInputProgress();
+    return;
+  }
+
+  if (action === "edit-person") {
+    updatePersonName(target.dataset.personId, target.value);
+    saveInputProgress();
+    return;
+  }
+
+  if (action === "edit-expense") {
+    updateExpenseField(target.dataset.expenseId, target.dataset.field, target.value);
+    if (target.matches("input")) {
+      if (target.dataset.field === "amount") {
+        const expense = state.expenses.find((item) => item.id === target.dataset.expenseId);
+        target.value = formattedInputNumber(expense?.amount, expense?.type === "deduction");
+      }
+      saveInputProgress();
+      return;
+    }
+    saveAndRender();
+    return;
+  }
+
+  if (action === "toggle-participant") {
+    const expense = state.expenses.find((item) => item.id === target.dataset.expenseId);
+    if (!expense) return;
+    expense.participants = expense.participants || [];
+    if (target.checked) {
+      if (!expense.participants.includes(target.dataset.personId)) expense.participants.push(target.dataset.personId);
+    } else {
+      expense.participants = expense.participants.filter((id) => id !== target.dataset.personId);
+    }
+    saveAndRender();
+  }
+});
+
+document.addEventListener("click", (event) => {
+  const dateControl = event.target.closest(".date-control");
+  if (dateControl) {
+    const dateInput = $("#meetingDate");
+    dateInput?.focus();
+    if (typeof dateInput?.showPicker === "function") {
+      try {
+        dateInput.showPicker();
+      } catch (error) {
+        // Some browsers only allow the picker from a direct date-input click.
+      }
+    }
+    return;
+  }
+
+  const button = event.target.closest("button");
+  if (!button) return;
+  const action = button.dataset.action;
+
+  if (button.id === "addPersonButton") addPerson();
+  if (button.id === "addExpenseButton") addExpense();
+  if (button.id === "addDeductionButton") addDeduction();
+  if (button.id === "copySummaryButton") copySummary();
+  if (button.id === "openGuideButton") openGuide();
+  if (button.id === "closeGuideButton") closeGuide();
+  if (button.id === "openReportButton") openReport();
+  if (button.id === "saveReportImageButton") saveReportImage(button);
+  if (button.id === "closeReportButton") closeReport();
+  if (button.id === "resetButton") {
+    state = clone(sampleState);
+    saveAndRender();
+  }
+  if (action === "delete-person") deletePerson(button.dataset.personId);
+  if (action === "delete-expense") deleteExpense(button.dataset.expenseId);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !$("#reportOverlay").hidden) closeReport();
+  if (event.key === "Escape" && !$("#guideOverlay").hidden) closeGuide();
+});
+
+render();
+
+    </script>
   </body>
 </html>
