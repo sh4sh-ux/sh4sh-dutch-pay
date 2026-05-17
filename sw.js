@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-pwa-v4-spacing-icon";
+const CACHE_NAME = "dutch-pay-pwa-v5-report-box-center";
 const ASSETS = [
   "./",
   "./index.html",
