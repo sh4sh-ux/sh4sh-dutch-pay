@@ -1,6 +1,7 @@
 
 
 <!doctype html>
+<!-- Dutch Pay v11 screenshot button fix -->
 <!-- v10 exact screenshot matches final report DOM -->
 <html lang="ko">
   <head>
@@ -9,7 +10,7 @@
     <title>더치페이 계산기</title>
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest?v=10" />
+    <link rel="manifest" href="./manifest.webmanifest?v=11" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -3124,7 +3125,7 @@ render();
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js?v=10").catch(() => {});
+          navigator.serviceWorker.register("./sw.js?v=11").catch(() => {});
         });
       }
     </script>
@@ -3135,6 +3136,241 @@ render();
         caches.keys().then((keys) => {
           keys
             .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v10-dom-report-capture")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
+      }
+    </script>
+
+    <script>
+      // v11: iPhone/PWA에서 "이미지 저장 중"에 멈추는 문제 방지.
+      // 최종리포트 화면의 총지출/요약 카드 비율을 기준으로 직접 그립니다.
+      makeReportScreenshotBlob = async function makeReportScreenshotBlobV11() {
+        await document.fonts?.ready?.catch?.(() => {});
+
+        const result = calculate();
+        const peopleCount = result.people.length;
+        const average = peopleCount ? result.totalExpense / peopleCount : 0;
+        const meetingTitle = state.meetingTitle.trim() || "더치페이 정산";
+        const meetingDate = formatDateForDisplay(state.meetingDate) || "일자 미입력";
+        const transfers = result.transfers;
+
+        // 최종리포트 카드(.final-report)의 실제 기준 폭과 같은 논리 폭
+        const width = 460;
+        const reportPaddingX = 20;
+        const heroHeight = 276;
+        const statsHeight = 88;
+        const sectionTop = heroHeight + statsHeight;
+        const transferRowHeight = 76;
+        const transferGap = 9;
+        const transferRowsHeight = transfers.length
+          ? transfers.length * transferRowHeight + (transfers.length - 1) * transferGap
+          : 56;
+        const height = sectionTop + 62 + transferRowsHeight + 28;
+        const scale = Math.min(3, Math.max(2, window.devicePixelRatio || 2));
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width * scale;
+        canvas.height = height * scale;
+        const context = canvas.getContext("2d");
+        context.scale(scale, scale);
+
+        drawExactReportBackgroundV11(context, width, height, heroHeight, sectionTop);
+        drawExactReportHeroV11(context, {
+          width,
+          padding: reportPaddingX,
+          title: meetingTitle,
+          date: meetingDate,
+          total: money(result.grossExpense),
+          deduction: result.deductionTotal ? money(result.deductionTotal) : "",
+        });
+        drawExactReportStatsV11(context, {
+          width,
+          y: heroHeight,
+          people: `${peopleCount}명`,
+          average: money(average),
+          transfers: `${transfers.length}건`,
+        });
+        drawExactReportTransfersV11(context, {
+          width,
+          y: sectionTop,
+          padding: 14,
+          transfers,
+        });
+
+        return canvasToBlob(canvas);
+      };
+
+      function drawExactReportBackgroundV11(context, width, height, heroHeight, sectionTop) {
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, width, height);
+
+        const heroGradient = context.createLinearGradient(0, 0, width, heroHeight);
+        heroGradient.addColorStop(0, "#111216");
+        heroGradient.addColorStop(0.58, "#202a37");
+        heroGradient.addColorStop(1, "#0f6fcf");
+        context.fillStyle = heroGradient;
+        context.fillRect(0, 0, width, heroHeight);
+
+        context.fillStyle = "#f7f8fb";
+        context.fillRect(0, heroHeight, width, sectionTop - heroHeight);
+
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, sectionTop, width, height - sectionTop);
+      }
+
+      function drawExactReportHeroV11(context, data) {
+        const { width, padding, title, date, total, deduction } = data;
+
+        setCanvasText(context, 11, 850, "rgba(255, 255, 255, 0.68)");
+        context.fillText("Dutch Pay Report", padding, 35);
+
+        const sealWidth = 56;
+        drawRoundRect(
+          context,
+          width - padding - sealWidth,
+          22,
+          sealWidth,
+          24,
+          12,
+          "rgba(255, 255, 255, 0.13)",
+          "rgba(255, 255, 255, 0.18)"
+        );
+        setCanvasText(context, 11, 850, "#e9f5ff");
+        context.textAlign = "center";
+        context.fillText("공유용", width - padding - sealWidth / 2, 38);
+        context.textAlign = "left";
+
+        setCanvasText(context, 29, 850, "#ffffff");
+        drawFittedText(context, title, padding, 79, width - padding * 2, 29);
+
+        setCanvasText(context, 13, 700, "rgba(255, 255, 255, 0.72)");
+        context.fillText(date, padding, 111);
+
+        // 최종리포트의 .report-total과 동일한 크기 기준: height 120px, 좌우 20px
+        const cardX = padding;
+        const cardY = 134;
+        const cardW = width - padding * 2;
+        const cardH = 120;
+
+        drawRoundRect(context, cardX, cardY, cardW, cardH, 8, "#202a38");
+        const borderGradient = context.createLinearGradient(cardX, cardY, cardX + cardW, cardY + cardH);
+        borderGradient.addColorStop(0, "rgba(122, 194, 255, 0.95)");
+        borderGradient.addColorStop(0.48, "rgba(255, 255, 255, 0.16)");
+        borderGradient.addColorStop(1, "rgba(95, 160, 255, 0.92)");
+        strokeRoundRect(context, cardX, cardY, cardW, cardH, 8, borderGradient, 1);
+
+        // flex column + justify-content:center와 동일하게 보이도록 세로 중앙 배치
+        const centerY = cardY + cardH / 2;
+        const labelY = centerY - 23;
+        const amountY = centerY + 29;
+
+        setCanvasText(context, 12, 750, "rgba(255, 255, 255, 0.72)");
+        context.fillText("총 지출", cardX + 18, labelY);
+
+        const amountX = cardX + 18;
+        const noteReserved = deduction ? 92 + context.measureText(deduction).width : 0;
+        const amountFontSize = fitFontSize(context, total, 33, 27, cardW - 36 - noteReserved);
+        setCanvasText(context, amountFontSize, 600, "#ffffff");
+        context.fillText(total, amountX, amountY);
+
+        if (deduction) {
+          const amountWidth = context.measureText(total).width;
+          let noteX = amountX + amountWidth + 8;
+          setCanvasText(context, 11, 500, "rgba(223, 240, 255, 0.78)");
+          const noteText = `(공제금액 ${deduction})`;
+          const noteW = context.measureText(noteText).width;
+          if (noteX + noteW > cardX + cardW - 18) noteX = cardX + cardW - noteW - 18;
+          context.fillText("(공제금액 ", noteX, amountY - 4);
+          const prefixW = context.measureText("(공제금액 ").width;
+          context.fillStyle = "#ff9f0a";
+          context.fillText(deduction, noteX + prefixW, amountY - 4);
+          const deductionW = context.measureText(deduction).width;
+          context.fillStyle = "rgba(223, 240, 255, 0.78)";
+          context.fillText(")", noteX + prefixW + deductionW, amountY - 4);
+        }
+      }
+
+      function drawExactReportStatsV11(context, data) {
+        const { width, y, people, average, transfers } = data;
+        const paddingX = 12;
+        const gap = 8;
+        const cardW = (width - paddingX * 2 - gap * 2) / 3;
+        const cardH = 64;
+        const cardY = y + 12;
+        const cards = [
+          ["참여자", people],
+          ["1인 평균", average],
+          ["송금", transfers],
+        ];
+
+        cards.forEach(([label, value], index) => {
+          const x = paddingX + index * (cardW + gap);
+          const centerX = x + cardW / 2;
+          const centerY = cardY + cardH / 2;
+
+          // 최종리포트의 요약 박스 크기/간격과 동일한 기준
+          drawRoundRect(context, x, cardY, cardW, cardH, 8, "#ffffff", "rgba(0, 0, 0, 0.08)");
+          context.textAlign = "center";
+          setCanvasText(context, 12, 750, "rgba(110, 110, 115, 0.64)");
+          context.fillText(label, centerX, centerY - 8);
+          setCanvasText(context, 21, 780, "rgba(29, 29, 31, 0.78)");
+          drawFittedText(context, value, centerX, centerY + 20, cardW - 16, 21, "center");
+          context.textAlign = "left";
+        });
+      }
+
+      function drawExactReportTransfersV11(context, data) {
+        const { width, y, padding, transfers } = data;
+        const rowX = padding;
+        const rowW = width - padding * 2;
+        const rowH = 76;
+        const gap = 9;
+
+        setCanvasText(context, 16, 830, "#1d1d1f");
+        context.fillText("송금", padding, y + 37);
+
+        setCanvasText(context, 11, 800, "rgba(110, 110, 115, 0.9)");
+        context.textAlign = "right";
+        context.fillText("보낼 금액", width - padding, y + 37);
+        context.textAlign = "left";
+
+        if (!transfers.length) {
+          drawRoundRect(context, rowX, y + 52, rowW, 44, 8, "#f7f7f8", "rgba(0, 0, 0, 0.06)");
+          setCanvasText(context, 13, 700, "rgba(110, 110, 115, 0.9)");
+          context.textAlign = "center";
+          context.fillText("송금할 금액이 없습니다", width / 2, y + 80);
+          context.textAlign = "left";
+          return;
+        }
+
+        transfers.forEach((transfer, index) => {
+          const rowY = y + 52 + index * (rowH + gap);
+          drawRoundRect(context, rowX, rowY, rowW, rowH, 8, "#ffffff", "rgba(0, 113, 227, 0.14)");
+
+          drawRoundRect(context, rowX + 13, rowY + 23, 30, 30, 15, "#e8f2ff", "rgba(0, 113, 227, 0.14)");
+          setCanvasText(context, 11, 900, "#0071e3");
+          context.textAlign = "center";
+          context.fillText(String(index + 1).padStart(2, "0"), rowX + 28, rowY + 43);
+          context.textAlign = "left";
+
+          setCanvasText(context, 14, 720, "rgba(29, 29, 31, 0.82)");
+          drawFittedText(context, `${transfer.from} → ${transfer.to}`, rowX + 53, rowY + 45, rowW - 175, 14);
+
+          setCanvasText(context, 21, 780, "#1d1d1f");
+          context.textAlign = "right";
+          context.fillText(money(transfer.amount), rowX + rowW - 13, rowY + 47);
+          context.textAlign = "left";
+        });
+      }
+    </script>
+
+
+    <script>
+      window.DUTCH_PAY_APP_VERSION = "v11-screenshot-button-fix";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v11-screenshot-button-fix")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
