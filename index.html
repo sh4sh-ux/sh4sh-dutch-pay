@@ -1,16 +1,17 @@
 
 
 <!doctype html>
+<!-- Dutch Pay v8 screenshot matches final report card sizes -->
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>더치페이 계산기</title>
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="icon" href="./favicon-v4.png" type="image/png" />
-    <link rel="apple-touch-icon" href="./icons/apple-touch-icon-v4.png" />
+    <link rel="manifest" href="./manifest.webmanifest?v=8" />
+    <link rel="icon" href="./favicon-v8.png" type="image/png" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon-v8.png" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Dutch Pay" />
@@ -1499,8 +1500,8 @@ body.guide-open {
   .report-stats div {
     min-height: 64px;
     padding: 10px;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
   }
 
   .report-stats strong {
@@ -1542,17 +1543,17 @@ body.guide-open {
 }
 
 
-/* PWA app mode spacing fix: Safari보다 앱 화면에서 상단이 답답해 보이는 문제 보정 */
+/* v8: installed app safe top spacing */
 @media all and (display-mode: standalone) {
   .topbar {
-    padding-top: max(34px, calc(22px + env(safe-area-inset-top)));
+    padding-top: max(30px, calc(18px + env(safe-area-inset-top)));
   }
 }
 
 @supports (-webkit-touch-callout: none) {
   @media all and (display-mode: standalone) {
     .topbar {
-      padding-top: max(38px, calc(24px + env(safe-area-inset-top)));
+      padding-top: max(36px, calc(22px + env(safe-area-inset-top)));
     }
   }
 }
@@ -2572,16 +2573,16 @@ async function makeReportScreenshotBlob() {
   const meetingTitle = state.meetingTitle.trim() || "더치페이 정산";
   const meetingDate = formatDateForDisplay(state.meetingDate) || "일자 미입력";
   const transfers = result.transfers;
-  const width = 720;
-  const padding = 40;
-  const heroHeight = 510;
-  const statsHeight = 150;
+  const width = 460;
+  const padding = 24;
+  const heroHeight = 281;
+  const statsHeight = 102;
   const sectionTop = heroHeight + statsHeight;
-  const transferRowHeight = 96;
+  const transferRowHeight = 68;
   const transferGap = 12;
   const transferRowsHeight = transfers.length ? transfers.length * transferRowHeight + (transfers.length - 1) * transferGap : 76;
-  const height = sectionTop + 78 + transferRowsHeight + 36;
-  const scale = 2;
+  const height = sectionTop + 64 + transferRowsHeight + 28;
+  const scale = Math.max(2, Math.min(3, window.devicePixelRatio || 2));
   const canvas = document.createElement("canvas");
   canvas.width = width * scale;
   canvas.height = height * scale;
@@ -2633,68 +2634,68 @@ function drawReportImageBackground(context, width, height, heroHeight, sectionTo
 
 function drawReportImageHero(context, data) {
   const { width, padding, title, date, total, deduction } = data;
-  const font = reportCanvasFont();
 
-  setCanvasText(context, 18, 850, "rgba(255, 255, 255, 0.68)");
-  context.fillText("Dutch Pay Report", padding, 52);
+  setCanvasText(context, 11, 850, "rgba(255, 255, 255, 0.68)");
+  context.fillText("DUTCH PAY REPORT", padding, 42);
 
-  const sealWidth = 98;
-  drawRoundRect(context, width - padding - sealWidth, 29, sealWidth, 40, 20, "rgba(255, 255, 255, 0.13)", "rgba(255, 255, 255, 0.18)");
-  setCanvasText(context, 20, 850, "#e9f5ff");
+  const sealWidth = 78;
+  const sealHeight = 28;
+  const sealX = width - padding - sealWidth;
+  const sealY = 27;
+  drawRoundRect(context, sealX, sealY, sealWidth, sealHeight, 14, "rgba(255, 255, 255, 0.13)", "rgba(255, 255, 255, 0.18)");
+  setCanvasText(context, 12, 850, "#e9f5ff");
   context.textAlign = "center";
-  context.fillText("공유용", width - padding - sealWidth / 2, 56);
+  context.fillText("공유용", sealX + sealWidth / 2, sealY + 19);
   context.textAlign = "left";
 
-  setCanvasText(context, 50, 850, "#ffffff");
-  drawFittedText(context, title, padding, 132, width - padding * 2, 50);
+  setCanvasText(context, 31, 850, "#ffffff");
+  drawFittedText(context, title, padding, 88, width - padding * 2, 31);
 
-  setCanvasText(context, 24, 730, "rgba(255, 255, 255, 0.72)");
-  context.fillText(date, padding, 194);
+  setCanvasText(context, 13, 730, "rgba(255, 255, 255, 0.72)");
+  context.fillText(date, padding, 120);
 
   const cardX = padding;
-  const cardY = 232;
+  const cardY = 144;
   const cardW = width - padding * 2;
-  const cardH = 220;
-  drawRoundRect(context, cardX, cardY, cardW, cardH, 10, "rgba(32, 42, 56, 0.82)");
+  const cardH = 120;
+  drawRoundRect(context, cardX, cardY, cardW, cardH, 8, "rgba(32, 42, 56, 0.82)");
   const borderGradient = context.createLinearGradient(cardX, cardY, cardX + cardW, cardY + cardH);
   borderGradient.addColorStop(0, "rgba(122, 194, 255, 0.95)");
   borderGradient.addColorStop(0.46, "rgba(255, 255, 255, 0.2)");
   borderGradient.addColorStop(1, "rgba(95, 160, 255, 0.95)");
-  strokeRoundRect(context, cardX, cardY, cardW, cardH, 10, borderGradient, 2);
+  strokeRoundRect(context, cardX, cardY, cardW, cardH, 8, borderGradient, 1.5);
 
   const cardCenterY = cardY + cardH / 2;
-  const labelY = cardCenterY - 42;
-  const amountY = cardCenterY + 52;
-  setCanvasText(context, 20, 800, "rgba(255, 255, 255, 0.72)");
-  context.fillText("총 지출", cardX + 26, labelY);
+  const labelY = cardCenterY - 22;
+  const amountY = cardCenterY + 32;
+  setCanvasText(context, 12, 800, "rgba(255, 255, 255, 0.72)");
+  context.fillText("총 지출", cardX + 18, labelY);
 
-  const amountX = cardX + 26;
-  const deductionWidth = deduction ? 136 + context.measureText(deduction).width : 0;
-  const amountFontSize = fitFontSize(context, total, 58, 42, cardW - 52 - deductionWidth);
+  const amountX = cardX + 18;
+  const deductionWidth = deduction ? 82 + context.measureText(deduction).width : 0;
+  const amountFontSize = fitFontSize(context, total, 33, 24, cardW - 36 - deductionWidth);
   setCanvasText(context, amountFontSize, 650, "#ffffff");
   context.fillText(total, amountX, amountY);
 
   if (deduction) {
     const amountWidth = context.measureText(total).width;
-    let noteX = amountX + amountWidth + 18;
-    if (noteX + deductionWidth > cardX + cardW - 26) noteX = cardX + cardW - deductionWidth - 26;
-    setCanvasText(context, 20, 560, "rgba(223, 240, 255, 0.78)");
-    context.fillText("(공제금액 ", noteX, amountY - 7);
+    let noteX = amountX + amountWidth + 10;
+    if (noteX + deductionWidth > cardX + cardW - 18) noteX = cardX + cardW - deductionWidth - 18;
+    setCanvasText(context, 11, 560, "rgba(223, 240, 255, 0.78)");
+    context.fillText("(공제금액 ", noteX, amountY - 4);
     const prefixWidth = context.measureText("(공제금액 ").width;
     context.fillStyle = "#ff9f0a";
-    context.fillText(deduction, noteX + prefixWidth, amountY - 7);
+    context.fillText(deduction, noteX + prefixWidth, amountY - 4);
     const deductionWidthOnly = context.measureText(deduction).width;
     context.fillStyle = "rgba(223, 240, 255, 0.78)";
-    context.fillText(")", noteX + prefixWidth + deductionWidthOnly, amountY - 7);
+    context.fillText(")", noteX + prefixWidth + deductionWidthOnly, amountY - 4);
   }
-
-  context.font = context.font.replace(font, font);
 }
 
 function drawReportImageStats(context, data) {
   const { width, y, people, average, transfers } = data;
-  const left = 28;
-  const gap = 16;
+  const left = 18;
+  const gap = 10;
   const cardWidth = (width - left * 2 - gap * 2) / 3;
   const cards = [
     ["참여자", people],
@@ -2705,15 +2706,15 @@ function drawReportImageStats(context, data) {
   cards.forEach(([label, value], index) => {
     const x = left + index * (cardWidth + gap);
     const centerX = x + cardWidth / 2;
-    const cardY = y + 26;
-    const cardH = 96;
+    const cardY = y + 16;
+    const cardH = 70;
     const centerY = cardY + cardH / 2;
     drawRoundRect(context, x, cardY, cardWidth, cardH, 8, "#ffffff", "rgba(0, 0, 0, 0.08)");
     context.textAlign = "center";
-    setCanvasText(context, 18, 720, "rgba(110, 110, 115, 0.68)");
-    context.fillText(label, centerX, centerY - 14);
-    setCanvasText(context, 30, 780, "rgba(29, 29, 31, 0.82)");
-    drawFittedText(context, value, centerX, centerY + 30, cardWidth - 40, 30, "center");
+    setCanvasText(context, 12, 750, "rgba(110, 110, 115, 0.64)");
+    context.fillText(label, centerX, centerY - 9);
+    setCanvasText(context, 21, 780, "rgba(29, 29, 31, 0.82)");
+    drawFittedText(context, value, centerX, centerY + 19, cardWidth - 22, 21, "center");
     context.textAlign = "left";
   });
 }
@@ -2722,40 +2723,40 @@ function drawReportImageTransfers(context, data) {
   const { width, y, padding, transfers } = data;
   const rowX = padding;
   const rowW = width - padding * 2;
-  const rowH = 96;
-  const gap = 12;
-  let rowY = y + 78;
+  const rowH = 68;
+  const gap = 10;
+  let rowY = y + 64;
 
-  setCanvasText(context, 28, 830, "#171719");
-  context.fillText("송금", padding, y + 54);
-  setCanvasText(context, 16, 720, "rgba(110, 110, 115, 0.72)");
+  setCanvasText(context, 16, 830, "#171719");
+  context.fillText("송금", padding, y + 38);
+  setCanvasText(context, 11, 800, "rgba(110, 110, 115, 0.72)");
   context.textAlign = "right";
-  context.fillText("보낼 금액", width - padding, y + 54);
+  context.fillText("보낼 금액", width - padding, y + 38);
   context.textAlign = "left";
 
   if (!transfers.length) {
-    drawRoundRect(context, rowX, rowY, rowW, 76, 8, "#f5f5f7", "rgba(0, 0, 0, 0.08)");
-    setCanvasText(context, 20, 700, "rgba(110, 110, 115, 0.76)");
+    drawRoundRect(context, rowX, rowY, rowW, 62, 8, "#f5f5f7", "rgba(0, 0, 0, 0.08)");
+    setCanvasText(context, 13, 700, "rgba(110, 110, 115, 0.76)");
     context.textAlign = "center";
-    context.fillText("송금할 금액이 없습니다", width / 2, rowY + 47);
+    context.fillText("송금할 금액이 없습니다", width / 2, rowY + 38);
     context.textAlign = "left";
     return;
   }
 
   transfers.forEach((transfer, index) => {
     drawRoundRect(context, rowX, rowY, rowW, rowH, 8, "#ffffff", "rgba(0, 113, 227, 0.18)");
-    drawRoundRect(context, rowX + 20, rowY + 25, 48, 48, 24, "#eaf4ff", "rgba(0, 113, 227, 0.12)");
-    setCanvasText(context, 17, 850, "#0071e3");
+    drawRoundRect(context, rowX + 16, rowY + 17, 34, 34, 17, "#eaf4ff", "rgba(0, 113, 227, 0.12)");
+    setCanvasText(context, 11, 900, "#0071e3");
     context.textAlign = "center";
-    context.fillText(String(index + 1).padStart(2, "0"), rowX + 44, rowY + 56);
+    context.fillText(String(index + 1).padStart(2, "0"), rowX + 33, rowY + 39);
     context.textAlign = "left";
 
-    setCanvasText(context, 24, 760, "rgba(29, 29, 31, 0.84)");
-    drawFittedText(context, `${transfer.from} → ${transfer.to}`, rowX + 86, rowY + 58, rowW - 250, 24);
+    setCanvasText(context, 15, 760, "rgba(29, 29, 31, 0.84)");
+    drawFittedText(context, `${transfer.from} → ${transfer.to}`, rowX + 64, rowY + 42, rowW - 180, 15);
 
-    setCanvasText(context, 31, 780, "rgba(29, 29, 31, 0.88)");
+    setCanvasText(context, 21, 780, "rgba(29, 29, 31, 0.88)");
     context.textAlign = "right";
-    drawFittedText(context, money(transfer.amount), rowX + rowW - 20, rowY + 60, 190, 31, "right");
+    drawFittedText(context, money(transfer.amount), rowX + rowW - 16, rowY + 43, 120, 21, "right");
     context.textAlign = "left";
     rowY += rowH + gap;
   });
@@ -3099,9 +3100,17 @@ render();
     </script>
 
     <script>
+      window.DUTCH_PAY_APP_VERSION = "v8-final-report-screenshot-match";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-pwa-v8-final-report-screenshot-match")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
+      }
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js").catch((error) => {
+          navigator.serviceWorker.register("./sw.js?v=8").catch((error) => {
             console.warn("Service worker registration failed.", error);
           });
         });

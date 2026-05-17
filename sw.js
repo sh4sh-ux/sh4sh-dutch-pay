@@ -1,13 +1,13 @@
-const CACHE_NAME = "dutch-pay-pwa-v6-report-layout";
+const CACHE_NAME = "dutch-pay-pwa-v8-final-report-screenshot-match";
 const ASSETS = [
-  "./",
+  "./?v=8",
   "./index.html",
-  "./manifest.webmanifest",
-  "./favicon-v4.png",
+  "./manifest.webmanifest?v=8",
+  "./favicon-v8.png",
   "./favicon.png",
-  "./icons/icon-192-v4.png",
-  "./icons/icon-512-v4.png",
-  "./icons/apple-touch-icon-v4.png",
+  "./icons/icon-192-v8.png",
+  "./icons/icon-512-v8.png",
+  "./icons/apple-touch-icon-v8.png",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/apple-touch-icon.png"
@@ -30,15 +30,12 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => caches.match("./index.html"));
-    })
+    fetch(event.request)
+      .then((response) => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        return response;
+      })
+      .catch(() => caches.match(event.request).then((cached) => cached || caches.match("./index.html")))
   );
 });
