@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-summary-box-center-v3";
+const CACHE_NAME = "dutch-pay-v10-dom-report-capture";
 const ASSETS = [
   "./",
   "./index.html",

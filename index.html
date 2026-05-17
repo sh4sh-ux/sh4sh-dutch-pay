@@ -1,8 +1,7 @@
 
 
 <!doctype html>
-<!-- summarybox=v3 -->
-<!-- report-box-v2 -->
+<!-- v10 exact screenshot matches final report DOM -->
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -10,7 +9,7 @@
     <title>더치페이 계산기</title>
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest?summarybox=v3" />
+    <link rel="manifest" href="./manifest.webmanifest?v=10" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -1097,14 +1096,11 @@ body.guide-open {
 }
 
 .report-total {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  display: grid;
+  align-content: center;
   gap: 13px;
   min-height: 120px;
-  height: 120px;
-  padding: 18px;
+  padding: 18px 18px 20px;
   background:
     linear-gradient(#202a38, #202a38) padding-box,
     linear-gradient(135deg, rgba(122, 194, 255, 0.95), rgba(255, 255, 255, 0.16) 48%, rgba(95, 160, 255, 0.92)) border-box;
@@ -1173,10 +1169,9 @@ body.guide-open {
 }
 
 .report-stats div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  align-content: center;
+  justify-items: center;
   gap: 6px;
   min-height: 70px;
   padding: 12px;
@@ -2584,53 +2579,63 @@ async function saveReportImage(button) {
 
 async function makeReportScreenshotBlob() {
   await document.fonts?.ready?.catch?.(() => {});
+  renderReport();
 
-  const result = calculate();
-  const peopleCount = result.people.length;
-  const average = peopleCount ? result.totalExpense / peopleCount : 0;
-  const meetingTitle = state.meetingTitle.trim() || "더치페이 정산";
-  const meetingDate = formatDateForDisplay(state.meetingDate) || "일자 미입력";
-  const transfers = result.transfers;
-  const width = 720;
-  const padding = 40;
-  const heroHeight = 400;
-  const statsHeight = 150;
-  const sectionTop = heroHeight + statsHeight;
-  const transferRowHeight = 96;
-  const transferGap = 12;
-  const transferRowsHeight = transfers.length ? transfers.length * transferRowHeight + (transfers.length - 1) * transferGap : 76;
-  const height = sectionTop + 78 + transferRowsHeight + 36;
-  const scale = 2;
-  const canvas = document.createElement("canvas");
-  canvas.width = width * scale;
-  canvas.height = height * scale;
-  const context = canvas.getContext("2d");
-  context.scale(scale, scale);
+  const report = document.querySelector(".final-report");
+  if (!report) throw new Error("최종 리포트를 찾을 수 없습니다.");
 
-  drawReportImageBackground(context, width, height, heroHeight, sectionTop);
-  drawReportImageHero(context, {
-    width,
-    padding,
-    title: meetingTitle,
-    date: meetingDate,
-    total: money(result.grossExpense),
-    deduction: result.deductionTotal ? money(result.deductionTotal) : "",
-  });
-  drawReportImageStats(context, {
-    width,
-    y: heroHeight,
-    people: `${peopleCount}명`,
-    average: money(average),
-    transfers: `${transfers.length}건`,
-  });
-  drawReportImageTransfers(context, {
-    width,
-    y: sectionTop,
-    padding: 28,
-    transfers,
-  });
+  try {
+    return await reportToImageBlob(report);
+  } catch (error) {
+    console.warn("DOM report capture failed. Falling back to canvas renderer.", error);
 
-  return canvasToBlob(canvas);
+    const result = calculate();
+    const peopleCount = result.people.length;
+    const average = peopleCount ? result.totalExpense / peopleCount : 0;
+    const meetingTitle = state.meetingTitle.trim() || "더치페이 정산";
+    const meetingDate = formatDateForDisplay(state.meetingDate) || "일자 미입력";
+    const transfers = result.transfers;
+    const width = 720;
+    const padding = 40;
+    const heroHeight = 400;
+    const statsHeight = 150;
+    const sectionTop = heroHeight + statsHeight;
+    const transferRowHeight = 96;
+    const transferGap = 12;
+    const transferRowsHeight = transfers.length ? transfers.length * transferRowHeight + (transfers.length - 1) * transferGap : 76;
+    const height = sectionTop + 78 + transferRowsHeight + 36;
+    const scale = 2;
+    const canvas = document.createElement("canvas");
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+    const context = canvas.getContext("2d");
+    context.scale(scale, scale);
+
+    drawReportImageBackground(context, width, height, heroHeight, sectionTop);
+    drawReportImageHero(context, {
+      width,
+      padding,
+      title: meetingTitle,
+      date: meetingDate,
+      total: money(result.grossExpense),
+      deduction: result.deductionTotal ? money(result.deductionTotal) : "",
+    });
+    drawReportImageStats(context, {
+      width,
+      y: heroHeight,
+      people: `${peopleCount}명`,
+      average: money(average),
+      transfers: `${transfers.length}건`,
+    });
+    drawReportImageTransfers(context, {
+      width,
+      y: sectionTop,
+      padding: 28,
+      transfers,
+    });
+
+    return canvasToBlob(canvas);
+  }
 }
 
 function drawReportImageBackground(context, width, height, heroHeight, sectionTop) {
@@ -2673,7 +2678,7 @@ function drawReportImageHero(context, data) {
   const cardX = padding;
   const cardY = 230;
   const cardW = width - padding * 2;
-  const cardH = 120;
+  const cardH = 128;
   drawRoundRect(context, cardX, cardY, cardW, cardH, 10, "rgba(32, 42, 56, 0.82)");
   const borderGradient = context.createLinearGradient(cardX, cardY, cardX + cardW, cardY + cardH);
   borderGradient.addColorStop(0, "rgba(122, 194, 255, 0.95)");
@@ -2681,22 +2686,15 @@ function drawReportImageHero(context, data) {
   borderGradient.addColorStop(1, "rgba(95, 160, 255, 0.95)");
   strokeRoundRect(context, cardX, cardY, cardW, cardH, 10, borderGradient, 2);
 
+  const labelY = cardY + 43;
+  const amountY = cardY + 96;
+  setCanvasText(context, 20, 800, "rgba(255, 255, 255, 0.72)");
+  context.fillText("총 지출", cardX + 26, labelY);
+
   const amountX = cardX + 26;
-  const labelFontSize = 20;
-  setCanvasText(context, labelFontSize, 800, "rgba(255, 255, 255, 0.72)");
   const deductionWidth = deduction ? 136 + context.measureText(deduction).width : 0;
   const amountFontSize = fitFontSize(context, total, 58, 42, cardW - 52 - deductionWidth);
-  const contentGap = 13;
-  const contentHeight = labelFontSize + contentGap + amountFontSize;
-  const contentTop = cardY + Math.max(14, (cardH - contentHeight) / 2);
-
-  const prevBaseline = context.textBaseline;
-  context.textBaseline = "top";
-  context.fillText("총 지출", amountX, contentTop);
-
-  const amountY = contentTop + labelFontSize + contentGap;
   setCanvasText(context, amountFontSize, 650, "#ffffff");
-  context.textBaseline = "top";
   context.fillText(total, amountX, amountY);
 
   if (deduction) {
@@ -2704,17 +2702,14 @@ function drawReportImageHero(context, data) {
     let noteX = amountX + amountWidth + 18;
     if (noteX + deductionWidth > cardX + cardW - 26) noteX = cardX + cardW - deductionWidth - 26;
     setCanvasText(context, 20, 560, "rgba(223, 240, 255, 0.78)");
-    context.textBaseline = "alphabetic";
-    context.fillText("(공제금액 ", noteX, amountY + amountFontSize - 9);
+    context.fillText("(공제금액 ", noteX, amountY - 7);
     const prefixWidth = context.measureText("(공제금액 ").width;
     context.fillStyle = "#ff9f0a";
-    context.fillText(deduction, noteX + prefixWidth, amountY + amountFontSize - 9);
+    context.fillText(deduction, noteX + prefixWidth, amountY - 7);
     const deductionWidthOnly = context.measureText(deduction).width;
     context.fillStyle = "rgba(223, 240, 255, 0.78)";
-    context.fillText(")", noteX + prefixWidth + deductionWidthOnly, amountY + amountFontSize - 9);
+    context.fillText(")", noteX + prefixWidth + deductionWidthOnly, amountY - 7);
   }
-
-  context.textBaseline = prevBaseline;
 
   context.font = context.font.replace(font, font);
 }
@@ -2735,25 +2730,13 @@ function drawReportImageStats(context, data) {
     const centerX = x + cardWidth / 2;
     const cardY = y + 26;
     const cardH = 96;
+    const centerY = cardY + cardH / 2;
     drawRoundRect(context, x, cardY, cardWidth, cardH, 8, "#ffffff", "rgba(0, 0, 0, 0.08)");
     context.textAlign = "center";
-
-    const labelFontSize = 18;
-    const valueFontSize = 30;
-    const innerGap = 8;
-    const blockHeight = labelFontSize + innerGap + valueFontSize;
-    const blockTop = cardY + (cardH - blockHeight) / 2;
-
-    const prevBaseline = context.textBaseline;
-    context.textBaseline = "top";
-
-    setCanvasText(context, labelFontSize, 720, "rgba(110, 110, 115, 0.68)");
-    context.fillText(label, centerX, blockTop);
-
-    setCanvasText(context, valueFontSize, 780, "rgba(29, 29, 31, 0.82)");
-    drawFittedText(context, value, centerX, blockTop + labelFontSize + innerGap + valueFontSize, cardWidth - 40, valueFontSize, "center");
-
-    context.textBaseline = prevBaseline;
+    setCanvasText(context, 18, 720, "rgba(110, 110, 115, 0.68)");
+    context.fillText(label, centerX, centerY - 8);
+    setCanvasText(context, 30, 780, "rgba(29, 29, 31, 0.82)");
+    drawFittedText(context, value, centerX, centerY + 33, cardWidth - 40, 30, "center");
     context.textAlign = "left";
   });
 }
@@ -3141,8 +3124,19 @@ render();
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js?summarybox=v3").catch(() => {});
+          navigator.serviceWorker.register("./sw.js?v=10").catch(() => {});
         });
+      }
+    </script>
+
+    <script>
+      window.DUTCH_PAY_APP_VERSION = "v10-dom-report-capture";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v10-dom-report-capture")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
       }
     </script>
   </body>
