@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-pwa-v8-final-report-screenshot-match";
+const CACHE_NAME = "dutch-pay-pwa-v9-tap-zoom-fix";
 const ASSETS = [
   "./?v=8",
   "./index.html",
