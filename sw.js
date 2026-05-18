@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-v2-05-expense-mobile-fix";
+const CACHE_NAME = "dutch-pay-v2-07-top-summary-balance";
 const ASSETS = [
   "./",
   "./index.html",
