@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-v2-16-clean-dashboard";
+const CACHE_NAME = "dutch-pay-v2-18-sidebar-exact";
 const ASSETS = [
   "./",
   "./index.html",

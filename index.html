@@ -1,6 +1,8 @@
 
 
 <!doctype html>
+<!-- Dutch Pay v2.18 sidebar exact -->
+<!-- Dutch Pay v2.17 sidebar icons -->
 <!-- Dutch Pay v2.16 clean dashboard -->
 <!-- Dutch Pay v2.15 dashboard refine -->
 <!-- Dutch Pay v2.14 dashboard input drawer -->
@@ -30,7 +32,7 @@
     <title>더치페이 계산기</title>
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest?v=2.16" />
+    <link rel="manifest" href="./manifest.webmanifest?v=2.18" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -6167,6 +6169,170 @@ body {
       }
     </style>
 
+  
+    <style id="v2-17-sidebar-icons">
+      /* v2.17: sidebar icons refined like the reference image */
+      @media (min-width: 1181px) {
+        .side-nav-list {
+          gap: 8px !important;
+        }
+
+        .side-nav-button {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: flex-start !important;
+          gap: 16px !important;
+          min-height: 54px !important;
+          padding: 0 16px !important;
+          border-radius: 15px !important;
+          color: rgba(126,126,132,.92) !important;
+          font-size: 14px !important;
+          font-weight: 780 !important;
+          letter-spacing: -0.025em !important;
+        }
+
+        .side-nav-button.is-active {
+          color: #111113 !important;
+          background: #ffffff !important;
+          border-color: rgba(20,20,22,.06) !important;
+          box-shadow: 0 10px 26px rgba(0,0,0,.038) !important;
+        }
+
+        .side-nav-icon {
+          width: 26px !important;
+          height: 26px !important;
+          min-width: 26px !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          color: currentColor !important;
+          opacity: 1 !important;
+        }
+
+        .side-nav-icon svg {
+          width: 25px !important;
+          height: 25px !important;
+          display: block !important;
+          stroke: currentColor !important;
+        }
+
+        .side-nav-button.is-active .side-nav-icon svg {
+          stroke-width: 2.45 !important;
+        }
+
+        .side-brand {
+          padding-left: 8px !important;
+        }
+
+        .side-brand strong {
+          font-size: 26px !important;
+          font-weight: 850 !important;
+        }
+
+        .side-brand span {
+          font-size: 12px !important;
+          font-weight: 650 !important;
+        }
+      }
+    </style>
+
+  
+    <style id="v2-18-sidebar-exact">
+      /* v2.18: sidebar matched closely to user-provided reference */
+      @media (min-width: 1181px) {
+        .app-shell {
+          grid-template-columns: 230px minmax(0, 1fr) !important;
+          column-gap: 34px !important;
+        }
+
+        .desktop-side-nav {
+          top: 22px !important;
+          min-height: calc(100vh - 44px) !important;
+          margin: 22px 0 !important;
+          padding: 34px 18px 22px !important;
+          border-radius: 34px !important;
+          background: rgba(255,255,255,.9) !important;
+          border: 1px solid rgba(15,15,18,.04) !important;
+          box-shadow: 0 16px 44px rgba(0,0,0,.045) !important;
+        }
+
+        .side-brand {
+          padding: 0 14px !important;
+          margin-bottom: 28px !important;
+        }
+
+        .side-brand strong {
+          display: block !important;
+          font-size: 25px !important;
+          font-weight: 800 !important;
+          line-height: 1.15 !important;
+          letter-spacing: -0.045em !important;
+          color: #111113 !important;
+        }
+
+        .side-brand span {
+          display: none !important;
+        }
+
+        .side-nav-list {
+          gap: 16px !important;
+          margin-top: 0 !important;
+        }
+
+        .side-nav-button {
+          min-height: 54px !important;
+          padding: 0 18px !important;
+          gap: 16px !important;
+          border-radius: 15px !important;
+          background: transparent !important;
+          border: 1px solid transparent !important;
+          box-shadow: none !important;
+          color: #8d8d95 !important;
+          font-size: 14px !important;
+          font-weight: 700 !important;
+          letter-spacing: -0.02em !important;
+          justify-content: flex-start !important;
+        }
+
+        .side-nav-button:hover {
+          background: rgba(255,255,255,.5) !important;
+        }
+
+        .side-nav-button.is-active {
+          background: #fff !important;
+          color: #111113 !important;
+          border-color: rgba(15,15,18,.055) !important;
+          box-shadow: 0 8px 22px rgba(0,0,0,.03) !important;
+        }
+
+        .side-nav-icon {
+          width: 28px !important;
+          height: 28px !important;
+          min-width: 28px !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          color: currentColor !important;
+        }
+
+        .side-nav-icon svg {
+          width: 22px !important;
+          height: 22px !important;
+          display: block !important;
+          stroke: currentColor !important;
+          stroke-width: 2.1 !important;
+        }
+
+        .side-nav-button.is-active .side-nav-icon svg {
+          stroke-width: 2.35 !important;
+        }
+
+        .side-upgrade-card {
+          display: none !important;
+        }
+      }
+    </style>
+
   </head>
   <body>
     <div class="app-shell">
@@ -6178,23 +6344,57 @@ body {
         </div>
         <nav class="side-nav-list">
           <button type="button" class="side-nav-button is-active" data-nav-target="home">
-            <span class="side-nav-icon" aria-hidden="true">⌂</span>
+            <span class="side-nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.35" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3.5 11.5 12 4l8.5 7.5" />
+                <path d="M5.7 10.6V20h12.6v-9.4" />
+                <path d="M9.5 20v-5.3h5V20" />
+              </svg>
+            </span>
             <span>대시보드</span>
           </button>
-          <button type="button" class="side-nav-button" data-nav-target="meeting">
-            <span class="side-nav-icon" aria-hidden="true">◫</span>
-            <span>모임</span>
-          </button>
           <button type="button" class="side-nav-button" data-nav-target="settlement">
-            <span class="side-nav-icon" aria-hidden="true">▤</span>
+            <span class="side-nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="3.5" width="11.5" height="16.5" rx="2.2" />
+                <path d="M8.2 8h5.2" />
+                <path d="M8.2 11.5h5.8" />
+                <path d="M8.2 15h3.8" />
+                <path d="M17.2 14.6 21 18.4" />
+                <path d="M21 15.5v2.9h-2.9" />
+              </svg>
+            </span>
             <span>정산</span>
           </button>
           <button type="button" class="side-nav-button" data-nav-target="report">
-            <span class="side-nav-icon" aria-hidden="true">▥</span>
+            <span class="side-nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 20V11" />
+                <path d="M12 20V5" />
+                <path d="M19 20v-8" />
+                <path d="M3.5 20.5h17" />
+              </svg>
+            </span>
             <span>리포트</span>
           </button>
+          <button type="button" class="side-nav-button" data-nav-target="meeting">
+            <span class="side-nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8.5 11.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" />
+                <path d="M15.8 11a2.7 2.7 0 1 0 0-5.4" />
+                <path d="M3.5 19.2c.55-3.35 2.4-5.15 5-5.15s4.45 1.8 5 5.15" />
+                <path d="M13.6 14.4c2.7.25 4.45 1.9 4.9 4.8" />
+              </svg>
+            </span>
+            <span>멤버</span>
+          </button>
           <button type="button" class="side-nav-button" data-nav-target="settings">
-            <span class="side-nav-icon" aria-hidden="true">⚙</span>
+            <span class="side-nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3.1" />
+                <path d="M19.3 14.7a1.5 1.5 0 0 0 .3 1.65l.05.05a2 2 0 0 1-2.83 2.83l-.05-.05a1.5 1.5 0 0 0-1.65-.3 1.5 1.5 0 0 0-.9 1.37V20.4a2 2 0 0 1-4 0v-.15a1.5 1.5 0 0 0-.9-1.37 1.5 1.5 0 0 0-1.65.3l-.05.05a2 2 0 0 1-2.83-2.83l.05-.05a1.5 1.5 0 0 0 .3-1.65 1.5 1.5 0 0 0-1.37-.9H3.6a2 2 0 0 1 0-4h.15a1.5 1.5 0 0 0 1.37-.9 1.5 1.5 0 0 0-.3-1.65l-.05-.05A2 2 0 0 1 7.6 4.37l.05.05a1.5 1.5 0 0 0 1.65.3 1.5 1.5 0 0 0 .9-1.37V3.2a2 2 0 0 1 4 0v.15a1.5 1.5 0 0 0 .9 1.37 1.5 1.5 0 0 0 1.65-.3l.05-.05A2 2 0 0 1 19.63 7.2l-.05.05a1.5 1.5 0 0 0-.3 1.65 1.5 1.5 0 0 0 1.37.9h.15a2 2 0 0 1 0 4h-.15a1.5 1.5 0 0 0-1.35.9Z" />
+              </svg>
+            </span>
             <span>설정</span>
           </button>
         </nav>
@@ -7971,7 +8171,7 @@ render();
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js?v=2.16").catch(() => {});
+          navigator.serviceWorker.register("./sw.js?v=2.18").catch(() => {});
         });
       }
     </script>
@@ -9218,6 +9418,30 @@ render();
         caches.keys().then((keys) => {
           keys
             .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-16-clean-dashboard")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
+      }
+    </script>
+
+  
+    <script>
+      window.DUTCH_PAY_APP_VERSION = "v2.17-sidebar-icons";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-17-sidebar-icons")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
+      }
+    </script>
+
+  
+    <script>
+      window.DUTCH_PAY_APP_VERSION = "v2.18-sidebar-exact";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-18-sidebar-exact")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
