@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-v12-mobile-usability";
+const CACHE_NAME = "dutch-pay-v13-android-install-layout";
 const ASSETS = [
   "./",
   "./index.html",
