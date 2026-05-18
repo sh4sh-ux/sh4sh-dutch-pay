@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-v2-09-top-summary-like-mockup";
+const CACHE_NAME = "dutch-pay-v2-10-top-summary-forcefix";
 const ASSETS = [
   "./",
   "./index.html",

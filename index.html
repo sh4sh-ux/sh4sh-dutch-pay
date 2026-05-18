@@ -26,7 +26,7 @@
     <title>더치페이 계산기</title>
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest?v=2.09" />
+    <link rel="manifest" href="./manifest.webmanifest?v=2.10" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -4397,6 +4397,176 @@ body {
 }
 
     </style>
+  
+    <style id="v2-10-top-summary-forcefix">
+      /* v2.10 force fix: top summary layout really applied */
+      @media (min-width: 1181px) {
+        .layout {
+          grid-template-columns: minmax(540px, 0.93fr) minmax(760px, 1.17fr) !important;
+          gap: 28px !important;
+          align-items: start !important;
+        }
+
+        .meeting-panel,
+        .kpi-panel {
+          min-height: 252px !important;
+        }
+
+        .meeting-panel {
+          display: grid !important;
+          grid-template-rows: auto 1fr !important;
+        }
+
+        .meeting-panel .panel-heading {
+          min-height: 76px !important;
+          padding-bottom: 18px !important;
+        }
+
+        .meeting-grid {
+          height: 100% !important;
+          align-content: center !important;
+          padding-top: 16px !important;
+          padding-bottom: 18px !important;
+        }
+
+        .kpi-panel {
+          display: block !important;
+          padding: 0 !important;
+          background: transparent !important;
+          border: 0 !important;
+          box-shadow: none !important;
+          overflow: visible !important;
+        }
+
+        .kpi-panel > h2,
+        .kpi-footnote {
+          display: none !important;
+        }
+
+        .kpi-grid {
+          display: grid !important;
+          grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.94fr) !important;
+          grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+          gap: 18px !important;
+          min-height: 252px !important;
+          height: 252px !important;
+        }
+
+        .kpi-grid .metric,
+        .kpi-grid .metric:first-child {
+          min-height: 0 !important;
+          height: 100% !important;
+          padding: 24px 28px !important;
+          border-radius: 30px !important;
+          background: rgba(255,255,255,.96) !important;
+          border: 1px solid rgba(20,20,22,.06) !important;
+          box-shadow: 0 16px 34px rgba(0,0,0,.035) !important;
+          color: #141416 !important;
+        }
+
+        .kpi-grid .total-metric,
+        .kpi-grid .metric:first-child {
+          grid-column: 1 !important;
+          grid-row: 1 / span 2 !important;
+          display: flex !important;
+          flex-direction: column !important;
+          justify-content: center !important;
+          align-items: center !important;
+          text-align: center !important;
+        }
+
+        .kpi-grid .side-metric:nth-of-type(2) {
+          grid-column: 2 !important;
+          grid-row: 1 !important;
+        }
+
+        .kpi-grid .side-metric:nth-of-type(3) {
+          grid-column: 2 !important;
+          grid-row: 2 !important;
+        }
+
+        .kpi-grid .side-metric {
+          display: flex !important;
+          flex-direction: column !important;
+          justify-content: space-between !important;
+          align-items: flex-end !important;
+          text-align: right !important;
+        }
+
+        .kpi-grid .metric span {
+          color: rgba(110,110,115,.80) !important;
+          font-size: 15px !important;
+          font-weight: 800 !important;
+          line-height: 1.25 !important;
+        }
+
+        .kpi-grid .total-metric > span {
+          margin-bottom: 16px !important;
+        }
+
+        .kpi-grid .total-line {
+          display: grid !important;
+          justify-items: center !important;
+          gap: 10px !important;
+          width: 100% !important;
+        }
+
+        .kpi-grid .total-line strong {
+          color: #111113 !important;
+          font-size: clamp(46px, 3.25vw, 62px) !important;
+          font-weight: 900 !important;
+          line-height: 1.0 !important;
+          letter-spacing: -0.06em !important;
+          white-space: nowrap !important;
+        }
+
+        .kpi-grid .total-line small,
+        .kpi-grid .total-line small:empty {
+          display: none !important;
+        }
+
+        .kpi-grid .side-metric > span {
+          width: 100% !important;
+          text-align: right !important;
+        }
+
+        .kpi-grid .side-metric > strong {
+          width: 100% !important;
+          margin-top: auto !important;
+          text-align: right !important;
+          color: #111113 !important;
+          font-size: clamp(28px, 2vw, 40px) !important;
+          font-weight: 900 !important;
+          line-height: 1.06 !important;
+          letter-spacing: -0.045em !important;
+        }
+      }
+
+      @media (min-width: 1181px) and (max-width: 1440px) {
+        .layout {
+          grid-template-columns: minmax(500px, 0.92fr) minmax(680px, 1.08fr) !important;
+        }
+
+        .meeting-panel,
+        .kpi-panel {
+          min-height: 236px !important;
+        }
+
+        .kpi-grid {
+          min-height: 236px !important;
+          height: 236px !important;
+        }
+
+        .kpi-grid .total-line strong {
+          font-size: clamp(40px, 2.85vw, 54px) !important;
+        }
+
+        .kpi-grid .side-metric > strong {
+          font-size: clamp(24px, 1.8vw, 34px) !important;
+        }
+      }
+    </style>
+
   </head>
   <body>
     <div class="app-shell">
@@ -6101,7 +6271,7 @@ render();
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js?v=2.09").catch(() => {});
+          navigator.serviceWorker.register("./sw.js?v=2.10").catch(() => {});
         });
       }
     </script>
@@ -7016,6 +7186,18 @@ render();
         caches.keys().then((keys) => {
           keys
             .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-09-top-summary-like-mockup")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
+      }
+    </script>
+
+  
+    <script>
+      window.DUTCH_PAY_APP_VERSION = "v2.10-top-summary-forcefix";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-10-top-summary-forcefix")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
