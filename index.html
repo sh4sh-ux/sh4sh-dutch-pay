@@ -1,6 +1,9 @@
 
 
 <!doctype html>
+<!-- Dutch Pay v20 structure upgrade -->
+<!-- Dutch Pay v19 soft light redesign -->
+<!-- Dutch Pay v18 concept3 redesign -->
 <!-- Dutch Pay v17 usability only -->
 <!-- Dutch Pay v16 android direct install -->
 <!-- Dutch Pay v13 android install layout -->
@@ -14,7 +17,7 @@
     <title>더치페이 계산기</title>
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest?v=17" />
+    <link rel="manifest" href="./manifest.webmanifest?v=20" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -1826,14 +1829,1150 @@ button,
   font-weight: 650;
 }
 
+
+/* v18 Concept 3 Redesign
+   화이트 기반 + 블랙 포인트 + 카드형 대시보드 느낌.
+   기능/계산 로직은 유지하고, 화면 구조와 사용성만 재정리. */
+:root {
+  --bg: #f4f4f5;
+  --surface: rgba(255, 255, 255, 0.92);
+  --surface-solid: #ffffff;
+  --surface-soft: #f6f6f7;
+  --surface-raised: #ffffff;
+  --ink: #141416;
+  --muted: #8a8a91;
+  --line: rgba(20, 20, 22, 0.08);
+  --line-soft: rgba(20, 20, 22, 0.06);
+  --primary: #111113;
+  --primary-dark: #000000;
+  --primary-soft: #f0f0f2;
+  --accent: #007aff;
+  --accent-soft: #edf5ff;
+  --danger: #d70015;
+  --danger-soft: #fff0f1;
+  --good: #248a3d;
+  --good-soft: #edf9f0;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.07);
+}
+
+body {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255,255,255,.95), transparent 36%),
+    linear-gradient(180deg, #fafafa 0%, #f3f3f4 100%);
+}
+
+.app-shell {
+  max-width: 1480px;
+  margin: 0 auto;
+}
+
+.topbar {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: start;
+  padding: 34px clamp(22px, 4vw, 56px) 18px;
+  background: transparent;
+  border-bottom: 0;
+  backdrop-filter: none;
+}
+
+.eyebrow {
+  color: rgba(29, 29, 31, .55);
+  font-size: 13px;
+  font-weight: 780;
+  letter-spacing: .01em;
+  text-transform: none;
+}
+
+h1 {
+  max-width: 520px;
+  color: var(--ink);
+  font-size: clamp(32px, 4vw, 54px);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 1.05;
+}
+
+.mobile-title-break {
+  display: none;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  width: auto;
+  padding-top: 8px;
+}
+
+.ghost-button,
+.report-button,
+.primary-button,
+.deduction-button,
+.icon-button,
+.delete-button {
+  border-radius: 14px;
+  min-height: 42px;
+  font-weight: 820;
+  box-shadow: none;
+}
+
+.ghost-button {
+  color: var(--ink);
+  background: #ffffff;
+  border-color: var(--line);
+}
+
+.report-button,
+.primary-button,
+.icon-button {
+  color: #ffffff;
+  background: #111113;
+  border-color: #111113;
+}
+
+.report-button:hover,
+.primary-button:hover {
+  background: #000000;
+}
+
+.more-menu-button {
+  border-radius: 14px;
+  font-size: 24px;
+}
+
+.layout {
+  grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr);
+  gap: 20px;
+  padding: 10px clamp(22px, 4vw, 56px) 54px;
+}
+
+.workspace,
+.summary {
+  gap: 18px;
+}
+
+.panel {
+  overflow: hidden;
+  background: rgba(255,255,255,.9);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: saturate(150%) blur(18px);
+}
+
+.panel-heading {
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.panel-heading h2,
+.summary .panel h2,
+.kpi-panel h2 {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+/* 첫 번째 모임 패널을 메인 히어로 카드처럼 보이게 */
+.meeting-panel {
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 88% 28%, rgba(255,255,255,.16), transparent 24%),
+    linear-gradient(135deg, #121214 0%, #1d1f24 58%, #050506 100%);
+  border-color: rgba(0,0,0,.12);
+}
+
+.meeting-panel .panel-heading {
+  border-bottom: 0;
+  padding-bottom: 8px;
+}
+
+.meeting-panel .panel-heading h2 {
+  color: rgba(255,255,255,.8);
+}
+
+.meeting-panel .save-status {
+  color: rgba(255,255,255,.58);
+}
+
+.meeting-grid {
+  max-width: none;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 0 22px 22px;
+  gap: 14px;
+}
+
+.meeting-grid label span,
+.meeting-panel .field-label {
+  color: rgba(255,255,255,.64);
+}
+
+.meeting-panel input,
+.meeting-panel .date-control,
+.meeting-panel .date-control .native-date-input {
+  color: #ffffff;
+  background: rgba(255,255,255,.1);
+  border-color: rgba(255,255,255,.16);
+}
+
+.meeting-panel input::placeholder,
+.meeting-panel .date-display.empty {
+  color: rgba(255,255,255,.42);
+}
+
+.people-list {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  padding: 18px 22px 22px;
+}
+
+.person-row {
+  padding: 10px;
+  background: #fbfbfc;
+  border: 1px solid var(--line-soft);
+  border-radius: 18px;
+}
+
+.person-row input {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.expense-panel .panel-heading {
+  align-items: center;
+}
+
+.expense-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.deduction-button {
+  min-height: 40px;
+  color: var(--danger);
+  background: var(--danger-soft);
+}
+
+.expense-scroll {
+  overflow-x: auto;
+  padding: 0 14px 16px;
+}
+
+.expense-table {
+  min-width: 760px;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  background: transparent;
+}
+
+.expense-table th {
+  position: static;
+  padding: 4px 10px;
+  color: rgba(29,29,31,.48);
+  background: transparent;
+  border-bottom: 0;
+}
+
+.expense-table td {
+  padding: 10px;
+  background: #ffffff;
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.expense-table td:first-child {
+  border-left: 1px solid var(--line-soft);
+  border-radius: 16px 0 0 16px;
+}
+
+.expense-table td:last-child {
+  border-right: 1px solid var(--line-soft);
+  border-radius: 0 16px 16px 0;
+}
+
+.expense-table tbody tr:hover {
+  background: transparent;
+}
+
+input,
+select,
+.date-control .native-date-input {
+  min-height: 44px;
+  border-radius: 14px;
+  background: #fbfbfc;
+  border-color: var(--line);
+}
+
+input:focus,
+select:focus,
+.date-control .native-date-input:focus {
+  border-color: rgba(0,0,0,.24);
+  box-shadow: 0 0 0 4px rgba(0,0,0,.06);
+}
+
+/* 요약 영역: 대시보드 카드처럼 */
+.summary {
+  align-content: start;
+}
+
+.kpi-panel {
+  background:
+    radial-gradient(circle at 82% 30%, rgba(255,255,255,.12), transparent 24%),
+    linear-gradient(135deg, #111113 0%, #1e2027 100%);
+  color: #ffffff;
+}
+
+.summary .panel {
+  padding: 20px;
+}
+
+.kpi-panel h2 {
+  color: rgba(255,255,255,.76);
+}
+
+.kpi-grid {
+  gap: 12px;
+}
+
+.metric {
+  min-height: 100px;
+  padding: 16px;
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.12);
+  border-radius: 18px;
+}
+
+.metric span {
+  color: rgba(255,255,255,.58);
+}
+
+.metric strong,
+.total-line strong {
+  color: #ffffff;
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.total-line small {
+  color: rgba(255,255,255,.62);
+}
+
+.total-line small strong {
+  color: #ff9f0a;
+}
+
+.transfer-row,
+.summary-row,
+.settlement-card {
+  border-radius: 18px;
+  background: #ffffff;
+  border-color: var(--line-soft);
+  box-shadow: 0 8px 22px rgba(0,0,0,.035);
+}
+
+.transfer-row,
+.summary-row {
+  min-height: 58px;
+  padding: 14px 15px;
+}
+
+.settlement-card {
+  min-height: 100px;
+  padding: 18px;
+}
+
+.settlement-result span {
+  min-height: 32px;
+}
+
+.settlement-result.receive span {
+  color: #006de5;
+  background: #edf5ff;
+}
+
+.settlement-result.pay span {
+  color: var(--danger);
+  background: var(--danger-soft);
+}
+
+.badge.receive {
+  color: #006de5;
+  background: #edf5ff;
+}
+
+.install-prompt {
+  max-width: 1480px;
+  margin-left: clamp(22px, 4vw, 56px);
+  margin-right: clamp(22px, 4vw, 56px);
+  border-radius: 22px;
+}
+
+/* 모바일: 선택한 시안처럼 홈 카드 + 빠른 기능 + 리스트 느낌 */
+@media (max-width: 720px) {
+  .app-shell {
+    max-width: 430px;
+    padding-bottom: calc(92px + env(safe-area-inset-bottom));
+  }
+
+  .topbar {
+    display: block;
+    padding: calc(20px + env(safe-area-inset-top)) 20px 12px;
+  }
+
+  .eyebrow {
+    margin-top: 2px;
+    font-size: 12px;
+  }
+
+  h1 {
+    margin-top: 8px;
+    font-size: 28px;
+    line-height: 1.16;
+    letter-spacing: -0.055em;
+  }
+
+  .mobile-title-break {
+    display: block;
+  }
+
+  .top-actions {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: 1fr auto 44px;
+    gap: 8px;
+    width: 100%;
+    padding-top: 0;
+  }
+
+  #copySummaryButton {
+    grid-column: 1;
+  }
+
+  #openReportButton {
+    grid-column: 2;
+    margin-left: 0;
+  }
+
+  .more-menu-wrap {
+    grid-column: 3;
+  }
+
+  .layout {
+    display: grid;
+    gap: 14px;
+    padding: 8px 20px 28px;
+  }
+
+  .workspace,
+  .summary {
+    gap: 14px;
+  }
+
+  .panel {
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.055);
+  }
+
+  .meeting-panel {
+    order: -3;
+  }
+
+  .meeting-grid {
+    grid-template-columns: 1fr;
+    padding: 0 18px 20px;
+  }
+
+  .meeting-panel .panel-heading {
+    padding: 18px 18px 8px;
+  }
+
+  .people-list {
+    grid-template-columns: 1fr;
+    padding: 14px 16px 18px;
+  }
+
+  .expense-panel {
+    order: 1;
+  }
+
+  .expense-panel .panel-heading {
+    gap: 14px;
+  }
+
+  .expense-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .expense-table {
+    min-width: 700px;
+  }
+
+  .summary {
+    grid-template-columns: 1fr;
+  }
+
+  .summary .panel {
+    padding: 18px;
+  }
+
+  .kpi-panel {
+    order: -2;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metric {
+    min-height: 92px;
+  }
+
+  .metric strong,
+  .total-line strong {
+    font-size: 22px;
+  }
+
+  .mobile-bottom-actions {
+    max-width: 430px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    padding: 10px 20px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,.84);
+  }
+
+  .mobile-action-button {
+    border-radius: 18px;
+  }
+
+  .mobile-action-button.primary,
+  .mobile-action-button.secondary {
+    background: #111113;
+  }
+
+  .install-prompt {
+    margin: 10px 20px 0;
+    border-radius: 20px;
+  }
+}
+
+/* 데스크톱에서 앱처럼 더 넓은 카드 느낌 */
+@media (min-width: 1041px) {
+  .summary {
+    position: sticky;
+    top: 20px;
+  }
+}
+
+
+/* v19 Soft Light Balance
+   v18에서 무겁게 느껴지던 모임/요약 카드의 검정 면적을 줄이고,
+   블랙은 버튼과 핵심 텍스트에만 쓰도록 조정. */
+body {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255,255,255,.95), transparent 34%),
+    radial-gradient(circle at 85% 18%, rgba(238,239,242,.72), transparent 30%),
+    linear-gradient(180deg, #fbfbfc 0%, #f3f3f5 100%);
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+/* 모임 정보 카드: 검정 히어로 → 밝은 카드 */
+.meeting-panel {
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 92% 8%, rgba(0, 0, 0, 0.035), transparent 24%),
+    linear-gradient(180deg, rgba(255,255,255,.98) 0%, rgba(248,248,250,.95) 100%);
+  border-color: rgba(20, 20, 22, 0.08);
+  box-shadow: 0 18px 48px rgba(0,0,0,.06);
+}
+
+.meeting-panel .panel-heading {
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 14px;
+}
+
+.meeting-panel .panel-heading h2 {
+  color: var(--ink);
+}
+
+.meeting-panel .save-status {
+  color: var(--muted);
+}
+
+.meeting-panel .panel-heading::before {
+  content: "모임";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 26px;
+  padding: 0 10px;
+  margin-right: 8px;
+  color: #ffffff;
+  background: #111113;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.meeting-grid label span,
+.meeting-panel .field-label {
+  color: rgba(29, 29, 31, 0.58);
+}
+
+.meeting-panel input,
+.meeting-panel .date-control,
+.meeting-panel .date-control .native-date-input {
+  color: var(--ink);
+  background: #ffffff;
+  border-color: var(--line);
+}
+
+.meeting-panel input::placeholder,
+.meeting-panel .date-display.empty {
+  color: rgba(29, 29, 31, 0.35);
+}
+
+/* 요약 카드: 검정 박스 → 밝은 대시보드 카드 */
+.kpi-panel {
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 88% 20%, rgba(0, 0, 0, 0.035), transparent 26%),
+    linear-gradient(180deg, #ffffff 0%, #f8f8fa 100%);
+  border-color: rgba(20, 20, 22, 0.08);
+  box-shadow: 0 18px 48px rgba(0,0,0,.06);
+}
+
+.kpi-panel h2 {
+  color: var(--ink);
+}
+
+.metric {
+  background: #ffffff;
+  border-color: rgba(20, 20, 22, 0.08);
+  box-shadow: 0 10px 24px rgba(0,0,0,.035);
+}
+
+.metric span {
+  color: rgba(29, 29, 31, 0.52);
+}
+
+.metric strong,
+.total-line strong {
+  color: var(--ink);
+}
+
+.total-line small {
+  color: rgba(29, 29, 31, 0.52);
+}
+
+.total-line small strong {
+  color: #ff8a00;
+}
+
+/* 핵심 금액만 아주 은은한 포인트 카드로 */
+.metric:first-child {
+  background:
+    radial-gradient(circle at 88% 20%, rgba(0, 122, 255, 0.07), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+  border-color: rgba(0, 122, 255, 0.12);
+}
+
+.metric:first-child strong {
+  color: #111113;
+}
+
+/* 검정 포인트는 버튼 위주로 유지 */
+.report-button,
+.primary-button,
+.icon-button,
+.mobile-action-button.primary,
+.mobile-action-button.secondary {
+  background: #111113;
+  border-color: #111113;
+}
+
+.report-button:hover,
+.primary-button:hover {
+  background: #000000;
+}
+
+/* 모바일에서는 상단 첫 카드가 너무 밋밋하지 않도록 얇은 음영만 */
+@media (max-width: 720px) {
+  .meeting-panel,
+  .kpi-panel {
+    box-shadow: 0 14px 36px rgba(0,0,0,.055);
+  }
+
+  .meeting-panel .panel-heading::before {
+    min-height: 24px;
+    padding: 0 9px;
+    font-size: 11px;
+  }
+
+  .metric {
+    min-height: 88px;
+  }
+}
+
+
+/* v20 Structure Upgrade
+   1. 단정한 상단 구조
+   2. 작은 카드형 요약 박스
+   3. 모바일 카드형 지출 리스트
+   4. 모바일 하단 탭 네비게이션
+   5. 데스크톱 사이드 메뉴 + 본문 구조 */
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  column-gap: 24px;
+  align-items: start;
+}
+
+.desktop-side-nav {
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: calc(100vh - 48px);
+  padding: 24px 16px;
+  margin: 22px 0 22px 24px;
+  background: rgba(255,255,255,.78);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: 0 18px 46px rgba(0,0,0,.05);
+  backdrop-filter: saturate(150%) blur(18px);
+}
+
+.side-brand strong {
+  display: block;
+  color: var(--ink);
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
+
+.side-brand span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.side-nav-list {
+  display: grid;
+  gap: 8px;
+}
+
+.side-nav-button {
+  min-height: 48px;
+  padding: 0 14px;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 820;
+}
+
+.side-nav-button:hover {
+  background: #f6f6f8;
+  border-color: var(--line-soft);
+}
+
+.side-nav-button.is-active {
+  color: #111113;
+  background: #f4f4f6;
+  border-color: rgba(17,17,19,.08);
+}
+
+.side-upgrade-card {
+  margin-top: auto;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid var(--line-soft);
+  border-radius: 20px;
+}
+
+.side-upgrade-card strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.side-upgrade-card p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.topbar,
+.install-prompt,
+.layout {
+  grid-column: 2;
+}
+
+.topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 30px 32px 14px 6px;
+}
+
+.topbar-copy {
+  min-width: 0;
+}
+
+.topbar-copy .eyebrow {
+  margin-bottom: 8px;
+}
+
+.topbar-copy h1 {
+  max-width: none;
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.08;
+  letter-spacing: -0.05em;
+}
+
+.top-description {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.top-actions {
+  flex: 0 0 auto;
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.top-actions #resetButton,
+.top-actions #openGuideButton {
+  display: none !important;
+}
+
+.layout {
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 420px);
+  gap: 22px;
+  padding: 8px 32px 56px 6px;
+}
+
+.workspace {
+  gap: 18px;
+}
+
+.summary {
+  gap: 16px;
+}
+
+.kpi-panel {
+  padding: 18px;
+}
+
+.kpi-panel h2 {
+  margin-bottom: 12px;
+}
+
+.kpi-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.metric {
+  min-height: 84px;
+  padding: 14px 14px 12px;
+  border-radius: 16px;
+}
+
+.metric span {
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.metric strong,
+.total-line strong {
+  font-size: 22px;
+}
+
+.summary-detail-panel {
+  padding: 18px;
+}
+
+.summary-detail-panel h2 {
+  margin-bottom: 14px;
+}
+
+.transfer-row,
+.summary-row {
+  min-height: 54px;
+  padding: 12px 14px;
+  border-radius: 16px;
+}
+
+.settlement-card {
+  border-radius: 18px;
+}
+
+.expense-panel .panel-heading,
+.people-panel .panel-heading,
+.meeting-panel .panel-heading {
+  align-items: center;
+}
+
+.section-note {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+.install-prompt {
+  margin-left: 6px;
+  margin-right: 32px;
+}
+
+/* 모바일 카드형 지출 리스트 */
+@media (max-width: 720px) {
+  .app-shell {
+    display: block;
+  }
+
+  .desktop-side-nav {
+    display: none;
+  }
+
+  .topbar,
+  .install-prompt,
+  .layout {
+    grid-column: auto;
+  }
+
+  .topbar {
+    display: block;
+    padding: calc(18px + env(safe-area-inset-top)) 20px 10px;
+  }
+
+  .topbar-copy h1 {
+    font-size: 28px;
+  }
+
+  .top-description {
+    font-size: 13px;
+  }
+
+  .top-actions {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 8px;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .layout {
+    display: block;
+    padding: 8px 20px 92px;
+  }
+
+  .workspace,
+  .summary {
+    gap: 14px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .metric {
+    min-height: 74px;
+    padding: 12px;
+  }
+
+  .metric strong,
+  .total-line strong {
+    font-size: 20px;
+  }
+
+  .expense-scroll {
+    padding: 0 14px 14px;
+  }
+
+  .expense-table,
+  .expense-table thead,
+  .expense-table tbody,
+  .expense-table tr,
+  .expense-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .expense-table {
+    min-width: 0;
+    border-spacing: 0;
+  }
+
+  .expense-table thead {
+    display: none;
+  }
+
+  .expense-table tbody {
+    display: grid;
+    gap: 12px;
+  }
+
+  .expense-table tr {
+    padding: 14px;
+    background: #ffffff;
+    border: 1px solid var(--line-soft);
+    border-radius: 20px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.03);
+  }
+
+  .expense-table td {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    padding: 7px 0;
+    border: 0 !important;
+    background: transparent !important;
+  }
+
+  .expense-table td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 780;
+    line-height: 1.6;
+  }
+
+  .expense-table td[data-label="삭제"] {
+    grid-template-columns: 1fr;
+    justify-items: end;
+    padding-top: 4px;
+  }
+
+  .expense-table td[data-label="삭제"]::before {
+    display: none;
+  }
+
+  .expense-table td[data-label="참여 인원"] .participant-list {
+    justify-content: flex-start;
+  }
+
+  .mobile-bottom-tabs {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    bottom: 0;
+    z-index: 18;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    width: min(100%, 430px);
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,.88);
+    border-top: 1px solid var(--line);
+    backdrop-filter: saturate(150%) blur(18px);
+    box-shadow: 0 -10px 24px rgba(0,0,0,.05);
+  }
+
+  .mobile-tab-button {
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    min-height: 46px;
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .mobile-tab-button .mobile-tab-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .mobile-tab-button.is-active {
+    color: var(--ink);
+  }
+
+  .mobile-tab-button.is-active .mobile-tab-icon {
+    color: #ffffff;
+    background: #111113;
+  }
+
+  .install-prompt {
+    margin: 10px 20px 0;
+  }
+
+  body.report-open .mobile-bottom-tabs,
+  body.guide-open .mobile-bottom-tabs {
+    display: none;
+  }
+}
+
+/* desktop/mobile visibility cleanup */
+@media (min-width: 721px) {
+  .mobile-bottom-tabs {
+    display: none;
+  }
+}
+
     </style>
   </head>
   <body>
     <div class="app-shell">
+
+      <aside class="desktop-side-nav" aria-label="데스크톱 메뉴">
+        <div class="side-brand">
+          <strong>Dutch Pay</strong>
+          <span>모임 정산 대시보드</span>
+        </div>
+        <nav class="side-nav-list">
+          <button type="button" class="side-nav-button is-active" data-nav-target="home">홈</button>
+          <button type="button" class="side-nav-button" data-nav-target="meeting">모임</button>
+          <button type="button" class="side-nav-button" data-nav-target="settlement">정산</button>
+          <button type="button" class="side-nav-button" data-nav-target="report">리포트</button>
+          <button type="button" class="side-nav-button" data-nav-target="settings">설정</button>
+        </nav>
+        <div class="side-upgrade-card">
+          <strong>Dutch Pay</strong>
+          <p>깔끔한 더치페이 정산을 빠르게 관리하세요.</p>
+        </div>
+      </aside>
+
       <header class="topbar">
-        <div>
+        <div class="topbar-copy">
           <p class="eyebrow">Dutch Pay</p>
-          <h1>더치페이 계산기</h1>
+          <h1>Dutch Pay</h1>
+          <p class="top-description">모임 지출을 입력하면 정산과 송금 내역이 자동으로 정리됩니다.</p>
         </div>
         <div class="top-actions">
           <button class="ghost-button danger" id="resetButton" type="button" aria-label="초기화">초기화</button>
@@ -1861,8 +3000,8 @@ button,
       </section>
 
       <main class="layout">
-        <section class="workspace">
-          <div class="panel meeting-panel">
+        <section class="workspace" id="section-home">
+          <div class="panel meeting-panel" id="section-meeting">
             <div class="panel-heading">
               <h2>모임</h2>
               <span id="saveStatus" class="save-status">저장됨</span>
@@ -1882,7 +3021,7 @@ button,
             </div>
           </div>
 
-          <div class="panel">
+          <div class="panel people-panel">
             <div class="panel-heading">
               <h2>인원</h2>
               <button class="icon-button" id="addPersonButton" type="button" aria-label="인원 추가">+</button>
@@ -1890,7 +3029,7 @@ button,
             <div id="peopleList" class="people-list" aria-live="polite"></div>
           </div>
 
-          <div class="panel expense-panel">
+          <div class="panel expense-panel quick-action-panel" id="section-settlement">
             <div class="panel-heading split-heading">
               <div>
                 <h2>지출</h2>
@@ -1919,7 +3058,7 @@ button,
           </div>
         </section>
 
-        <aside class="summary">
+        <aside class="summary" id="section-summary">
           <section class="panel kpi-panel">
             <h2>요약</h2>
             <div class="kpi-grid">
@@ -1945,18 +3084,18 @@ button,
             </div>
           </section>
 
-          <section class="panel">
+          <section class="panel summary-detail-panel transfers-panel">
             <h2>송금</h2>
             <div id="transferSummary" class="transfer-summary"></div>
           </section>
 
-          <section class="panel">
+          <section class="panel summary-detail-panel person-panel">
             <h2>사람별 정산</h2>
             <div id="personSummary" class="person-summary"></div>
           </section>
 
-          <section class="panel">
-            <h2>차수별</h2>
+          <section class="panel summary-detail-panel rounds-panel">
+            <h2>차수별 내역</h2>
             <div id="roundSummary" class="round-summary"></div>
           </section>
         </aside>
@@ -2060,10 +3199,26 @@ button,
       </div>
     </div>
 
-    <nav class="mobile-bottom-actions" aria-label="빠른 실행">
-      <button class="mobile-action-button secondary" id="mobileAddExpenseButton" type="button">+ 지출 추가</button>
-      <button class="mobile-action-button primary" id="mobileOpenReportButton" type="button">정산 결과</button>
+    
+    <nav class="mobile-bottom-tabs" aria-label="하단 탭 메뉴">
+      <button class="mobile-tab-button is-active" id="mobileTabHome" type="button" data-nav-target="home">
+        <span class="mobile-tab-icon">⌂</span>
+        <span>홈</span>
+      </button>
+      <button class="mobile-tab-button" id="mobileTabSettlement" type="button" data-nav-target="settlement">
+        <span class="mobile-tab-icon">≡</span>
+        <span>정산</span>
+      </button>
+      <button class="mobile-tab-button" id="mobileTabReport" type="button" data-nav-target="report">
+        <span class="mobile-tab-icon">▣</span>
+        <span>리포트</span>
+      </button>
+      <button class="mobile-tab-button" id="mobileTabSettings" type="button" data-nav-target="settings">
+        <span class="mobile-tab-icon">⚙</span>
+        <span>설정</span>
+      </button>
     </nav>
+
 
     <div id="reportOverlay" class="report-overlay" hidden>
       <div class="report-toolbar">
@@ -2465,7 +3620,7 @@ function renderExpenses() {
 
       return `
         <tr class="${isDeduction ? "deduction-row" : ""}" data-expense-id="${expense.id}">
-          <td>
+          <td data-label="차수">
             ${
               isDeduction
                 ? '<span class="deduction-label">공제</span>'
@@ -2477,15 +3632,15 @@ function renderExpenses() {
                   </select>`
             }
           </td>
-          <td><input data-action="edit-expense" data-field="place" data-expense-id="${expense.id}" type="text" value="${escapeHtml(expense.place || "")}" placeholder="${isDeduction ? "공제 사유" : "장소"}" aria-label="${isDeduction ? "공제 사유" : "장소"}" /></td>
-          <td><input class="${isDeduction ? "negative-input" : ""}" data-action="edit-expense" data-field="amount" data-expense-id="${expense.id}" inputmode="numeric" type="text" value="${formattedInputNumber(expense.amount, isDeduction)}" placeholder="${isDeduction ? "-금액" : "금액"}" aria-label="${isDeduction ? "공제 금액" : "금액"}" /></td>
-          <td>
+          <td data-label="장소"><input data-action="edit-expense" data-field="place" data-expense-id="${expense.id}" type="text" value="${escapeHtml(expense.place || "")}" placeholder="${isDeduction ? "공제 사유" : "장소"}" aria-label="${isDeduction ? "공제 사유" : "장소"}" /></td>
+          <td data-label="금액"><input class="${isDeduction ? "negative-input" : ""}" data-action="edit-expense" data-field="amount" data-expense-id="${expense.id}" inputmode="numeric" type="text" value="${formattedInputNumber(expense.amount, isDeduction)}" placeholder="${isDeduction ? "-금액" : "금액"}" aria-label="${isDeduction ? "공제 금액" : "금액"}" /></td>
+          <td data-label="결제자">
             <select data-action="edit-expense" data-field="payer" data-expense-id="${expense.id}" aria-label="결제자">
               ${payerOptions}
             </select>
           </td>
-          <td><div class="participant-list">${participants || '<span class="row-meta">인원 없음</span>'}</div></td>
-          <td><button class="delete-button" data-action="delete-expense" data-expense-id="${expense.id}" type="button" aria-label="지출 삭제">×</button></td>
+          <td data-label="참여 인원"><div class="participant-list">${participants || '<span class="row-meta">인원 없음</span>'}</div></td>
+          <td data-label="삭제"><button class="delete-button" data-action="delete-expense" data-expense-id="${expense.id}" type="button" aria-label="지출 삭제">×</button></td>
         </tr>
       `;
     })
@@ -3441,7 +4596,7 @@ render();
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js?v=17").catch(() => {});
+          navigator.serviceWorker.register("./sw.js?v=20").catch(() => {});
         });
       }
     </script>
@@ -4080,6 +5235,100 @@ render();
         caches.keys().then((keys) => {
           keys
             .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v17-usability-only")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
+      }
+    </script>
+
+
+    <script>
+      window.DUTCH_PAY_APP_VERSION = "v18-concept3-redesign";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v18-concept3-redesign")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
+      }
+    </script>
+
+
+    <script>
+      window.DUTCH_PAY_APP_VERSION = "v19-soft-light-redesign";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v19-soft-light-redesign")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
+      }
+    </script>
+
+
+    <script>
+      (function setupV20Navigation() {
+        const targets = {
+          home: document.querySelector("#section-home"),
+          meeting: document.querySelector("#section-meeting"),
+          settlement: document.querySelector("#section-settlement"),
+          report: null,
+          settings: null,
+        };
+
+        function setActiveButtons(name) {
+          document.querySelectorAll("[data-nav-target]").forEach((button) => {
+            button.classList.toggle("is-active", button.getAttribute("data-nav-target") === name);
+          });
+        }
+
+        function openTarget(name) {
+          if (name === "report") {
+            document.querySelector("#openReportButton")?.click();
+            setActiveButtons("report");
+            return;
+          }
+          if (name === "settings") {
+            document.querySelector("#openGuideButton")?.click();
+            setActiveButtons("settings");
+            return;
+          }
+
+          const target = targets[name] || targets.home;
+          target?.scrollIntoView({ behavior: "smooth", block: "start" });
+          setActiveButtons(name);
+        }
+
+        document.querySelectorAll("[data-nav-target]").forEach((button) => {
+          button.addEventListener("click", () => openTarget(button.getAttribute("data-nav-target")));
+        });
+
+        // Update active tab on scroll for major sections
+        const observedSections = [
+          { key: "home", el: document.querySelector("#section-home") },
+          { key: "meeting", el: document.querySelector("#section-meeting") },
+          { key: "settlement", el: document.querySelector("#section-settlement") },
+        ].filter((item) => item.el);
+
+        const observer = new IntersectionObserver((entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (!visible) return;
+          const found = observedSections.find((item) => item.el === visible.target);
+          if (found) setActiveButtons(found.key);
+        }, { threshold: [0.25, 0.5, 0.75] });
+
+        observedSections.forEach((item) => observer.observe(item.el));
+      })();
+    </script>
+
+
+    <script>
+      window.DUTCH_PAY_APP_VERSION = "v20-structure-upgrade";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v20-structure-upgrade")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
