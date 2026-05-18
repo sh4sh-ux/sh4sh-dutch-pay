@@ -1,6 +1,7 @@
 
 
 <!doctype html>
+<!-- Dutch Pay v2.14 dashboard input drawer -->
 <!-- Dutch Pay v2.13 dashboard polish -->
 <!-- Dutch Pay v2.09 top summary like mockup -->
 <!-- Dutch Pay v2.08 mobile bottom nav redesign -->
@@ -27,7 +28,7 @@
     <title>더치페이 계산기</title>
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest?v=2.13" />
+    <link rel="manifest" href="./manifest.webmanifest?v=2.14" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -5327,6 +5328,308 @@ body {
       }
     </style>
 
+  
+    <style id="v2-14-dashboard-input-drawer">
+      /* v2.14: sidebar icons + desktop right-side input drawer + install banner mobile-only */
+
+      @media (min-width: 721px) {
+        .install-prompt {
+          display: none !important;
+        }
+      }
+
+      @media (min-width: 1181px) {
+        .side-nav-button {
+          display: flex !important;
+          align-items: center !important;
+          gap: 12px !important;
+        }
+
+        .side-nav-icon {
+          width: 22px;
+          min-width: 22px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: rgba(29,29,31,.68);
+          font-size: 18px;
+          line-height: 1;
+        }
+
+        .side-nav-button.is-active .side-nav-icon {
+          color: #111113;
+        }
+
+        .dashboard-input-actions {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 12px;
+          margin: -6px 0 22px;
+        }
+
+        .dashboard-input-trigger {
+          min-height: 74px;
+          padding: 16px 18px;
+          text-align: left;
+          background: rgba(255,255,255,.94);
+          border: 1px solid rgba(20,20,22,.065);
+          border-radius: 22px;
+          box-shadow: 0 14px 34px rgba(0,0,0,.035);
+          cursor: pointer;
+          transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+        }
+
+        .dashboard-input-trigger:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 18px 38px rgba(0,0,0,.055);
+        }
+
+        .dashboard-input-trigger span {
+          display: block;
+          color: rgba(29,29,31,.48);
+          font-size: 12px;
+          font-weight: 820;
+          line-height: 1;
+        }
+
+        .dashboard-input-trigger strong {
+          display: block;
+          margin-top: 9px;
+          color: #111113;
+          font-size: 15px;
+          font-weight: 900;
+          letter-spacing: -0.035em;
+          line-height: 1.2;
+        }
+
+        .dashboard-input-trigger.primary {
+          color: #ffffff;
+          background: #111113;
+          border-color: #111113;
+          box-shadow: 0 14px 30px rgba(0,0,0,.13);
+        }
+
+        .dashboard-input-trigger.primary span,
+        .dashboard-input-trigger.primary strong {
+          color: #ffffff;
+        }
+
+        .dashboard-input-close {
+          display: none;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open {
+          overflow: hidden;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .layout {
+          display: block !important;
+          position: fixed !important;
+          top: 24px !important;
+          right: 24px !important;
+          bottom: 24px !important;
+          left: auto !important;
+          z-index: 90 !important;
+          width: min(560px, calc(100vw - 300px)) !important;
+          min-width: 0 !important;
+          padding: 0 !important;
+          overflow-y: auto !important;
+          overflow-x: hidden !important;
+          border-radius: 32px !important;
+          background: rgba(250,250,251,.94) !important;
+          border: 1px solid rgba(20,20,22,.08) !important;
+          box-shadow: 0 30px 90px rgba(0,0,0,.16) !important;
+          backdrop-filter: saturate(160%) blur(20px) !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .layout::before {
+          content: "빠른 입력";
+          position: sticky;
+          top: 0;
+          z-index: 3;
+          display: block;
+          padding: 22px 76px 18px 24px;
+          color: #111113;
+          font-size: 22px;
+          font-weight: 900;
+          letter-spacing: -0.045em;
+          background: rgba(250,250,251,.92);
+          border-bottom: 1px solid rgba(20,20,22,.06);
+          backdrop-filter: saturate(160%) blur(18px);
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .dashboard-input-close {
+          position: sticky;
+          top: 16px;
+          z-index: 5;
+          float: right;
+          display: inline-flex !important;
+          align-items: center;
+          justify-content: center;
+          width: 42px;
+          height: 42px;
+          margin: 14px 16px -58px 0;
+          color: #111113;
+          font-size: 26px;
+          font-weight: 500;
+          background: #ffffff;
+          border: 1px solid rgba(20,20,22,.08);
+          border-radius: 999px;
+          box-shadow: 0 10px 24px rgba(0,0,0,.06);
+          cursor: pointer;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .workspace {
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 16px !important;
+          padding: 18px !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .summary,
+        body.home-dashboard-mode.dashboard-input-drawer-open .quick-feature-panel {
+          display: none !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .panel {
+          border-radius: 24px !important;
+          box-shadow: 0 12px 32px rgba(0,0,0,.045) !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .panel-heading {
+          padding: 20px 20px 16px !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .meeting-grid {
+          grid-template-columns: 1fr !important;
+          padding: 18px 20px 20px !important;
+          gap: 14px !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .people-list {
+          grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)) !important;
+          gap: 12px !important;
+          padding: 16px 18px 20px !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .person-row {
+          min-height: 66px !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-panel .panel-heading {
+          align-items: stretch !important;
+          gap: 14px !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-panel .panel-heading > div:first-child {
+          width: 100%;
+          text-align: center;
+          align-items: center;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-actions {
+          display: grid !important;
+          grid-template-columns: 1fr 1fr !important;
+          width: 100% !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-scroll {
+          padding: 0 18px 20px !important;
+          overflow: visible !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table,
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table thead,
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table tbody,
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table tr,
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table td {
+          display: block !important;
+          width: 100% !important;
+          min-width: 0 !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table {
+          border-spacing: 0 !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table thead {
+          display: none !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table tbody {
+          display: grid !important;
+          gap: 14px !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table tr {
+          padding: 16px !important;
+          background: #ffffff !important;
+          border: 1px solid rgba(20,20,22,.07) !important;
+          border-radius: 22px !important;
+          box-shadow: 0 10px 24px rgba(0,0,0,.03) !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table td {
+          display: grid !important;
+          grid-template-columns: 1fr !important;
+          gap: 6px !important;
+          padding: 8px 0 !important;
+          border: 0 !important;
+          background: transparent !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table td::before {
+          content: attr(data-label);
+          display: block;
+          color: rgba(110,110,115,.78);
+          font-size: 12px;
+          font-weight: 800;
+          line-height: 1.35;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table td input,
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table td select {
+          width: 100% !important;
+          max-width: 100% !important;
+          min-height: 50px !important;
+          padding: 12px 14px !important;
+          font-size: 17px !important;
+          border-radius: 16px !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .participant-list {
+          width: 100% !important;
+          display: flex !important;
+          flex-wrap: wrap !important;
+          gap: 8px !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .chip {
+          min-height: 38px !important;
+          padding: 6px 12px !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table td[data-label="삭제"] {
+          justify-items: end !important;
+          padding-top: 12px !important;
+        }
+
+        body.home-dashboard-mode.dashboard-input-drawer-open .expense-table td[data-label="삭제"]::before {
+          display: none !important;
+        }
+      }
+
+      @media (max-width: 1180px) {
+        .dashboard-input-actions {
+          display: none !important;
+        }
+
+        .dashboard-input-close {
+          display: none !important;
+        }
+      }
+    </style>
+
   </head>
   <body>
     <div class="app-shell">
@@ -5337,11 +5640,26 @@ body {
           <span>더치페이 계산기</span>
         </div>
         <nav class="side-nav-list">
-          <button type="button" class="side-nav-button is-active" data-nav-target="home">홈</button>
-          <button type="button" class="side-nav-button" data-nav-target="meeting">모임</button>
-          <button type="button" class="side-nav-button" data-nav-target="settlement">정산</button>
-          <button type="button" class="side-nav-button" data-nav-target="report">리포트</button>
-          <button type="button" class="side-nav-button" data-nav-target="settings">설정</button>
+          <button type="button" class="side-nav-button is-active" data-nav-target="home">
+            <span class="side-nav-icon" aria-hidden="true">⌂</span>
+            <span>대시보드</span>
+          </button>
+          <button type="button" class="side-nav-button" data-nav-target="meeting">
+            <span class="side-nav-icon" aria-hidden="true">◫</span>
+            <span>모임</span>
+          </button>
+          <button type="button" class="side-nav-button" data-nav-target="settlement">
+            <span class="side-nav-icon" aria-hidden="true">▤</span>
+            <span>정산</span>
+          </button>
+          <button type="button" class="side-nav-button" data-nav-target="report">
+            <span class="side-nav-icon" aria-hidden="true">▥</span>
+            <span>리포트</span>
+          </button>
+          <button type="button" class="side-nav-button" data-nav-target="settings">
+            <span class="side-nav-icon" aria-hidden="true">⚙</span>
+            <span>설정</span>
+          </button>
         </nav>
         <div class="side-upgrade-card">
           <strong>Dutch Pay</strong>
@@ -5392,6 +5710,22 @@ body {
             <button class="hero-primary-button" id="dashboardNewMeetingButton" type="button">새 모임 만들기 <span>＋</span></button>
             <button class="hero-icon-button" id="dashboardBellButton" type="button" aria-label="알림">🔔</button>
           </div>
+        </div>
+
+
+        <div class="dashboard-input-actions" aria-label="빠른 입력">
+          <button type="button" class="dashboard-input-trigger" data-input-target="meeting">
+            <span>모임</span>
+            <strong>모임 정보 입력</strong>
+          </button>
+          <button type="button" class="dashboard-input-trigger" data-input-target="people">
+            <span>인원</span>
+            <strong>참여자 관리</strong>
+          </button>
+          <button type="button" class="dashboard-input-trigger primary" data-input-target="expense">
+            <span>지출</span>
+            <strong>지출 바로 입력</strong>
+          </button>
         </div>
 
         <div class="dashboard-stat-grid">
@@ -5449,6 +5783,7 @@ body {
 
 
       <main class="layout">
+        <button class="dashboard-input-close" id="dashboardInputCloseButton" type="button" aria-label="입력 패널 닫기">×</button>
         <section class="workspace" id="section-home">
           <div class="panel meeting-panel" id="section-meeting">
             <div class="panel-heading">
@@ -7099,7 +7434,7 @@ render();
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js?v=2.13").catch(() => {});
+          navigator.serviceWorker.register("./sw.js?v=2.14").catch(() => {});
         });
       }
     </script>
@@ -8219,6 +8554,109 @@ render();
         caches.keys().then((keys) => {
           keys
             .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-13-dashboard-polish")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
+      }
+    </script>
+
+  
+    <script>
+      (function setupV214InputDrawer() {
+        const desktopMedia = window.matchMedia('(min-width: 1181px)');
+        const body = document.body;
+
+        function isDesktop() {
+          return desktopMedia.matches;
+        }
+
+        function setActive(name) {
+          document.querySelectorAll('[data-nav-target]').forEach((button) => {
+            button.classList.toggle('is-active', button.getAttribute('data-nav-target') === name);
+          });
+        }
+
+        function openDashboard() {
+          if (!isDesktop()) return;
+          body.classList.add('home-dashboard-mode');
+          body.classList.remove('dashboard-input-drawer-open');
+          setActive('home');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openDrawer(targetName = 'meeting', shouldAddExpense = false) {
+          if (!isDesktop()) return;
+          body.classList.add('home-dashboard-mode', 'dashboard-input-drawer-open');
+
+          const activeName = targetName === 'expense' ? 'settlement' : targetName === 'people' ? 'meeting' : targetName;
+          setActive(activeName === 'settlement' ? 'settlement' : 'meeting');
+
+          const target =
+            targetName === 'people'
+              ? document.querySelector('.people-panel')
+              : targetName === 'expense'
+                ? document.querySelector('#section-settlement')
+                : document.querySelector('#section-meeting');
+
+          setTimeout(() => {
+            target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (shouldAddExpense) {
+              document.querySelector('#addExpenseButton')?.click();
+            }
+          }, 80);
+        }
+
+        document.querySelectorAll('.dashboard-input-trigger').forEach((button) => {
+          button.addEventListener('click', () => {
+            const targetName = button.getAttribute('data-input-target') || 'meeting';
+            openDrawer(targetName, targetName === 'expense');
+          });
+        });
+
+        document.querySelector('#dashboardInputCloseButton')?.addEventListener('click', openDashboard);
+
+        document.querySelectorAll('[data-nav-target]').forEach((button) => {
+          button.addEventListener('click', (event) => {
+            if (!isDesktop()) return;
+
+            const name = button.getAttribute('data-nav-target');
+
+            if (name === 'home') {
+              event.preventDefault();
+              event.stopImmediatePropagation();
+              openDashboard();
+              return;
+            }
+
+            if (name === 'meeting') {
+              event.preventDefault();
+              event.stopImmediatePropagation();
+              openDrawer('meeting');
+              return;
+            }
+
+            if (name === 'settlement') {
+              event.preventDefault();
+              event.stopImmediatePropagation();
+              openDrawer('expense');
+              return;
+            }
+          }, true);
+        });
+
+        desktopMedia.addEventListener?.('change', () => {
+          if (!isDesktop()) {
+            body.classList.remove('dashboard-input-drawer-open');
+          }
+        });
+      })();
+    </script>
+
+    <script>
+      window.DUTCH_PAY_APP_VERSION = "v2.14-dashboard-input-drawer";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-14-dashboard-input-drawer")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
