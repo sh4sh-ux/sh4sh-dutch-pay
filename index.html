@@ -1,6 +1,9 @@
 
 
 <!doctype html>
+<!-- Dutch Pay v2.03 concept closer -->
+<!-- Dutch Pay v2.02 report + meeting spacing -->
+<!-- Dutch Pay v2.01 concept UI -->
 <!-- Dutch Pay v20 structure upgrade -->
 <!-- Dutch Pay v19 soft light redesign -->
 <!-- Dutch Pay v18 concept3 redesign -->
@@ -17,7 +20,7 @@
     <title>더치페이 계산기</title>
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest?v=20" />
+    <link rel="manifest" href="./manifest.webmanifest?v=2.03" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -2945,15 +2948,1457 @@ body {
   }
 }
 
+
+/* v2.01 Concept UI
+   선택한 시안 기반: 미니멀 화이트, 블랙 포인트 카드, 모바일 앱 홈 + 데스크톱 사이드바 */
+
+:root {
+  --bg: #f5f5f6;
+  --surface: rgba(255,255,255,.94);
+  --surface-solid: #ffffff;
+  --surface-soft: #f6f6f7;
+  --surface-raised: #ffffff;
+  --ink: #141416;
+  --muted: #8b8b92;
+  --line: rgba(20,20,22,.08);
+  --line-soft: rgba(20,20,22,.055);
+  --primary: #111113;
+  --primary-dark: #000000;
+  --primary-soft: #f0f0f2;
+  --accent: #007aff;
+  --accent-soft: #edf5ff;
+  --danger: #d70015;
+  --danger-soft: #fff0f1;
+  --shadow: 0 20px 56px rgba(0,0,0,.07);
+}
+
+body {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255,255,255,.96), transparent 34%),
+    linear-gradient(180deg, #fbfbfc 0%, #f3f3f4 100%);
+}
+
+.app-shell {
+  max-width: 1480px;
+  grid-template-columns: 250px minmax(0, 1fr);
+  column-gap: 22px;
+}
+
+/* 데스크톱 사이드바 */
+.desktop-side-nav {
+  margin: 24px 0 24px 24px;
+  padding: 24px 16px;
+  border-radius: 30px;
+  background: rgba(255,255,255,.82);
+  border: 1px solid rgba(20,20,22,.07);
+  box-shadow: 0 24px 60px rgba(0,0,0,.055);
+}
+
+.side-brand strong {
+  font-size: 27px;
+  letter-spacing: -0.055em;
+}
+
+.side-brand span {
+  margin-top: 5px;
+  color: rgba(29,29,31,.48);
+}
+
+.side-nav-button {
+  min-height: 50px;
+  border-radius: 16px;
+  color: rgba(29,29,31,.72);
+}
+
+.side-nav-button.is-active {
+  color: #111113;
+  background: #f3f3f5;
+  border-color: rgba(20,20,22,.055);
+}
+
+.side-upgrade-card {
+  border-radius: 20px;
+}
+
+/* 상단 구조 */
+.topbar {
+  padding: 34px 32px 22px 8px;
+}
+
+.topbar-copy h1 {
+  max-width: 560px;
+  font-size: clamp(38px, 4.2vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -0.065em;
+}
+
+.top-description {
+  max-width: 520px;
+  color: rgba(29,29,31,.56);
+}
+
+.top-actions {
+  gap: 10px;
+}
+
+.ghost-button,
+.report-button,
+.primary-button,
+.deduction-button,
+.icon-button,
+.delete-button {
+  border-radius: 14px;
+}
+
+.report-button,
+.primary-button,
+.icon-button {
+  background: #111113;
+  border-color: #111113;
+}
+
+.report-button {
+  padding-inline: 18px;
+}
+
+.more-menu-button {
+  width: 44px;
+  min-width: 44px;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+/* 메인 레이아웃 */
+.layout {
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 420px);
+  gap: 22px;
+  padding: 0 32px 64px 8px;
+}
+
+.panel {
+  border-radius: 26px;
+  border-color: rgba(20,20,22,.07);
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 18px 46px rgba(0,0,0,.052);
+}
+
+.panel-heading {
+  padding: 20px 22px 16px;
+}
+
+.panel-heading h2,
+.summary .panel h2,
+.kpi-panel h2 {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+}
+
+/* 모바일 시안의 검정 히어로 느낌을 요약 카드에만 적용 */
+.kpi-panel {
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 83% 45%, rgba(255,255,255,.12), transparent 26%),
+    linear-gradient(135deg, #111113 0%, #1a1b20 65%, #050506 100%);
+  border-color: rgba(0,0,0,.14);
+  box-shadow: 0 22px 58px rgba(0,0,0,.12);
+}
+
+.kpi-panel h2 {
+  color: rgba(255,255,255,.78);
+}
+
+.kpi-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.metric {
+  min-height: 86px;
+  padding: 14px;
+  border-radius: 18px;
+  color: #ffffff;
+  background: rgba(255,255,255,.085);
+  border-color: rgba(255,255,255,.12);
+  box-shadow: none;
+}
+
+.metric:first-child {
+  grid-column: span 3;
+  min-height: 116px;
+  background: rgba(255,255,255,.095);
+  border-color: rgba(255,255,255,.14);
+}
+
+.metric span {
+  color: rgba(255,255,255,.62);
+  font-weight: 780;
+}
+
+.metric strong,
+.total-line strong {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.metric:first-child strong,
+.metric:first-child .total-line strong {
+  font-size: 34px;
+}
+
+.total-line small {
+  color: rgba(255,255,255,.68);
+}
+
+/* 빠른 기능 */
+.quick-feature-panel {
+  padding: 18px;
+}
+
+.quick-feature-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.quick-feature-heading h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+}
+
+.quick-feature-heading span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.quick-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.quick-feature-button {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 8px;
+  min-height: 86px;
+  color: var(--ink);
+  background: #ffffff;
+  border: 1px solid var(--line-soft);
+  border-radius: 18px;
+  font-size: 12px;
+  font-weight: 850;
+  box-shadow: 0 10px 24px rgba(0,0,0,.035);
+}
+
+.quick-feature-button span {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: #111113;
+  background: #f2f2f4;
+  border-radius: 999px;
+  font-size: 18px;
+}
+
+.quick-feature-button strong {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* 모임/인원/지출 카드 */
+.meeting-panel {
+  background: rgba(255,255,255,.94);
+}
+
+.meeting-panel .panel-heading::before {
+  content: none;
+}
+
+.meeting-panel .panel-heading h2,
+.meeting-panel .save-status,
+.meeting-grid label span,
+.meeting-panel .field-label {
+  color: var(--ink);
+}
+
+.meeting-panel .save-status,
+.meeting-grid label span,
+.meeting-panel .field-label {
+  color: var(--muted);
+}
+
+.meeting-panel input,
+.meeting-panel .date-control,
+.meeting-panel .date-control .native-date-input {
+  color: var(--ink);
+  background: #fbfbfc;
+  border-color: var(--line);
+}
+
+.people-list {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.person-row {
+  border-radius: 18px;
+  background: #fbfbfc;
+}
+
+.expense-table {
+  border-spacing: 0 10px;
+}
+
+.expense-table td {
+  background: #ffffff;
+}
+
+.transfer-row,
+.summary-row,
+.settlement-card {
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(0,0,0,.035);
+}
+
+/* 모바일 */
+@media (max-width: 720px) {
+  .app-shell {
+    display: block;
+    max-width: 430px;
+    padding-bottom: calc(94px + env(safe-area-inset-bottom));
+  }
+
+  .desktop-side-nav {
+    display: none;
+  }
+
+  .topbar {
+    display: block;
+    padding: calc(18px + env(safe-area-inset-top)) 20px 10px;
+  }
+
+  .topbar-copy h1 {
+    font-size: 27px;
+    line-height: 1.16;
+    letter-spacing: -0.06em;
+  }
+
+  .desktop-title-break {
+    display: none;
+  }
+
+  .top-description {
+    font-size: 13px;
+  }
+
+  .top-actions {
+    display: grid;
+    grid-template-columns: 1fr auto 44px;
+    gap: 8px;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  #copySummaryButton {
+    grid-column: 1;
+  }
+
+  #openReportButton {
+    grid-column: 2;
+    margin-left: 0;
+  }
+
+  .more-menu-wrap {
+    grid-column: 3;
+  }
+
+  .layout {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 8px 20px 24px;
+  }
+
+  .summary {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    order: -2;
+  }
+
+  .workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .kpi-panel {
+    order: -3;
+    padding: 18px;
+    border-radius: 24px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metric:first-child {
+    grid-column: span 2;
+    min-height: 112px;
+  }
+
+  .metric {
+    min-height: 76px;
+    border-radius: 16px;
+  }
+
+  .metric:first-child strong,
+  .metric:first-child .total-line strong {
+    font-size: 31px;
+  }
+
+  .metric strong,
+  .total-line strong {
+    font-size: 20px;
+  }
+
+  .quick-feature-panel {
+    order: -2;
+    padding: 16px;
+  }
+
+  .quick-feature-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .quick-feature-button {
+    min-height: 70px;
+    gap: 6px;
+    border-radius: 16px;
+  }
+
+  .quick-feature-button span {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+
+  .quick-feature-button strong {
+    font-size: 11px;
+  }
+
+  .meeting-panel {
+    order: -1;
+  }
+
+  .meeting-grid {
+    grid-template-columns: 1fr;
+    padding: 0 18px 20px;
+  }
+
+  .expense-table,
+  .expense-table thead,
+  .expense-table tbody,
+  .expense-table tr,
+  .expense-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .expense-table {
+    min-width: 0;
+    border-spacing: 0;
+  }
+
+  .expense-table thead {
+    display: none;
+  }
+
+  .expense-table tbody {
+    display: grid;
+    gap: 12px;
+  }
+
+  .expense-table tr {
+    padding: 14px;
+    background: #ffffff;
+    border: 1px solid var(--line-soft);
+    border-radius: 20px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.03);
+  }
+
+  .expense-table td {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    padding: 7px 0;
+    border: 0 !important;
+    background: transparent !important;
+  }
+
+  .expense-table td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 780;
+    line-height: 1.6;
+  }
+
+  .expense-table td[data-label="삭제"] {
+    grid-template-columns: 1fr;
+    justify-items: end;
+  }
+
+  .expense-table td[data-label="삭제"]::before {
+    display: none;
+  }
+
+  .summary-detail-panel {
+    padding: 18px;
+  }
+
+  .mobile-bottom-tabs {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    z-index: 18;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: min(100%, 430px);
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,.9);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -10px 28px rgba(0,0,0,.055);
+    backdrop-filter: saturate(150%) blur(18px);
+  }
+
+  .mobile-tab-button {
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    min-height: 46px;
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .mobile-tab-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+  }
+
+  .mobile-tab-button.is-active {
+    color: var(--ink);
+  }
+
+  .mobile-tab-button.is-active .mobile-tab-icon {
+    color: #ffffff;
+    background: #111113;
+  }
+}
+
+@media (min-width: 721px) {
+  .mobile-bottom-tabs {
+    display: none;
+  }
+}
+
+
+/* v2.03 Comprehensive concept pass
+   목표: 선택한 시안에 최대한 가깝게, 데스크톱은 대시보드형 / 모바일은 앱 홈형 */
+
+:root {
+  --bg: #f5f5f6;
+  --surface: rgba(255,255,255,.96);
+  --surface-soft: #f7f7f8;
+  --card-line: rgba(20,20,22,.07);
+  --card-shadow: 0 20px 52px rgba(0,0,0,.055);
+  --muted-2: rgba(110,110,115,.78);
+}
+
+body {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255,255,255,.95), transparent 34%),
+    linear-gradient(180deg, #fbfbfc 0%, #f3f3f4 100%);
+  color: #141416;
+}
+
+.app-shell {
+  max-width: 1520px;
+  grid-template-columns: 220px minmax(0, 1fr);
+  column-gap: 18px;
+}
+
+/* Desktop sidebar closer to concept */
+.desktop-side-nav {
+  gap: 18px;
+  min-height: calc(100vh - 48px);
+  margin: 24px 0 24px 24px;
+  padding: 24px 14px;
+  background: rgba(255,255,255,.76);
+  border: 1px solid rgba(20,20,22,.06);
+  border-radius: 30px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.05);
+}
+
+.side-brand strong {
+  font-size: 24px;
+  letter-spacing: -0.05em;
+}
+
+.side-brand span {
+  color: rgba(29,29,31,.48);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.side-nav-list {
+  gap: 8px;
+}
+
+.side-nav-button {
+  min-height: 46px;
+  padding: 0 14px;
+  border-radius: 15px;
+  color: rgba(29,29,31,.72);
+  font-size: 14px;
+  font-weight: 820;
+}
+
+.side-nav-button.is-active {
+  color: #111113;
+  background: #ffffff;
+  border-color: rgba(20,20,22,.06);
+  box-shadow: 0 10px 24px rgba(0,0,0,.035);
+}
+
+.side-upgrade-card {
+  margin-top: auto;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 8px 20px rgba(0,0,0,.03);
+}
+
+.side-upgrade-card strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 880;
+}
+
+.side-upgrade-card p {
+  margin-top: 7px;
+  color: var(--muted-2);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+/* top header */
+.topbar {
+  align-items: center;
+  padding: 34px 28px 18px 8px;
+}
+
+.topbar-copy .eyebrow {
+  margin-bottom: 8px;
+}
+
+.topbar-copy h1 {
+  max-width: 620px;
+  margin: 0;
+  font-size: clamp(38px, 4vw, 58px);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.065em;
+}
+
+.top-description {
+  max-width: 540px;
+  margin-top: 10px;
+  color: rgba(29,29,31,.54);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.top-actions {
+  gap: 10px;
+}
+
+.top-actions #openGuideButton {
+  display: none !important;
+}
+
+.top-actions #resetButton {
+  order: 2;
+  color: #ffffff;
+  background: #111113;
+  border-color: #111113;
+}
+
+.top-actions #resetButton::after {
+  content: " +";
+  font-weight: 900;
+}
+
+.top-actions #copySummaryButton {
+  order: 1;
+}
+
+.top-actions #openReportButton {
+  order: 3;
+}
+
+.ghost-button,
+.report-button,
+.primary-button,
+.deduction-button,
+.icon-button,
+.delete-button,
+.side-nav-button,
+.quick-feature-button {
+  transition: all .18s ease;
+}
+
+.ghost-button,
+.report-button,
+.primary-button,
+.icon-button,
+.delete-button {
+  border-radius: 14px;
+}
+
+.ghost-button {
+  background: rgba(255,255,255,.94);
+}
+
+.report-button,
+.primary-button,
+.icon-button {
+  background: #111113;
+  border-color: #111113;
+}
+
+.report-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding-inline: 16px;
+}
+
+.more-menu-button {
+  min-width: 44px;
+  width: 44px;
+  min-height: 44px;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+/* main layout
+   left = input cards / right = dashboard cards */
+.layout {
+  grid-template-columns: minmax(360px, .76fr) minmax(620px, 1.24fr);
+  gap: 22px;
+  padding: 0 28px 64px 8px;
+}
+
+.workspace,
+.summary {
+  gap: 18px;
+}
+
+/* Generic panels */
+.panel {
+  background: rgba(255,255,255,.95);
+  border: 1px solid var(--card-line);
+  border-radius: 28px;
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+.panel-heading {
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid rgba(20,20,22,.06);
+}
+
+.panel-heading h2,
+.summary .panel h2 {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+}
+
+.panel-subtext {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted-2);
+  font-size: 12px;
+  font-weight: 760;
+  line-height: 1.4;
+}
+
+/* meeting card spacing refinement */
+.meeting-panel .panel-heading {
+  padding-bottom: 22px;
+}
+
+.meeting-grid {
+  padding-top: 22px;
+  padding-bottom: 24px;
+}
+
+.meeting-grid label span {
+  margin-bottom: 2px;
+}
+
+/* workspace cards */
+.meeting-panel,
+.people-panel,
+.expense-panel {
+  background: rgba(255,255,255,.95);
+}
+
+.people-list {
+  padding: 18px 20px 22px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.person-row {
+  padding: 10px;
+  border-radius: 18px;
+  background: #fbfbfc;
+  border: 1px solid rgba(20,20,22,.05);
+}
+
+.expense-panel .panel-heading {
+  align-items: end;
+}
+
+.expense-actions {
+  gap: 8px;
+}
+
+.expense-scroll {
+  padding: 0 18px 18px;
+}
+
+.expense-table {
+  min-width: 700px;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.expense-table th {
+  padding: 4px 10px;
+  color: rgba(29,29,31,.46);
+  background: transparent;
+  border-bottom: 0;
+}
+
+.expense-table td {
+  padding: 10px;
+  background: #ffffff;
+  border-top: 1px solid rgba(20,20,22,.05);
+  border-bottom: 1px solid rgba(20,20,22,.05);
+}
+
+.expense-table td:first-child {
+  border-left: 1px solid rgba(20,20,22,.05);
+  border-radius: 16px 0 0 16px;
+}
+
+.expense-table td:last-child {
+  border-right: 1px solid rgba(20,20,22,.05);
+  border-radius: 0 16px 16px 0;
+}
+
+/* Right dashboard */
+.summary {
+  align-content: start;
+}
+
+.kpi-panel {
+  padding: 0;
+  color: #141416;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.kpi-panel > h2 {
+  display: none;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.metric {
+  min-height: 110px;
+  padding: 16px;
+  background: rgba(255,255,255,.96);
+  border: 1px solid var(--card-line);
+  border-radius: 22px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.03);
+}
+
+.metric:first-child {
+  grid-column: span 1;
+  min-height: 110px;
+  background: rgba(255,255,255,.96);
+  border-color: var(--card-line);
+}
+
+.metric span {
+  color: rgba(110,110,115,.76);
+  font-size: 12px;
+  font-weight: 780;
+}
+
+.metric strong,
+.total-line strong {
+  color: #141416;
+  font-size: 18px;
+  font-weight: 880;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
+.total-line {
+  display: grid;
+  gap: 4px;
+  align-content: start;
+}
+
+.total-line small {
+  color: rgba(110,110,115,.62);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.total-line small strong {
+  color: #ff8a00;
+}
+
+/* quick features: desktop hide, mobile show */
+.quick-feature-panel {
+  display: none;
+}
+
+/* summary sections with header text and chevron */
+.summary-detail-panel {
+  padding: 18px;
+}
+
+.summary-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.summary-panel-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+}
+
+.summary-panel-header p {
+  margin: 6px 0 0;
+  color: rgba(110,110,115,.72);
+  font-size: 12px;
+  font-weight: 760;
+  line-height: 1.5;
+}
+
+.summary-panel-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: rgba(110,110,115,.62);
+  font-size: 24px;
+  line-height: 1;
+}
+
+.transfer-row,
+.summary-row,
+.settlement-card {
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid rgba(20,20,22,.06);
+  box-shadow: 0 8px 20px rgba(0,0,0,.03);
+}
+
+.transfer-row,
+.summary-row {
+  min-height: 64px;
+  padding: 14px 15px;
+}
+
+.transfer-row strong,
+.summary-row strong {
+  font-size: 15px;
+}
+
+.summary-name {
+  font-size: 15px;
+  font-weight: 850;
+}
+
+.summary-balance {
+  font-size: 18px;
+  font-weight: 880;
+}
+
+.settlement-card {
+  min-height: 112px;
+  padding: 18px;
+}
+
+.settlement-meta strong {
+  font-size: 16px;
+}
+
+.settlement-result span {
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 860;
+}
+
+.settlement-result strong {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+/* install prompt */
+.install-prompt {
+  margin-left: 8px;
+  margin-right: 28px;
+  border-radius: 22px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.03);
+}
+
+/* Report screen already refined in v2.02; this pass aligns corners/shadows with app */
+.report-toolbar,
+.final-report {
+  width: min(100%, 560px);
+}
+
+.final-report {
+  border-radius: 30px;
+  box-shadow: 0 28px 80px rgba(0,0,0,.14);
+}
+
+.report-toolbar .ghost-button {
+  border-radius: 18px;
+}
+
+.report-stats div,
+.report-item,
+.report-empty {
+  border-radius: 18px;
+}
+
+/* responsive */
+@media (max-width: 1180px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .summary {
+    order: -1;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metric:first-child {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    display: block;
+    max-width: 430px;
+    padding-bottom: calc(96px + env(safe-area-inset-bottom));
+  }
+
+  .desktop-side-nav {
+    display: none;
+  }
+
+  .topbar,
+  .layout,
+  .install-prompt {
+    margin: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .topbar {
+    display: block;
+    padding-top: calc(18px + env(safe-area-inset-top));
+    padding-bottom: 12px;
+  }
+
+  .topbar-copy h1 {
+    max-width: 320px;
+    font-size: 28px;
+    line-height: 1.16;
+  }
+
+  .top-description {
+    max-width: 290px;
+    font-size: 13px;
+  }
+
+  .top-actions {
+    display: grid;
+    grid-template-columns: 1fr auto 44px;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .top-actions #resetButton,
+  .top-actions #copySummaryButton,
+  .top-actions #openReportButton {
+    min-height: 44px;
+  }
+
+  .top-actions #resetButton {
+    display: none !important;
+  }
+
+  .top-actions #copySummaryButton {
+    grid-column: 1;
+  }
+
+  .top-actions #openReportButton {
+    grid-column: 2;
+  }
+
+  .more-menu-wrap {
+    grid-column: 3;
+  }
+
+  .layout {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 8px;
+    padding-bottom: 24px;
+  }
+
+  .summary {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    order: -3;
+  }
+
+  .workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* mobile summary hero */
+  .kpi-panel {
+    display: block;
+    padding: 18px;
+    color: #ffffff;
+    background:
+      radial-gradient(circle at 83% 45%, rgba(255,255,255,.12), transparent 26%),
+      linear-gradient(135deg, #111113 0%, #1a1b20 65%, #050506 100%);
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 24px;
+    box-shadow: 0 24px 60px rgba(0,0,0,.12);
+  }
+
+  .kpi-panel > h2 {
+    display: block;
+    margin-bottom: 12px;
+    color: rgba(255,255,255,.78);
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .metric,
+  .metric:first-child {
+    min-height: 78px;
+    padding: 12px;
+    color: #ffffff;
+    background: rgba(255,255,255,.09);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 16px;
+    box-shadow: none;
+  }
+
+  .metric:first-child {
+    grid-column: span 2;
+    min-height: 112px;
+  }
+
+  .metric span {
+    color: rgba(255,255,255,.66);
+    font-size: 12px;
+  }
+
+  .metric strong,
+  .total-line strong {
+    color: #ffffff;
+    font-size: 20px;
+  }
+
+  .metric:first-child strong,
+  .metric:first-child .total-line strong {
+    font-size: 31px;
+  }
+
+  .total-line small {
+    color: rgba(255,255,255,.76);
+  }
+
+  /* mobile quick features */
+  .quick-feature-panel {
+    display: block;
+    padding: 16px;
+  }
+
+  .quick-feature-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .quick-feature-heading h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 900;
+  }
+
+  .quick-feature-heading span {
+    color: rgba(110,110,115,.72);
+    font-size: 12px;
+    font-weight: 760;
+  }
+
+  .quick-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .quick-feature-button {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    gap: 6px;
+    min-height: 74px;
+    padding: 8px 4px;
+    background: #ffffff;
+    border: 1px solid rgba(20,20,22,.06);
+    border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.03);
+  }
+
+  .quick-feature-button span {
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    background: #f2f2f4;
+    border-radius: 999px;
+    font-size: 16px;
+  }
+
+  .quick-feature-button strong {
+    font-size: 11px;
+    font-weight: 850;
+    white-space: nowrap;
+  }
+
+  .summary-detail-panel {
+    padding: 18px;
+  }
+
+  .summary-panel-header {
+    margin-bottom: 12px;
+  }
+
+  .summary-panel-header h2 {
+    font-size: 17px;
+  }
+
+  .summary-panel-header p {
+    font-size: 12px;
+  }
+
+  .summary-panel-arrow {
+    display: none;
+  }
+
+  .meeting-grid {
+    grid-template-columns: 1fr;
+    padding-top: 18px;
+    padding-bottom: 20px;
+  }
+
+  .expense-scroll {
+    padding: 0 14px 14px;
+  }
+
+  .expense-table,
+  .expense-table thead,
+  .expense-table tbody,
+  .expense-table tr,
+  .expense-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .expense-table {
+    min-width: 0;
+    border-spacing: 0;
+  }
+
+  .expense-table thead {
+    display: none;
+  }
+
+  .expense-table tbody {
+    display: grid;
+    gap: 12px;
+  }
+
+  .expense-table tr {
+    padding: 14px;
+    background: #ffffff;
+    border: 1px solid rgba(20,20,22,.06);
+    border-radius: 20px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.03);
+  }
+
+  .expense-table td {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    padding: 7px 0;
+    border: 0 !important;
+    background: transparent !important;
+  }
+
+  .expense-table td::before {
+    content: attr(data-label);
+    color: rgba(110,110,115,.76);
+    font-size: 12px;
+    font-weight: 780;
+    line-height: 1.6;
+  }
+
+  .expense-table td[data-label="삭제"] {
+    grid-template-columns: 1fr;
+    justify-items: end;
+  }
+
+  .expense-table td[data-label="삭제"]::before {
+    display: none;
+  }
+
+  .mobile-bottom-tabs {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: min(100%, 430px);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,.9);
+    border-top: 1px solid rgba(20,20,22,.08);
+    box-shadow: 0 -10px 30px rgba(0,0,0,.055);
+    backdrop-filter: saturate(150%) blur(18px);
+  }
+
+  .mobile-tab-button {
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    min-height: 46px;
+    color: rgba(110,110,115,.72);
+    background: transparent;
+    border: 0;
+    font-size: 11px;
+    font-weight: 820;
+  }
+
+  .mobile-tab-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+  }
+
+  .mobile-tab-button.is-active {
+    color: #141416;
+  }
+
+  .mobile-tab-button.is-active .mobile-tab-icon {
+    color: #ffffff;
+    background: #111113;
+  }
+}
+
+@media (min-width: 721px) {
+  .mobile-bottom-tabs {
+    display: none;
+  }
+}
+
     </style>
   </head>
   <body>
     <div class="app-shell">
 
-      <aside class="desktop-side-nav" aria-label="데스크톱 메뉴">
+      <aside class="desktop-side-nav" aria-label="메뉴">
         <div class="side-brand">
           <strong>Dutch Pay</strong>
-          <span>모임 정산 대시보드</span>
+          <span>더치페이 계산기</span>
         </div>
         <nav class="side-nav-list">
           <button type="button" class="side-nav-button is-active" data-nav-target="home">홈</button>
@@ -2964,21 +4409,21 @@ body {
         </nav>
         <div class="side-upgrade-card">
           <strong>Dutch Pay</strong>
-          <p>깔끔한 더치페이 정산을 빠르게 관리하세요.</p>
+          <p>모임 정산을 한눈에 관리하세요.</p>
         </div>
       </aside>
 
       <header class="topbar">
         <div class="topbar-copy">
           <p class="eyebrow">Dutch Pay</p>
-          <h1>Dutch Pay</h1>
-          <p class="top-description">모임 지출을 입력하면 정산과 송금 내역이 자동으로 정리됩니다.</p>
+          <h1>모임의 모든 정산을<br class="desktop-title-break">한눈에 관리하세요.</h1>
+          <p class="top-description">정확한 계산, 명확한 정산. Dutch Pay가 함께합니다.</p>
         </div>
         <div class="top-actions">
-          <button class="ghost-button danger" id="resetButton" type="button" aria-label="초기화">초기화</button>
-          <button class="ghost-button" id="copySummaryButton" type="button" aria-label="텍스트로 복사">텍스트 복사</button>
+          <button class="ghost-button danger" id="resetButton" type="button" aria-label="새 모임 만들기">새 모임</button>
+          <button class="ghost-button" id="copySummaryButton" type="button" aria-label="텍스트로 복사">공유</button>
           <button class="ghost-button" id="openGuideButton" type="button" aria-label="사용자설명서 열기">사용법</button>
-          <button class="report-button" id="openReportButton" type="button" aria-label="정산 결과 보기">정산 결과</button>
+          <button class="report-button" id="openReportButton" type="button" aria-label="정산 완료하기">정산 완료</button>
 
           <div class="more-menu-wrap">
             <button class="ghost-button more-menu-button" id="moreMenuButton" type="button" aria-label="더보기 메뉴 열기" aria-expanded="false">⋮</button>
@@ -3004,6 +4449,7 @@ body {
           <div class="panel meeting-panel" id="section-meeting">
             <div class="panel-heading">
               <h2>모임</h2>
+              <span class="panel-subtext">모임 정보와 일자를 입력하세요.</span>
               <span id="saveStatus" class="save-status">저장됨</span>
             </div>
             <div class="meeting-grid">
@@ -3024,6 +4470,7 @@ body {
           <div class="panel people-panel">
             <div class="panel-heading">
               <h2>인원</h2>
+                <span class="panel-subtext">참여자를 추가하고 관리하세요.</span>
               <button class="icon-button" id="addPersonButton" type="button" aria-label="인원 추가">+</button>
             </div>
             <div id="peopleList" class="people-list" aria-live="polite"></div>
@@ -3033,7 +4480,7 @@ body {
             <div class="panel-heading split-heading">
               <div>
                 <h2>지출</h2>
-                <span class="section-note">전체</span>
+                <span class="panel-subtext">지출 내역을 입력하면 자동으로 정산됩니다.</span>
               </div>
               <div class="expense-actions">
                 <button class="deduction-button" id="addDeductionButton" type="button">공제</button>
@@ -3084,18 +4531,61 @@ body {
             </div>
           </section>
 
+          <section class="panel quick-feature-panel">
+            <div class="quick-feature-heading">
+              <h2>빠른 기능</h2>
+              <span>자주 쓰는 기능</span>
+            </div>
+            <div class="quick-feature-grid">
+              <button type="button" class="quick-feature-button" id="quickAddExpenseButton">
+                <span>＋</span>
+                <strong>지출 추가</strong>
+              </button>
+              <button type="button" class="quick-feature-button" id="quickOpenReportButton">
+                <span>↗</span>
+                <strong>정산하기</strong>
+              </button>
+              <button type="button" class="quick-feature-button" id="quickPeopleButton">
+                <span>♚</span>
+                <strong>참여자 관리</strong>
+              </button>
+              <button type="button" class="quick-feature-button" id="quickShareButton">
+                <span>⌁</span>
+                <strong>내역 공유</strong>
+              </button>
+            </div>
+          </section>
+
           <section class="panel summary-detail-panel transfers-panel">
-            <h2>송금</h2>
+            <div class="summary-panel-header">
+              <div>
+                <h2>송금</h2>
+                <p>간편하게 송금하고 정산을 마무리하세요.</p>
+              </div>
+              <span class="summary-panel-arrow">›</span>
+            </div>
             <div id="transferSummary" class="transfer-summary"></div>
           </section>
 
           <section class="panel summary-detail-panel person-panel">
-            <h2>사람별 정산</h2>
+            <div class="summary-panel-header">
+              <div>
+                <h2>사람별 정산</h2>
+                <p>누가, 얼마를 내고 받아야 하는지 한눈에 확인하세요.</p>
+              </div>
+              <span class="summary-panel-arrow">›</span>
+            </div>
             <div id="personSummary" class="person-summary"></div>
           </section>
 
           <section class="panel summary-detail-panel rounds-panel">
-            <h2>차수별 내역</h2>
+            <div class="summary-panel-header">
+              <div>
+                <h2>차수별 내역</h2>
+                <p>정산 차수별 지출과 결제 내역을 확인하세요.</p>
+              </div>
+              <span class="summary-panel-arrow">›</span>
+            </div>
             <div id="roundSummary" class="round-summary"></div>
           </section>
         </aside>
@@ -4596,7 +6086,7 @@ render();
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js?v=20").catch(() => {});
+          navigator.serviceWorker.register("./sw.js?v=2.03").catch(() => {});
         });
       }
     </script>
@@ -5329,6 +6819,103 @@ render();
         caches.keys().then((keys) => {
           keys
             .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v20-structure-upgrade")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
+      }
+    </script>
+
+
+    <script>
+      (function setupV201ConceptActions() {
+        const $v201 = (selector) => document.querySelector(selector);
+
+        $v201("#quickAddExpenseButton")?.addEventListener("click", () => {
+          $v201("#addExpenseButton")?.click();
+          setTimeout(() => {
+            const rows = document.querySelectorAll("#expenseRows tr");
+            rows[rows.length - 1]?.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 100);
+        });
+
+        $v201("#quickOpenReportButton")?.addEventListener("click", () => {
+          $v201("#openReportButton")?.click();
+        });
+
+        $v201("#quickPeopleButton")?.addEventListener("click", () => {
+          document.querySelector(".people-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        $v201("#quickShareButton")?.addEventListener("click", () => {
+          $v201("#copySummaryButton")?.click();
+        });
+
+        const targets = {
+          home: document.querySelector("#section-home") || document.querySelector(".layout"),
+          meeting: document.querySelector("#section-meeting") || document.querySelector(".meeting-panel"),
+          settlement: document.querySelector("#section-settlement") || document.querySelector(".expense-panel"),
+          report: null,
+          settings: null,
+        };
+
+        function setActiveButtons(name) {
+          document.querySelectorAll("[data-nav-target]").forEach((button) => {
+            button.classList.toggle("is-active", button.getAttribute("data-nav-target") === name);
+          });
+        }
+
+        function openTarget(name) {
+          if (name === "report") {
+            $v201("#openReportButton")?.click();
+            setActiveButtons("report");
+            return;
+          }
+          if (name === "settings") {
+            $v201("#openGuideButton")?.click();
+            setActiveButtons("settings");
+            return;
+          }
+          const target = targets[name] || targets.home;
+          target?.scrollIntoView({ behavior: "smooth", block: "start" });
+          setActiveButtons(name);
+        }
+
+        document.querySelectorAll("[data-nav-target]").forEach((button) => {
+          button.addEventListener("click", () => openTarget(button.getAttribute("data-nav-target")));
+        });
+      })();
+    </script>
+
+
+    <script>
+      window.DUTCH_PAY_APP_VERSION = "v2.01-concept-ui";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-01-concept-ui")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
+      }
+    </script>
+
+
+    <script>
+      window.DUTCH_PAY_APP_VERSION = "v2.02-report-meeting-spacing";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-02-report-meeting-spacing")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
+      }
+    </script>
+
+
+    <script>
+      window.DUTCH_PAY_APP_VERSION = "v2.03-concept-closer";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-03-concept-closer")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
