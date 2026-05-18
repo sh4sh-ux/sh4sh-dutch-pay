@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-v2-10-top-summary-forcefix";
+const CACHE_NAME = "dutch-pay-v2-13-dashboard-polish";
 const ASSETS = [
   "./",
   "./index.html",
