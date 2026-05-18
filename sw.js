@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-v14-android-install-fallback";
+const CACHE_NAME = "dutch-pay-v17-usability-only";
 const ASSETS = [
   "./",
   "./index.html",
@@ -10,7 +10,9 @@ const ASSETS = [
 ];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS.filter(Boolean)))
+  );
   self.skipWaiting();
 });
 
@@ -25,16 +27,18 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
+
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;
-      return fetch(event.request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => caches.match("./index.html"));
+
+      return fetch(event.request).then((response) => {
+        if (!response || response.status !== 200) return response;
+
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)).catch(() => {});
+        return response;
+      }).catch(() => caches.match("./index.html"));
     })
   );
 });

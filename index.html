@@ -1,7 +1,8 @@
 
 
 <!doctype html>
-<!-- Dutch Pay v14 android install fallback -->
+<!-- Dutch Pay v17 usability only -->
+<!-- Dutch Pay v16 android direct install -->
 <!-- Dutch Pay v13 android install layout -->
 <!-- Dutch Pay v12 mobile usability -->
 <!-- Dutch Pay v11 screenshot button fix -->
@@ -13,7 +14,7 @@
     <title>더치페이 계산기</title>
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest?v=14" />
+    <link rel="manifest" href="./manifest.webmanifest?v=17" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -1799,17 +1800,30 @@ button,
 }
 
 
-/* v14: Android 설치 안내/실제 설치 상태 구분 */
-.install-prompt.installable button,
-.more-menu button.installable {
-  color: #ffffff;
-  background: var(--primary);
+/* v16: Android direct install button */
+.install-prompt.install-ready button,
+.more-menu button.install-ready {
+  color: #ffffff !important;
+  background: var(--primary) !important;
 }
 
-.install-prompt.checking button,
-.more-menu button.checking {
-  color: var(--ink);
-  background: #ffffff;
+.install-prompt.install-waiting button,
+.more-menu button.install-waiting {
+  color: var(--primary) !important;
+  background: var(--primary-soft) !important;
+}
+
+.install-prompt.install-disabled button,
+.more-menu button.install-disabled {
+  color: var(--muted) !important;
+  background: #ffffff !important;
+}
+
+.install-prompt .install-state-text {
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 11px;
+  font-weight: 650;
 }
 
     </style>
@@ -1830,7 +1844,7 @@ button,
           <div class="more-menu-wrap">
             <button class="ghost-button more-menu-button" id="moreMenuButton" type="button" aria-label="더보기 메뉴 열기" aria-expanded="false">⋮</button>
             <div class="more-menu" id="moreMenu" hidden>
-              <button type="button" id="menuInstallButton">설치 / 추가 방법</button>
+              <button type="button" id="menuInstallButton">앱 설치</button>
               <button type="button" id="menuGuideButton">사용법</button>
               <button type="button" class="danger" id="menuResetButton">초기화</button>
             </div>
@@ -1841,9 +1855,9 @@ button,
       <section class="install-prompt" id="installPrompt" hidden>
         <div>
           <strong>앱처럼 사용하려면 홈 화면에 추가하세요</strong>
-          <p>Android는 바로 설치, iPhone은 공유 버튼에서 “홈 화면에 추가”로 사용할 수 있어요.</p>
+          <p>Android Chrome에서는 버튼을 눌러 바로 설치할 수 있어요.</p>
         </div>
-        <button type="button" id="installPromptButton">설치 / 추가 방법</button>
+        <button type="button" id="installPromptButton">앱 설치</button>
       </section>
 
       <main class="layout">
@@ -2023,15 +2037,15 @@ button,
             <div class="guide-step">
               <span>AOS</span>
               <div>
-                <strong>Android / Chrome</strong>
-                <p>오른쪽 위 ⋮ 메뉴 → “앱 설치” 또는 “홈 화면에 추가”를 누르세요.</p>
+                <strong>Android / Chrome 바로 설치</strong>
+                <p>상단의 “앱 설치” 버튼을 누르면 설치창이 열립니다. 설치창이 안 뜨면 Chrome에서 새로고침 후 다시 눌러주세요.</p>
               </div>
             </div>
             <div class="guide-step">
-              <span>TIP</span>
+              <span>ALT</span>
               <div>
-                <strong>설치 버튼이 안 보일 때</strong>
-                <p>Chrome에서 열기, 새로고침, 기존 홈 화면 아이콘 삭제 후 다시 시도해 주세요.</p>
+                <strong>버튼이 안 될 때</strong>
+                <p>Chrome 오른쪽 위 ⋮ 메뉴 → “앱 설치” 또는 “홈 화면에 추가”를 누르세요.</p>
               </div>
             </div>
             <div class="guide-step">
@@ -3427,7 +3441,7 @@ render();
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js?v=14").catch(() => {});
+          navigator.serviceWorker.register("./sw.js?v=17").catch(() => {});
         });
       }
     </script>
@@ -3877,23 +3891,25 @@ render();
 
 
     <script>
-      (function setupV14AndroidInstallFallback() {
-        let deferredInstallPrompt = null;
-        let promptReady = false;
+      (function setupV16AndroidDirectInstall() {
+        let deferredPrompt = null;
+        let installReady = false;
+        let installTried = false;
 
         const installPrompt = document.querySelector("#installPrompt");
         const installPromptButton = document.querySelector("#installPromptButton");
         const menuInstallButton = document.querySelector("#menuInstallButton");
-        const installGuideOverlay = document.querySelector("#installGuideOverlay");
         const moreMenu = document.querySelector("#moreMenu");
         const moreButton = document.querySelector("#moreMenuButton");
+        const guideOverlay = document.querySelector("#installGuideOverlay");
 
         function isStandaloneMode() {
           return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
         }
 
-        function isAndroid() {
-          return /Android/i.test(navigator.userAgent);
+        function isAndroidChrome() {
+          const ua = navigator.userAgent;
+          return /Android/i.test(ua) && /Chrome/i.test(ua) && !/SamsungBrowser|DuckDuckGo|EdgA|OPR|Firefox/i.test(ua);
         }
 
         function closeMoreMenu() {
@@ -3902,39 +3918,34 @@ render();
           moreButton.setAttribute("aria-expanded", "false");
         }
 
-        function openInstallGuide() {
-          if (!installGuideOverlay) return;
-          installGuideOverlay.hidden = false;
+        function openGuide() {
+          if (!guideOverlay) return;
+          guideOverlay.hidden = false;
           document.body.classList.add("guide-open");
           closeMoreMenu();
         }
 
-        function setInstallButtonMode(mode) {
-          [installPromptButton, menuInstallButton].forEach((button) => {
-            if (!button) return;
-            button.classList.remove("installable", "checking");
-
-            if (mode === "installable") {
-              button.classList.add("installable");
-              button.textContent = "앱 설치";
-              return;
-            }
-
-            if (mode === "guide") {
-              button.textContent = isAndroid() ? "Android 추가 방법" : "추가 방법";
-              return;
-            }
-
-            button.classList.add("checking");
-            button.textContent = "설치 확인";
+        function setState(mode) {
+          [installPrompt, menuInstallButton].forEach((el) => {
+            if (!el) return;
+            el.classList.remove("install-ready", "install-waiting", "install-disabled");
+            el.classList.add(mode);
           });
 
-          if (installPrompt && !isStandaloneMode()) {
-            installPrompt.hidden = false;
-          }
+          [installPromptButton, menuInstallButton].forEach((button) => {
+            if (!button) return;
+            button.classList.remove("install-ready", "install-waiting", "install-disabled");
+            button.classList.add(mode);
+
+            if (mode === "install-ready") button.textContent = "앱 설치";
+            if (mode === "install-waiting") button.textContent = "설치 준비 중";
+            if (mode === "install-disabled") button.textContent = "설치 안내";
+          });
+
+          if (installPrompt && !isStandaloneMode()) installPrompt.hidden = false;
         }
 
-        async function runInstallFlow(event) {
+        async function tryInstall(event) {
           event?.preventDefault?.();
           event?.stopImmediatePropagation?.();
 
@@ -3943,59 +3954,132 @@ render();
             return;
           }
 
-          if (promptReady && deferredInstallPrompt) {
-            const promptEvent = deferredInstallPrompt;
-            deferredInstallPrompt = null;
-            promptReady = false;
+          // Android Chrome direct install path
+          if (deferredPrompt && installReady) {
+            const promptEvent = deferredPrompt;
+            deferredPrompt = null;
+            installReady = false;
+            installTried = true;
             closeMoreMenu();
+            setState("install-waiting");
 
             try {
               promptEvent.prompt();
               await promptEvent.userChoice;
-            } catch (_) {
-              openInstallGuide();
+            } catch (error) {
+              console.warn("Install prompt failed.", error);
+              openGuide();
             }
 
-            setInstallButtonMode("guide");
+            setTimeout(() => {
+              if (!isStandaloneMode()) setState("install-disabled");
+            }, 600);
             return;
           }
 
-          openInstallGuide();
+          // Not yet ready: wait a moment and retry once
+          if (isAndroidChrome() && !installTried) {
+            installTried = true;
+            setState("install-waiting");
+            window.setTimeout(() => {
+              if (deferredPrompt && installReady) {
+                tryInstall(event);
+              } else {
+                setState("install-disabled");
+                openGuide();
+              }
+            }, 900);
+            return;
+          }
+
+          setState("install-disabled");
+          openGuide();
         }
 
         window.addEventListener("beforeinstallprompt", (event) => {
           event.preventDefault();
-          deferredInstallPrompt = event;
-          promptReady = true;
-          setInstallButtonMode("installable");
+          deferredPrompt = event;
+          installReady = true;
+          setState("install-ready");
         });
 
         window.addEventListener("appinstalled", () => {
-          deferredInstallPrompt = null;
-          promptReady = false;
+          deferredPrompt = null;
+          installReady = false;
           if (installPrompt) installPrompt.hidden = true;
           closeMoreMenu();
         });
 
-        installPromptButton?.addEventListener("click", runInstallFlow, true);
-        menuInstallButton?.addEventListener("click", runInstallFlow, true);
+        // Capture phase: override older listeners that only opened guide
+        installPromptButton?.addEventListener("click", tryInstall, true);
+        menuInstallButton?.addEventListener("click", tryInstall, true);
 
+        // Initial state
         if (!isStandaloneMode()) {
-          setInstallButtonMode("checking");
-          window.setTimeout(() => {
-            if (!promptReady) setInstallButtonMode("guide");
-          }, 1200);
+          if (isAndroidChrome()) {
+            setState("install-waiting");
+            window.setTimeout(() => {
+              if (!installReady) setState("install-disabled");
+            }, 1800);
+          } else {
+            setState("install-disabled");
+          }
         }
       })();
     </script>
 
 
     <script>
-      window.DUTCH_PAY_APP_VERSION = "v14-android-install-fallback";
+      window.DUTCH_PAY_APP_VERSION = "v16-android-direct-install";
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v14-android-install-fallback")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v16-android-direct-install")
+            .forEach((key) => caches.delete(key));
+        }).catch(() => {});
+      }
+    </script>
+
+
+    <script>
+      (function setupV17UsabilityOnly() {
+        // 하단 빠른 버튼이 중복 클릭될 때 화면이 튀지 않도록 보정
+        const mobileAddExpenseButton = document.querySelector("#mobileAddExpenseButton");
+        const mobileOpenReportButton = document.querySelector("#mobileOpenReportButton");
+
+        mobileAddExpenseButton?.addEventListener("click", () => {
+          window.setTimeout(() => {
+            const rows = document.querySelectorAll("#expenseRows tr");
+            rows[rows.length - 1]?.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 120);
+        }, { passive: true });
+
+        mobileOpenReportButton?.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }, { passive: true });
+
+        // 입력 중 하단 고정 버튼이 키보드와 겹쳐 불편한 경우 숨김
+        const bottomActions = document.querySelector(".mobile-bottom-actions");
+        const formControls = document.querySelectorAll("input, select, textarea");
+
+        formControls.forEach((control) => {
+          control.addEventListener("focus", () => {
+            if (window.innerWidth <= 720 && bottomActions) bottomActions.style.opacity = "0";
+          });
+          control.addEventListener("blur", () => {
+            if (bottomActions) bottomActions.style.opacity = "";
+          });
+        });
+      })();
+    </script>
+
+
+    <script>
+      window.DUTCH_PAY_APP_VERSION = "v17-usability-only";
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v17-usability-only")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
