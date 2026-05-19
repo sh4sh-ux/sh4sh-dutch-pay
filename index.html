@@ -7708,6 +7708,11 @@ body {
         <strong id="expenseEntryCurrentRound">1차</strong>
         <small id="expenseEntryCurrentHint">저장하면 차수별 합계에 반영됩니다.</small>
       </div>
+      <div class="expense-entry-total-card">
+        <span>전체 합계</span>
+        <strong id="expenseEntryGrandTotal">0원</strong>
+        <small id="expenseEntryGrandHint">저장된 지출과 현재 입력을 합산합니다.</small>
+      </div>
       <div class="expense-entry-split-card" id="expenseEntrySplitHint">
         금액을 입력하면 인당 금액을 바로 확인할 수 있습니다.
       </div>
@@ -15818,6 +15823,8 @@ render();
   const saveNextButton = document.getElementById('expenseEntrySaveNextButton');
   const currentRoundEl = document.getElementById('expenseEntryCurrentRound');
   const currentHintEl = document.getElementById('expenseEntryCurrentHint');
+  const grandTotalEl = document.getElementById('expenseEntryGrandTotal');
+  const grandHintEl = document.getElementById('expenseEntryGrandHint');
   const splitHintEl = document.getElementById('expenseEntrySplitHint');
   const roundTotalsEl = document.getElementById('expenseEntryRoundTotals');
   const deductionCallout = document.getElementById('expenseEntryDeductionCallout');
@@ -15934,12 +15941,28 @@ render();
     const stats = roundStatsWithDraft(draft);
     const currentLabel = draft.isDeduction ? '공제' : draft.round;
     const currentStats = stats.get(currentLabel) || { amount: 0, entries: 0 };
-    const savedExpenseCount = state.expenses.filter((expense) => expenseAmount(expense) || String(expense.place || '').trim()).length;
+    const savedExpenses = state.expenses.filter((expense) => {
+      if (entryState.mode === 'edit' && expense.id === entryState.expenseId) return false;
+      return expenseAmount(expense) || String(expense.place || '').trim();
+    });
+    const savedExpenseCount = savedExpenses.length;
+    const savedTotal = savedExpenses.reduce((sum, expense) => sum + expenseAmount(expense), 0);
+    const grandTotal = savedTotal + (draft.amount || 0);
+    const hasDraftAmount = Boolean(draft.amount);
+    const activeCount = Math.max(1, activePeople().length || draft.participantCount || 1);
+    const grandRemainder = Math.abs(grandTotal) % activeCount;
+    const grandShare = Math.floor(Math.abs(grandTotal) / activeCount);
 
     if (currentRoundEl) currentRoundEl.textContent = currentLabel;
     if (currentHintEl) {
       const entryWord = currentStats.entries ? `${currentStats.entries}건` : '첫 내역';
       currentHintEl.textContent = `${entryWord} · 현재 합계 ${money(currentStats.amount)} · 전체 저장 ${savedExpenseCount}건`;
+    }
+    if (grandTotalEl) grandTotalEl.textContent = money(grandTotal);
+    if (grandHintEl) {
+      grandHintEl.textContent = hasDraftAmount
+        ? `저장 ${savedExpenseCount}건 + 현재 입력 · ${activeCount}명 기준`
+        : `저장 ${savedExpenseCount}건 · ${activeCount}명 기준`;
     }
 
     const amount = Math.abs(draft.amount);
@@ -15953,13 +15976,19 @@ render();
           <strong>인당 ${money(baseShare)}</strong>
           <small>${count}명 정산${remainder ? ` · 나머지 ${remainder}원` : ' · 딱 맞게 나눠짐'}</small>
         `
-        : '금액을 입력하면 인당 금액을 바로 확인할 수 있습니다.';
+        : grandTotal
+          ? `
+            <span>전체 합계 기준</span>
+            <strong>인당 ${money(grandShare)}</strong>
+            <small>${activeCount}명 정산${grandRemainder ? ` · 나머지 ${grandRemainder}원` : ' · 딱 맞게 나눠짐'}</small>
+          `
+          : '금액을 입력하면 인당 금액을 바로 확인할 수 있습니다.';
     }
 
-    const showDeduction = !draft.isDeduction && Boolean(remainder);
+    const showDeduction = !draft.isDeduction && Boolean(grandTotal) && Boolean(grandRemainder);
     if (deductionCallout) deductionCallout.hidden = !showDeduction;
     if (deductionTextEl && showDeduction) {
-      deductionTextEl.textContent = `${count}명으로 나누면 ${remainder}원이 남습니다. 할인/오차처럼 빼고 싶으면 공제로 조정하세요.`;
+      deductionTextEl.textContent = `전체 합계 ${money(grandTotal)}을 ${activeCount}명으로 나누면 ${grandRemainder}원이 남습니다. 공제로 빼면 인당 금액이 더 깔끔해집니다.`;
     }
 
     if (roundTotalsEl) {
@@ -16081,6 +16110,10 @@ render();
     const nextRound = continueNext ? ensureFollowingRound(round) : null;
 
     saveAndRender();
+    if (options.openDeductionAfter && !isDeduction) {
+      openExpenseEntry({ type: 'deduction' });
+      return;
+    }
     if (continueNext) {
       openExpenseEntry({
         type: 'expense',
@@ -16235,7 +16268,11 @@ render();
         event.preventDefault();
         event.stopPropagation();
         event.stopImmediatePropagation();
-        openExpenseEntry({ type: 'deduction' });
+        if (entryState.type !== 'deduction' && numberValue(amountInput?.value || '')) {
+          saveExpenseEntry({ openDeductionAfter: true });
+        } else {
+          openExpenseEntry({ type: 'deduction' });
+        }
         return;
       }
 
@@ -17213,12 +17250,13 @@ render();
 
   .expense-entry-overview {
     display: grid !important;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) !important;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr) minmax(0, 1.1fr) !important;
     gap: 12px !important;
     margin: 0 0 14px !important;
   }
 
   .expense-entry-current-card,
+  .expense-entry-total-card,
   .expense-entry-split-card {
     min-width: 0 !important;
     min-height: 108px !important;
@@ -17229,6 +17267,7 @@ render();
   }
 
   .expense-entry-current-card span,
+  .expense-entry-total-card span,
   .expense-entry-split-card span {
     display: block !important;
     color: #8d8e96 !important;
@@ -17238,6 +17277,7 @@ render();
   }
 
   .expense-entry-current-card strong,
+  .expense-entry-total-card strong,
   .expense-entry-split-card strong {
     display: block !important;
     margin-top: 10px !important;
@@ -17249,6 +17289,7 @@ render();
   }
 
   .expense-entry-current-card small,
+  .expense-entry-total-card small,
   .expense-entry-split-card small {
     display: block !important;
     margin-top: 8px !important;
@@ -17267,6 +17308,27 @@ render();
     font-size: 14px !important;
     font-weight: 720 !important;
     line-height: 1.45 !important;
+  }
+
+  .expense-entry-participants {
+    min-height: 46px !important;
+    gap: 8px !important;
+    padding: 9px !important;
+    border-radius: 16px !important;
+  }
+
+  .expense-entry-participant {
+    min-height: 34px !important;
+    gap: 7px !important;
+    padding: 0 11px !important;
+    border-radius: 999px !important;
+    font-size: 12px !important;
+    font-weight: 780 !important;
+  }
+
+  .expense-entry-participant input {
+    width: 15px !important;
+    height: 15px !important;
   }
 
   .expense-entry-round-totals {
@@ -17381,6 +17443,7 @@ render();
     }
 
     .expense-entry-current-card,
+    .expense-entry-total-card,
     .expense-entry-split-card {
       min-height: 94px !important;
       padding: 16px !important;
@@ -17388,6 +17451,7 @@ render();
     }
 
     .expense-entry-current-card strong,
+    .expense-entry-total-card strong,
     .expense-entry-split-card strong {
       font-size: 24px !important;
     }
