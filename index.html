@@ -7702,6 +7702,19 @@ body {
       <button type="button" class="expense-entry-close" id="expenseEntryCloseButton" aria-label="지출 입력 닫기">×</button>
     </div>
 
+    <div class="expense-entry-overview" id="expenseEntryOverview">
+      <div class="expense-entry-current-card">
+        <span>현재 입력</span>
+        <strong id="expenseEntryCurrentRound">1차</strong>
+        <small id="expenseEntryCurrentHint">저장하면 차수별 합계에 반영됩니다.</small>
+      </div>
+      <div class="expense-entry-split-card" id="expenseEntrySplitHint">
+        금액을 입력하면 인당 금액을 바로 확인할 수 있습니다.
+      </div>
+    </div>
+
+    <div class="expense-entry-round-totals" id="expenseEntryRoundTotals" aria-label="차수별 합계"></div>
+
     <div class="expense-entry-grid">
       <label class="expense-entry-field expense-entry-amount-field">
         <span>금액</span>
@@ -7722,6 +7735,13 @@ body {
       <div class="expense-entry-field-full">
         <span>참여자</span>
         <div id="expenseEntryParticipants" class="expense-entry-participants"></div>
+      </div>
+      <div class="expense-entry-deduction-callout" id="expenseEntryDeductionCallout" hidden>
+        <div>
+          <strong>공제가 필요할 수 있어요</strong>
+          <p id="expenseEntryDeductionText">인원수로 나누어 떨어지지 않는 금액은 공제로 맞출 수 있습니다.</p>
+        </div>
+        <button type="button" id="expenseEntryOpenDeductionButton">공제 추가</button>
       </div>
     </div>
 
@@ -15796,6 +15816,12 @@ render();
   const closeButtons = [document.getElementById('expenseEntryCloseButton'), document.getElementById('expenseEntryCancelButton')].filter(Boolean);
   const saveButton = document.getElementById('expenseEntrySaveButton');
   const saveNextButton = document.getElementById('expenseEntrySaveNextButton');
+  const currentRoundEl = document.getElementById('expenseEntryCurrentRound');
+  const currentHintEl = document.getElementById('expenseEntryCurrentHint');
+  const splitHintEl = document.getElementById('expenseEntrySplitHint');
+  const roundTotalsEl = document.getElementById('expenseEntryRoundTotals');
+  const deductionCallout = document.getElementById('expenseEntryDeductionCallout');
+  const deductionTextEl = document.getElementById('expenseEntryDeductionText');
   let entryState = { mode: 'create', type: 'expense', expenseId: null };
 
   function normalRounds() {
@@ -15861,6 +15887,103 @@ render();
       : '<div class="simple-expense-empty">먼저 참여자를 추가하세요</div>';
   }
 
+  function draftEntry() {
+    const isDeduction = entryState.type === 'deduction';
+    const amount = numberValue(amountInput?.value || '');
+    const participants = selectedParticipantIds();
+    return {
+      amount: isDeduction ? -Math.abs(amount) : amount,
+      isDeduction,
+      participants,
+      participantCount: participants.length || activePeople().length,
+      round: isDeduction ? deductionRound : roundSelect?.value || defaultRound(),
+    };
+  }
+
+  function roundStatsWithDraft(draft) {
+    const stats = new Map();
+    const ensure = (round) => {
+      if (!stats.has(round)) stats.set(round, { amount: 0, entries: 0 });
+      return stats.get(round);
+    };
+
+    normalizeRoundList(state.rounds, state.expenses).forEach(ensure);
+    if (draft?.round) ensure(draft.round);
+
+    state.expenses.forEach((expense) => {
+      if (entryState.mode === 'edit' && expense.id === entryState.expenseId) return;
+      const amount = expenseAmount(expense);
+      const label = expense.type === 'deduction' ? deductionRound : expense.round || '차수';
+      if (!amount && !String(expense.place || '').trim()) return;
+      const row = ensure(label);
+      row.amount += amount;
+      row.entries += 1;
+    });
+
+    if (draft && draft.amount) {
+      const row = ensure(draft.round);
+      row.amount += draft.amount;
+      row.entries += 1;
+    }
+
+    return stats;
+  }
+
+  function renderEntryContext() {
+    const draft = draftEntry();
+    const stats = roundStatsWithDraft(draft);
+    const currentLabel = draft.isDeduction ? '공제' : draft.round;
+    const currentStats = stats.get(currentLabel) || { amount: 0, entries: 0 };
+    const savedExpenseCount = state.expenses.filter((expense) => expenseAmount(expense) || String(expense.place || '').trim()).length;
+
+    if (currentRoundEl) currentRoundEl.textContent = currentLabel;
+    if (currentHintEl) {
+      const entryWord = currentStats.entries ? `${currentStats.entries}건` : '첫 내역';
+      currentHintEl.textContent = `${entryWord} · 현재 합계 ${money(currentStats.amount)} · 전체 저장 ${savedExpenseCount}건`;
+    }
+
+    const amount = Math.abs(draft.amount);
+    const count = Math.max(1, draft.participantCount || activePeople().length || 1);
+    const baseShare = amount ? Math.floor(amount / count) : 0;
+    const remainder = amount ? amount % count : 0;
+    if (splitHintEl) {
+      splitHintEl.innerHTML = amount
+        ? `
+          <span>이번 입력 기준</span>
+          <strong>인당 ${money(baseShare)}</strong>
+          <small>${count}명 정산${remainder ? ` · 나머지 ${remainder}원` : ' · 딱 맞게 나눠짐'}</small>
+        `
+        : '금액을 입력하면 인당 금액을 바로 확인할 수 있습니다.';
+    }
+
+    const showDeduction = !draft.isDeduction && Boolean(remainder);
+    if (deductionCallout) deductionCallout.hidden = !showDeduction;
+    if (deductionTextEl && showDeduction) {
+      deductionTextEl.textContent = `${count}명으로 나누면 ${remainder}원이 남습니다. 할인/오차처럼 빼고 싶으면 공제로 조정하세요.`;
+    }
+
+    if (roundTotalsEl) {
+      const rounds = Array.from(stats.entries())
+        .filter(([round, data]) => round === currentLabel || data.entries || data.amount)
+        .filter(([round]) => round !== deductionRound || stats.get(round)?.entries || currentLabel === deductionRound);
+      roundTotalsEl.innerHTML = rounds.length
+        ? rounds
+            .map(([round, data]) => `
+              <button type="button" class="expense-round-total ${round === currentLabel ? 'is-active' : ''}" data-entry-round="${escapeHtml(round)}">
+                <span>${escapeHtml(round)}</span>
+                <strong>${money(data.amount)}</strong>
+                <small>${data.entries}건</small>
+              </button>
+            `)
+            .join('')
+        : '<div class="expense-round-total-empty">아직 저장된 차수가 없습니다.</div>';
+    }
+
+    if (saveNextButton && !saveNextButton.hidden && !draft.isDeduction) {
+      saveNextButton.textContent = `저장하고 ${followingRound(draft.round)} 입력`;
+    }
+  }
+
   function openExpenseEntry(options = {}) {
     const people = activePeople();
     if (!people.length) {
@@ -15898,6 +16021,7 @@ render();
     );
     renderEntryParticipants(selectedParticipants);
     if (saveNextButton) saveNextButton.hidden = Boolean(existing) || type === 'deduction';
+    renderEntryContext();
 
     overlay.hidden = false;
     document.body.classList.add('guide-open');
@@ -16107,6 +16231,24 @@ render();
         return;
       }
 
+      if (button.id === 'expenseEntryOpenDeductionButton') {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        openExpenseEntry({ type: 'deduction' });
+        return;
+      }
+
+      const entryRound = button.getAttribute('data-entry-round');
+      if (entryRound && roundSelect && !roundSelect.disabled) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        roundSelect.value = entryRound;
+        renderEntryContext();
+        return;
+      }
+
       if (button.id === 'quickCreateSubmitExpenseButton') {
         event.preventDefault();
         event.stopPropagation();
@@ -16145,6 +16287,11 @@ render();
   closeButtons.forEach((button) => button.addEventListener('click', closeExpenseEntry));
   saveButton?.addEventListener('click', () => saveExpenseEntry());
   saveNextButton?.addEventListener('click', () => saveExpenseEntry({ continueNext: true }));
+  [amountInput, roundSelect, payerSelect].forEach((node) => {
+    node?.addEventListener('input', renderEntryContext);
+    node?.addEventListener('change', renderEntryContext);
+  });
+  participantBox?.addEventListener('change', renderEntryContext);
   amountInput?.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') saveExpenseEntry();
   });
@@ -17052,6 +17199,223 @@ render();
     caches.keys().then((keys) => {
       keys
         .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-49-settlement-purpose-flow')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-50-expense-entry-command-center">
+  /* v2.50: make expense input self-explanatory with round totals, split hints, and deduction access */
+  .expense-entry-sheet {
+    width: min(760px, calc(100vw - 32px)) !important;
+  }
+
+  .expense-entry-overview {
+    display: grid !important;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) !important;
+    gap: 12px !important;
+    margin: 0 0 14px !important;
+  }
+
+  .expense-entry-current-card,
+  .expense-entry-split-card {
+    min-width: 0 !important;
+    min-height: 108px !important;
+    padding: 18px !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(17, 17, 19, 0.07) !important;
+    background: #fbfbfc !important;
+  }
+
+  .expense-entry-current-card span,
+  .expense-entry-split-card span {
+    display: block !important;
+    color: #8d8e96 !important;
+    font-size: 12px !important;
+    font-weight: 820 !important;
+    line-height: 1.2 !important;
+  }
+
+  .expense-entry-current-card strong,
+  .expense-entry-split-card strong {
+    display: block !important;
+    margin-top: 10px !important;
+    color: #111113 !important;
+    font-size: 28px !important;
+    font-weight: 900 !important;
+    line-height: 1.05 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .expense-entry-current-card small,
+  .expense-entry-split-card small {
+    display: block !important;
+    margin-top: 8px !important;
+    color: #8f9097 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+  }
+
+  .expense-entry-split-card {
+    display: flex !important;
+    min-height: 108px !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    color: #8f9097 !important;
+    font-size: 14px !important;
+    font-weight: 720 !important;
+    line-height: 1.45 !important;
+  }
+
+  .expense-entry-round-totals {
+    display: flex !important;
+    gap: 10px !important;
+    margin: 0 0 18px !important;
+    padding: 4px 0 2px !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+  }
+
+  .expense-entry-round-totals::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .expense-round-total,
+  .expense-round-total-empty {
+    flex: 0 0 auto !important;
+    min-width: 128px !important;
+    min-height: 76px !important;
+    padding: 12px 14px !important;
+    border-radius: 18px !important;
+    border: 1px solid rgba(17, 17, 19, 0.07) !important;
+    background: #ffffff !important;
+    color: #111113 !important;
+    text-align: left !important;
+    box-shadow: 0 6px 16px rgba(17, 17, 19, 0.025) !important;
+  }
+
+  .expense-round-total.is-active {
+    border-color: rgba(17, 17, 19, 0.18) !important;
+    background: #111113 !important;
+    color: #ffffff !important;
+    box-shadow: 0 14px 28px rgba(17, 17, 19, 0.14) !important;
+  }
+
+  .expense-round-total span,
+  .expense-round-total small,
+  .expense-round-total-empty {
+    color: inherit !important;
+    opacity: 0.68 !important;
+    font-size: 12px !important;
+    font-weight: 780 !important;
+  }
+
+  .expense-round-total strong {
+    display: block !important;
+    margin-top: 7px !important;
+    color: inherit !important;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .expense-round-total small {
+    display: block !important;
+    margin-top: 4px !important;
+  }
+
+  .expense-entry-deduction-callout {
+    grid-column: 1 / -1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 14px !important;
+    padding: 16px !important;
+    border-radius: 18px !important;
+    border: 1px solid rgba(217, 52, 52, 0.12) !important;
+    background: #fff7f7 !important;
+  }
+
+  .expense-entry-deduction-callout[hidden] {
+    display: none !important;
+  }
+
+  .expense-entry-deduction-callout strong {
+    display: block !important;
+    color: #d93434 !important;
+    font-size: 14px !important;
+    font-weight: 860 !important;
+    line-height: 1.2 !important;
+  }
+
+  .expense-entry-deduction-callout p {
+    margin: 6px 0 0 !important;
+    color: #9a6262 !important;
+    font-size: 13px !important;
+    font-weight: 680 !important;
+    line-height: 1.45 !important;
+  }
+
+  .expense-entry-deduction-callout button {
+    flex: 0 0 auto !important;
+    min-height: 44px !important;
+    padding: 0 16px !important;
+    color: #ffffff !important;
+    background: #d93434 !important;
+    border: 1px solid rgba(217, 52, 52, 0.16) !important;
+    border-radius: 14px !important;
+    font-size: 13px !important;
+    font-weight: 840 !important;
+  }
+
+  @media (max-width: 720px) {
+    .expense-entry-sheet {
+      width: 100% !important;
+    }
+
+    .expense-entry-overview {
+      grid-template-columns: 1fr !important;
+    }
+
+    .expense-entry-current-card,
+    .expense-entry-split-card {
+      min-height: 94px !important;
+      padding: 16px !important;
+      border-radius: 18px !important;
+    }
+
+    .expense-entry-current-card strong,
+    .expense-entry-split-card strong {
+      font-size: 24px !important;
+    }
+
+    .expense-round-total,
+    .expense-round-total-empty {
+      min-width: 116px !important;
+      min-height: 70px !important;
+      border-radius: 16px !important;
+    }
+
+    .expense-entry-deduction-callout {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+    }
+
+    .expense-entry-deduction-callout button {
+      width: 100% !important;
+    }
+  }
+</style>
+<script id="v2-50-expense-entry-command-center-script">
+(function setupV50ExpenseEntryCommandCenter() {
+  window.DUTCH_PAY_APP_VERSION = 'v2.50-expense-entry-command-center';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-50-expense-entry-command-center')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
