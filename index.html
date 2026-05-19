@@ -17486,5 +17486,336 @@ render();
 })();
 </script>
 
+<style id="v2-51-expense-entry-compact-refine">
+  /* v2.51: compact, quieter expense entry with real small participant check chips */
+  #expenseEntryOverlay .expense-entry-sheet {
+    width: min(860px, calc(100vw - 32px)) !important;
+    padding: 24px !important;
+    border-radius: 28px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head {
+    margin-bottom: 18px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head p {
+    margin-bottom: 5px !important;
+    color: #8d8e96 !important;
+    font-size: 12px !important;
+    font-weight: 820 !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head h2 {
+    color: #111113 !important;
+    font-size: 32px !important;
+    font-weight: 860 !important;
+    line-height: 1.08 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head small {
+    margin-top: 8px !important;
+    color: #858790 !important;
+    font-size: 15px !important;
+    font-weight: 650 !important;
+    line-height: 1.45 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-close {
+    width: 48px !important;
+    height: 48px !important;
+    flex-basis: 48px !important;
+    border-radius: 16px !important;
+    color: #5d6068 !important;
+    font-size: 25px !important;
+    box-shadow: none !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-overview {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr) minmax(0, 1.08fr) !important;
+    gap: 10px !important;
+    margin-bottom: 12px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card,
+  #expenseEntryOverlay .expense-entry-total-card,
+  #expenseEntryOverlay .expense-entry-split-card {
+    min-height: 92px !important;
+    padding: 15px 16px !important;
+    border-radius: 18px !important;
+    background: #fbfbfc !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card span,
+  #expenseEntryOverlay .expense-entry-total-card span,
+  #expenseEntryOverlay .expense-entry-split-card span,
+  #expenseEntryOverlay .expense-entry-field span,
+  #expenseEntryOverlay .expense-entry-field-full > span {
+    color: #777a83 !important;
+    font-size: 13px !important;
+    font-weight: 780 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card strong,
+  #expenseEntryOverlay .expense-entry-total-card strong,
+  #expenseEntryOverlay .expense-entry-split-card strong {
+    margin-top: 8px !important;
+    color: #111113 !important;
+    font-size: 24px !important;
+    font-weight: 840 !important;
+    line-height: 1.08 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card small,
+  #expenseEntryOverlay .expense-entry-total-card small,
+  #expenseEntryOverlay .expense-entry-split-card small {
+    margin-top: 7px !important;
+    color: #8f9097 !important;
+    font-size: 12px !important;
+    font-weight: 650 !important;
+    line-height: 1.38 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-round-totals {
+    gap: 8px !important;
+    margin-bottom: 16px !important;
+    padding: 2px 0 !important;
+  }
+
+  #expenseEntryOverlay .expense-round-total,
+  #expenseEntryOverlay .expense-round-total-empty {
+    min-width: 112px !important;
+    min-height: 64px !important;
+    padding: 10px 12px !important;
+    border-radius: 16px !important;
+  }
+
+  #expenseEntryOverlay .expense-round-total span,
+  #expenseEntryOverlay .expense-round-total small {
+    font-size: 11px !important;
+    font-weight: 730 !important;
+  }
+
+  #expenseEntryOverlay .expense-round-total strong {
+    margin-top: 5px !important;
+    font-size: 17px !important;
+    font-weight: 840 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-grid {
+    gap: 14px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-field,
+  #expenseEntryOverlay .expense-entry-field-full {
+    gap: 8px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-field input,
+  #expenseEntryOverlay .expense-entry-field select {
+    min-height: 50px !important;
+    padding: 0 15px !important;
+    border-radius: 15px !important;
+    background: #fcfcfd !important;
+    font-size: 15px !important;
+    font-weight: 680 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-amount-field input {
+    min-height: 58px !important;
+    font-size: 27px !important;
+    font-weight: 800 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participants {
+    min-height: 44px !important;
+    gap: 7px !important;
+    padding: 8px !important;
+    border-radius: 16px !important;
+    background: #fcfcfd !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participant {
+    min-height: 32px !important;
+    height: 32px !important;
+    gap: 7px !important;
+    padding: 0 10px !important;
+    border-radius: 999px !important;
+    color: #6f727b !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(17, 17, 19, 0.08) !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participant input[type="checkbox"] {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    position: relative !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    width: 17px !important;
+    min-width: 17px !important;
+    max-width: 17px !important;
+    height: 17px !important;
+    min-height: 17px !important;
+    max-height: 17px !important;
+    flex: 0 0 17px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #ffffff !important;
+    background: #111113 !important;
+    border: 0 !important;
+    border-radius: 5px !important;
+    box-shadow: none !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participant input[type="checkbox"]::after {
+    content: "" !important;
+    width: 8px !important;
+    height: 5px !important;
+    margin-top: -1px !important;
+    border-left: 2px solid #ffffff !important;
+    border-bottom: 2px solid #ffffff !important;
+    transform: rotate(-45deg) !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participant input[type="checkbox"]:not(:checked) {
+    background: #ffffff !important;
+    box-shadow: inset 0 0 0 1px rgba(17, 17, 19, 0.18) !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participant input[type="checkbox"]:not(:checked)::after {
+    display: none !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-deduction-callout {
+    padding: 14px !important;
+    border-radius: 16px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-actions {
+    gap: 10px !important;
+    margin-top: 20px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-actions button {
+    min-height: 48px !important;
+    padding: 0 18px !important;
+    border-radius: 16px !important;
+    font-size: 15px !important;
+    font-weight: 760 !important;
+    letter-spacing: 0 !important;
+  }
+
+  @media (max-width: 720px) {
+    #expenseEntryOverlay .expense-entry-sheet {
+      padding: 20px 16px calc(18px + env(safe-area-inset-bottom)) !important;
+      border-radius: 24px 24px 0 0 !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-head h2 {
+      font-size: 28px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-overview {
+      grid-template-columns: 1fr !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-current-card,
+    #expenseEntryOverlay .expense-entry-total-card,
+    #expenseEntryOverlay .expense-entry-split-card {
+      min-height: 82px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-participants {
+      max-height: 118px !important;
+      overflow-y: auto !important;
+    }
+  }
+</style>
+<script id="v2-51-expense-entry-compact-refine-script">
+(function setupV51ExpenseEntryCompactRefine() {
+  window.DUTCH_PAY_APP_VERSION = 'v2.51-expense-entry-compact-refine';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-51-expense-entry-compact-refine')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-52-visible-version-label">
+  /* v2.52: show a visible app version label like Receipt DB */
+  .app-version-label {
+    display: block !important;
+    margin: 0 0 6px !important;
+    color: #7f8088 !important;
+    font-size: 14px !important;
+    font-weight: 820 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .side-brand .app-version-label {
+    margin-bottom: 8px !important;
+    color: #8d8e96 !important;
+    font-size: 13px !important;
+  }
+
+  .side-brand > span:not(.app-version-label) {
+    display: none !important;
+  }
+
+  .dashboard-home-page .dashboard-kicker,
+  .topbar .eyebrow {
+    color: #7f8088 !important;
+    font-size: 14px !important;
+    font-weight: 820 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+
+  .desktop-side-nav .side-brand strong {
+    display: block !important;
+  }
+</style>
+<script id="v2-52-visible-version-label-script">
+(function setupV52VisibleVersionLabel() {
+  const displayVersion = 'Dutch Pay · v2.52 PWA';
+
+  document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow').forEach((node) => {
+    node.textContent = displayVersion;
+    node.setAttribute('aria-label', displayVersion);
+  });
+
+  document.querySelectorAll('.side-brand').forEach((brand) => {
+    let label = brand.querySelector('.app-version-label');
+    if (!label) {
+      label = document.createElement('span');
+      label.className = 'app-version-label';
+      brand.insertBefore(label, brand.firstElementChild);
+    }
+    label.textContent = displayVersion;
+  });
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.52-visible-version-label';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-52-visible-version-label')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
 </body>
 </html>
