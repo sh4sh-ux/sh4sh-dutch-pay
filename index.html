@@ -23191,7 +23191,7 @@ render();
 </style>
 <script id="v2-75-restore-readable-amounts-script">
 (function setupV75RestoreReadableAmounts() {
-  const displayVersion = 'Dutch Pay · v2.75 PWA';
+  const displayVersion = 'Dutch Pay · v2.78 PWA';
 
   function setText(node, text) {
     if (!node || node.textContent === text) return;
@@ -23259,16 +23259,226 @@ render();
   }, true);
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.75-restore-readable-amounts';
+  window.DUTCH_PAY_APP_VERSION = 'v2.78-compact-settlement-status-pill';
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-75-restore-readable-amounts')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-78-compact-settlement-status-pill')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
 })();
 </script>
+
+<style id="v2-76-person-card-layout-repair">
+  /* v2.76: repair person settlement card alignment without changing behavior */
+  .dashboard-home-page #dashboardPersonSummary .settlement-card {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(96px, auto) !important;
+    align-items: center !important;
+    gap: 14px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    padding-right: 22px !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-main,
+  .dashboard-home-page #dashboardPersonSummary .settlement-meta {
+    min-width: 0 !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-result {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 132px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-top: 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    align-content: center !important;
+    justify-items: end !important;
+    gap: 7px !important;
+    text-align: right !important;
+    box-sizing: border-box !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-result::before,
+  .dashboard-home-page #dashboardPersonSummary .settlement-result::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-result strong {
+    max-width: 100% !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+  }
+
+  #reportPeople .report-settlement-card {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    align-items: stretch !important;
+    gap: 15px !important;
+    box-sizing: border-box !important;
+  }
+
+  #reportPeople .settlement-main,
+  #reportPeople .settlement-meta {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+
+  #reportPeople .settlement-meta {
+    display: grid !important;
+    gap: 8px !important;
+  }
+
+  #reportPeople .settlement-line {
+    width: 100% !important;
+    max-width: none !important;
+    display: grid !important;
+    grid-template-columns: 42px minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  #reportPeople .settlement-line-paid {
+    grid-template-columns: 42px minmax(0, 1fr) auto auto !important;
+  }
+
+  #reportPeople .settlement-line > .settlement-label {
+    grid-column: 1 !important;
+    justify-self: start !important;
+  }
+
+  #reportPeople .settlement-line:not(.settlement-line-paid) > strong {
+    grid-column: 3 !important;
+  }
+
+  #reportPeople .settlement-line-paid .settlement-deduction {
+    grid-column: 3 !important;
+    justify-self: end !important;
+  }
+
+  #reportPeople .settlement-line-paid > strong {
+    grid-column: 4 !important;
+  }
+
+  #reportPeople .settlement-line > strong,
+  #reportPeople .settlement-line-paid > strong {
+    justify-self: end !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+  }
+
+  #reportPeople .settlement-result {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    padding-top: 14px !important;
+    border-top: 1px solid rgba(17, 17, 19, 0.07) !important;
+    text-align: right !important;
+  }
+
+  #reportPeople .settlement-result strong {
+    justify-self: end !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+  }
+
+  @media (max-width: 720px) {
+    .dashboard-home-page #dashboardPersonSummary .settlement-card {
+      grid-template-columns: minmax(0, 1fr) minmax(92px, auto) !important;
+      padding-right: 18px !important;
+    }
+
+    .dashboard-home-page #dashboardPersonSummary .settlement-result {
+      max-width: 122px !important;
+    }
+  }
+</style>
+
+<style id="v2-77-report-detail-summary-alignment">
+  /* v2.77: tighten report person detail amounts and recenter records total */
+  html body .report-overlay #reportPeople .report-settlement-card .settlement-line > strong,
+  html body .report-overlay #reportPeople .report-settlement-card .settlement-line-paid > strong {
+    color: #9aa0a8 !important;
+    font-size: 12px !important;
+    font-weight: 640 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  html body .report-overlay #reportPeople .report-settlement-card .settlement-deduction {
+    min-height: 18px !important;
+    height: 18px !important;
+    padding: 0 6px !important;
+    border-radius: 999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    color: #9aa0a8 !important;
+    background: #f4f5f7 !important;
+    border: 1px solid rgba(17, 17, 19, 0.04) !important;
+    box-shadow: none !important;
+    font-size: 10px !important;
+    font-weight: 640 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  html body .report-overlay #reportPeople .report-settlement-card .settlement-deduction strong {
+    color: #9aa0a8 !important;
+    font-size: 10px !important;
+    font-weight: 640 !important;
+    line-height: 1 !important;
+  }
+
+  body.app-view-settlement .kpi-grid .total-metric,
+  body.app-view-settlement .kpi-grid .metric:first-child {
+    align-items: center !important;
+    justify-items: center !important;
+    text-align: center !important;
+  }
+
+  body.app-view-settlement .kpi-grid .total-metric .total-line,
+  body.app-view-settlement .kpi-grid .metric:first-child .total-line {
+    width: 100% !important;
+    display: flex !important;
+    align-items: baseline !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  body.app-view-settlement #totalExpense {
+    width: 100% !important;
+    display: block !important;
+    text-align: center !important;
+  }
+</style>
+
+<style id="v2-78-compact-settlement-status-pill">
+  /* v2.78: slightly reduce receive/pay status pill height in person settlement cards */
+  #personSummary .settlement-result span,
+  #dashboardPersonSummary .settlement-result span,
+  #reportPeople .settlement-result span {
+    min-height: 22px !important;
+    height: 22px !important;
+    padding: 0 9px !important;
+    border-radius: 999px !important;
+    font-size: 10.5px !important;
+    font-weight: 720 !important;
+    line-height: 22px !important;
+  }
+</style>
 
 </body>
 </html>
