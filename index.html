@@ -21826,5 +21826,138 @@ render();
 })();
 </script>
 
+<style id="v2-67-person-detail-tone-balance">
+  /* v2.67: make burden/payment/deduction read as one quiet support layer */
+  #personSummary .settlement-main,
+  #dashboardPersonSummary .settlement-main,
+  #reportPeople .settlement-main {
+    width: min(100%, 330px) !important;
+    max-width: 330px !important;
+  }
+
+  #personSummary .settlement-meta,
+  #dashboardPersonSummary .settlement-meta,
+  #reportPeople .settlement-meta {
+    width: min(100%, 235px) !important;
+    max-width: 235px !important;
+  }
+
+  #personSummary .settlement-line,
+  #dashboardPersonSummary .settlement-line,
+  #reportPeople .settlement-line {
+    grid-template-columns: 27px minmax(0, 1fr) auto !important;
+    width: 100% !important;
+    max-width: 235px !important;
+    gap: 5px !important;
+  }
+
+  #personSummary .settlement-label,
+  #dashboardPersonSummary .settlement-label,
+  #reportPeople .settlement-label,
+  #personSummary .settlement-line > strong,
+  #dashboardPersonSummary .settlement-line > strong,
+  #reportPeople .settlement-line > strong,
+  #personSummary .settlement-line:not(.settlement-line-paid) > strong,
+  #dashboardPersonSummary .settlement-line:not(.settlement-line-paid) > strong,
+  #reportPeople .settlement-line:not(.settlement-line-paid) > strong,
+  #personSummary .settlement-line-paid > strong,
+  #dashboardPersonSummary .settlement-line-paid > strong,
+  #reportPeople .settlement-line-paid > strong,
+  #personSummary .settlement-deduction,
+  #dashboardPersonSummary .settlement-deduction,
+  #reportPeople .settlement-deduction,
+  #personSummary .settlement-deduction strong,
+  #dashboardPersonSummary .settlement-deduction strong,
+  #reportPeople .settlement-deduction strong {
+    color: #9da1aa !important;
+    font-size: 10px !important;
+    font-weight: 610 !important;
+    line-height: 1.18 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #personSummary .settlement-line > strong,
+  #dashboardPersonSummary .settlement-line > strong,
+  #reportPeople .settlement-line > strong,
+  #personSummary .settlement-line-paid > strong,
+  #dashboardPersonSummary .settlement-line-paid > strong,
+  #reportPeople .settlement-line-paid > strong {
+    justify-self: end !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+  }
+
+  #personSummary .settlement-deduction,
+  #dashboardPersonSummary .settlement-deduction,
+  #reportPeople .settlement-deduction {
+    min-height: 14px !important;
+    padding: 0 4px !important;
+    border-radius: 999px !important;
+    background: #f7f8f9 !important;
+    border: 1px solid rgba(17, 17, 19, 0.035) !important;
+    margin: 0 !important;
+  }
+
+  #personSummary .settlement-deduction-empty,
+  #dashboardPersonSummary .settlement-deduction-empty,
+  #reportPeople .settlement-deduction-empty {
+    width: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+  }
+
+  @media (max-width: 720px) {
+    #personSummary .settlement-main,
+    #dashboardPersonSummary .settlement-main,
+    #reportPeople .settlement-main {
+      width: min(100%, 260px) !important;
+      max-width: 260px !important;
+    }
+
+    #personSummary .settlement-meta,
+    #dashboardPersonSummary .settlement-meta,
+    #reportPeople .settlement-meta,
+    #personSummary .settlement-line,
+    #dashboardPersonSummary .settlement-line,
+    #reportPeople .settlement-line {
+      width: min(100%, 205px) !important;
+      max-width: 205px !important;
+    }
+  }
+</style>
+<script id="v2-67-person-detail-tone-balance-script">
+(function setupV67PersonDetailToneBalance() {
+  const displayVersion = 'Dutch Pay · v2.67 PWA';
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      node.textContent = displayVersion;
+      node.setAttribute('aria-label', displayVersion);
+    });
+
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+      node.textContent = displayVersion;
+    });
+  }
+
+  setDisplayVersion();
+  document.addEventListener('click', () => requestAnimationFrame(setDisplayVersion), true);
+  window.addEventListener('click', () => requestAnimationFrame(setDisplayVersion), true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.67-person-detail-tone-balance';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-67-person-detail-tone-balance')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
 </body>
 </html>
