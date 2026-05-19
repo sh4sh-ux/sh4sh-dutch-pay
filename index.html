@@ -7173,6 +7173,17 @@ body {
             </span>
             <span>대시보드</span>
           </button>
+          <button type="button" class="side-nav-button" data-nav-target="meeting">
+            <span class="side-nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8.5 11.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" />
+                <path d="M15.8 11a2.7 2.7 0 1 0 0-5.4" />
+                <path d="M3.5 19.2c.55-3.35 2.4-5.15 5-5.15s4.45 1.8 5 5.15" />
+                <path d="M13.6 14.4c2.7.25 4.45 1.9 4.9 4.8" />
+              </svg>
+            </span>
+            <span>인원</span>
+          </button>
           <button type="button" class="side-nav-button" data-nav-target="settlement">
             <span class="side-nav-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round">
@@ -7184,7 +7195,7 @@ body {
                 <path d="M21 15.5v2.9h-2.9" />
               </svg>
             </span>
-            <span>정산</span>
+            <span>내역</span>
           </button>
           <button type="button" class="side-nav-button" data-nav-target="report">
             <span class="side-nav-icon" aria-hidden="true">
@@ -7196,17 +7207,6 @@ body {
               </svg>
             </span>
             <span>리포트</span>
-          </button>
-          <button type="button" class="side-nav-button" data-nav-target="meeting">
-            <span class="side-nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M8.5 11.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" />
-                <path d="M15.8 11a2.7 2.7 0 1 0 0-5.4" />
-                <path d="M3.5 19.2c.55-3.35 2.4-5.15 5-5.15s4.45 1.8 5 5.15" />
-                <path d="M13.6 14.4c2.7.25 4.45 1.9 4.9 4.8" />
-              </svg>
-            </span>
-            <span>멤버</span>
           </button>
           <button type="button" class="side-nav-button" data-nav-target="settings">
             <span class="side-nav-icon" aria-hidden="true">
@@ -7614,11 +7614,11 @@ body {
         </span>
         <span class="mobile-tab-label">홈</span>
       </button>
-      <button class="mobile-tab-button" id="mobileTabSettlement" type="button" data-nav-target="settlement" aria-label="정산">
+      <button class="mobile-tab-button" id="mobileTabSettlement" type="button" data-nav-target="settlement" aria-label="내역">
         <span class="mobile-tab-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="12.5" height="17" rx="2.5"/><path d="M9 8h5.5M9 12h6M9 16h4"/><path d="M18.5 14.5 21 17l-3.5 3.5"/></svg>
         </span>
-        <span class="mobile-tab-label">정산</span>
+        <span class="mobile-tab-label">내역</span>
       </button>
       <button class="mobile-tab-button mobile-tab-button--plus" id="mobileTabAdd" type="button" aria-label="지출 추가">
         <span class="mobile-tab-plus-circle" aria-hidden="true">+</span>
@@ -20438,12 +20438,12 @@ render();
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
-      node.textContent = displayVersion;
+      if (node.textContent !== displayVersion) node.textContent = displayVersion;
       node.setAttribute('aria-label', displayVersion);
     });
 
     document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
-      node.textContent = displayVersion;
+      if (node.textContent !== displayVersion) node.textContent = displayVersion;
     });
   }
 
@@ -22345,6 +22345,925 @@ render();
     caches.keys().then((keys) => {
       keys
         .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-68-share-choice-popup')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-69-dashboard-person-tone-reset">
+  /* v2.69: quiet dashboard person details and place reset in settings */
+  .dashboard-home-page #dashboardPersonSummary .settlement-meta {
+    width: min(100%, 215px) !important;
+    max-width: 215px !important;
+    gap: 5px !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-line {
+    display: grid !important;
+    grid-template-columns: 26px minmax(0, 1fr) auto !important;
+    width: 100% !important;
+    max-width: 215px !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-label,
+  .dashboard-home-page #dashboardPersonSummary .settlement-line > strong,
+  .dashboard-home-page #dashboardPersonSummary .settlement-line strong,
+  .dashboard-home-page #dashboardPersonSummary .settlement-line:not(.settlement-line-paid) > strong,
+  .dashboard-home-page #dashboardPersonSummary .settlement-line-paid > strong,
+  .dashboard-home-page #dashboardPersonSummary .settlement-deduction,
+  .dashboard-home-page #dashboardPersonSummary .settlement-deduction strong {
+    color: #9fa3ab !important;
+    font-size: 10px !important;
+    font-weight: 610 !important;
+    line-height: 1.15 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-line > strong,
+  .dashboard-home-page #dashboardPersonSummary .settlement-line-paid > strong {
+    justify-self: end !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-deduction {
+    min-height: 13px !important;
+    padding: 0 3px !important;
+    border-radius: 999px !important;
+    background: #f8f9fa !important;
+    border: 1px solid rgba(17, 17, 19, 0.035) !important;
+    margin: 0 !important;
+    gap: 2px !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-result strong {
+    color: #111113 !important;
+    font-size: 20px !important;
+    font-weight: 760 !important;
+  }
+
+  .guide-reset-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    margin-top: 14px;
+    padding: 16px;
+    border: 1px solid rgba(17, 17, 19, 0.07);
+    border-radius: 18px;
+    background: #fff;
+  }
+
+  .guide-reset-panel strong {
+    display: block;
+    color: #111113;
+    font-size: 14px;
+    font-weight: 740;
+    line-height: 1.25;
+  }
+
+  .guide-reset-panel p {
+    margin: 4px 0 0;
+    color: #979ba3;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .guide-reset-button {
+    min-height: 36px;
+    padding: 0 13px;
+    border: 1px solid rgba(220, 38, 38, 0.14);
+    border-radius: 12px;
+    background: #fff5f5;
+    color: #d13c3c;
+    font-size: 12px;
+    font-weight: 720;
+    cursor: pointer;
+  }
+
+  @media (max-width: 720px) {
+    .dashboard-home-page #dashboardPersonSummary .settlement-meta,
+    .dashboard-home-page #dashboardPersonSummary .settlement-line {
+      max-width: 205px !important;
+    }
+
+    .guide-reset-panel {
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
+
+    .guide-reset-button {
+      width: 100%;
+    }
+  }
+</style>
+<script id="v2-69-dashboard-person-tone-reset-script">
+(function setupV69DashboardPersonToneReset() {
+  const displayVersion = 'Dutch Pay · v2.69 PWA';
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      node.textContent = displayVersion;
+      node.setAttribute('aria-label', displayVersion);
+    });
+
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+      node.textContent = displayVersion;
+    });
+  }
+
+  function ensureGuideResetPanel() {
+    const guideCard = document.querySelector('#guideOverlay .guide-card');
+    if (!guideCard || document.getElementById('guideResetPanel')) return;
+
+    const panel = document.createElement('section');
+    panel.id = 'guideResetPanel';
+    panel.className = 'guide-reset-panel';
+    panel.setAttribute('aria-label', '데이터 초기화');
+    panel.innerHTML = `
+      <div>
+        <strong>데이터 초기화</strong>
+        <p>현재 모임, 인원, 지출 내역을 비우고 새로 시작합니다.</p>
+      </div>
+      <button type="button" class="guide-reset-button" id="guideResetButton">초기화</button>
+    `;
+    guideCard.appendChild(panel);
+  }
+
+  function resetAllData() {
+    const ok = window.confirm('현재 모임, 인원, 지출 내역을 모두 초기화할까요?');
+    if (!ok) return;
+
+    state = clone(sampleState);
+    saveAndRender();
+    if (typeof closeGuide === 'function') closeGuide();
+    document.querySelector('[data-nav-target="home"]')?.click();
+  }
+
+  ensureGuideResetPanel();
+  setDisplayVersion();
+
+  document.addEventListener('click', (event) => {
+    const resetButton = event.target.closest?.('#guideResetButton');
+    if (!resetButton) return;
+    event.preventDefault();
+    resetAllData();
+  }, true);
+
+  document.addEventListener('click', () => requestAnimationFrame(setDisplayVersion), true);
+  window.addEventListener('click', () => requestAnimationFrame(setDisplayVersion), true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.69-dashboard-person-tone-reset';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-69-dashboard-person-tone-reset')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-70-record-summary-centered-units">
+  /* v2.70: center records summary cards and quiet numeric units */
+  body.app-view-settlement .kpi-grid .metric,
+  body.app-view-settlement .kpi-grid .total-metric,
+  body.app-view-settlement .kpi-grid .side-metric {
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 14px !important;
+    text-align: center !important;
+  }
+
+  body.app-view-settlement .kpi-grid .metric > span,
+  body.app-view-settlement .kpi-grid .total-metric > span,
+  body.app-view-settlement .kpi-grid .side-metric > span {
+    width: 100% !important;
+    text-align: center !important;
+    color: #9498a1 !important;
+    font-size: 12px !important;
+    font-weight: 720 !important;
+  }
+
+  body.app-view-settlement .kpi-grid .total-line {
+    width: 100% !important;
+    margin-top: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  body.app-view-settlement .kpi-grid .metric strong,
+  body.app-view-settlement .kpi-grid .total-line strong,
+  body.app-view-settlement .kpi-grid .side-metric > strong {
+    margin-top: 0 !important;
+    text-align: center !important;
+    letter-spacing: 0 !important;
+  }
+
+  .amount-number,
+  .amount-unit {
+    letter-spacing: 0 !important;
+  }
+
+  .amount-unit {
+    display: inline-block;
+    margin-left: 1px;
+    color: #9ea2aa;
+    font-size: 0.58em;
+    font-weight: 580;
+    line-height: 1;
+    transform: translateY(-0.02em);
+  }
+
+  body.app-view-settlement .kpi-grid .amount-unit,
+  .dashboard-stat-card .amount-unit,
+  .report-stats .amount-unit {
+    color: #9ca0a8;
+    font-size: 0.56em;
+    font-weight: 580;
+  }
+
+  .simple-expense-amount .amount-unit,
+  .transfer-row > strong .amount-unit,
+  .summary-row > strong .amount-unit,
+  .settlement-result > strong .amount-unit,
+  .report-item .amount .amount-unit,
+  .report-total-line > strong .amount-unit {
+    color: #9da1aa;
+    font-size: 0.58em;
+    font-weight: 580;
+  }
+</style>
+<script id="v2-70-record-summary-centered-units-script">
+(function setupV70RecordSummaryCenteredUnits() {
+  return;
+  const displayVersion = 'Dutch Pay · v2.70 PWA';
+  const unitSelectors = [
+    '#totalExpense',
+    '#totalPeople',
+    '#averagePerPerson',
+    '#transferCount',
+    '#dashboardTotalExpense',
+    '#dashboardTotalPeople',
+    '#dashboardAveragePerPerson',
+    '#dashboardTransferHeadline',
+    '#reportTotal',
+    '#reportPeopleCount',
+    '#reportAverage',
+    '#reportTransferCount',
+    '.dashboard-stat-card > strong',
+    '.dashboard-inline-amount',
+    '.simple-expense-amount',
+    '.transfer-row > strong',
+    '.summary-row > strong',
+    '.settlement-result > strong',
+    '.report-total-line > strong',
+    '.report-stats strong',
+    '.report-item .amount'
+  ];
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      if (node.textContent !== displayVersion) node.textContent = displayVersion;
+      node.setAttribute('aria-label', displayVersion);
+    });
+
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+      if (node.textContent !== displayVersion) node.textContent = displayVersion;
+    });
+  }
+
+  function unitParts(value) {
+    const text = String(value || '').replace(/\s+/g, '').trim();
+    const match = text.match(/^(-?[\d,]+)(원|명|건)$/);
+    if (!match) return null;
+    return { raw: `${match[1]}${match[2]}`, number: match[1], unit: match[2] };
+  }
+
+  function stylizeUnits() {
+    const nodes = new Set();
+    unitSelectors.forEach((selector) => {
+      document.querySelectorAll(selector).forEach((node) => nodes.add(node));
+    });
+
+    nodes.forEach((node) => {
+      const parts = unitParts(node.textContent);
+      if (!parts) return;
+      if (node.dataset.unitStyledRaw === parts.raw && node.querySelector('.amount-unit')) return;
+      node.dataset.unitStyledRaw = parts.raw;
+      node.innerHTML = `<span class="amount-number">${parts.number}</span><span class="amount-unit">${parts.unit}</span>`;
+    });
+  }
+
+  const previousRender = typeof render === 'function' ? render : null;
+  if (previousRender) {
+    render = function renderWithCenteredUnits() {
+      previousRender();
+      stylizeUnits();
+    };
+  }
+
+  const previousRenderSummary = typeof renderSummary === 'function' ? renderSummary : null;
+  if (previousRenderSummary) {
+    renderSummary = function renderSummaryWithCenteredUnits() {
+      previousRenderSummary();
+      stylizeUnits();
+    };
+  }
+
+  const previousRenderReport = typeof renderReport === 'function' ? renderReport : null;
+  if (previousRenderReport) {
+    renderReport = function renderReportWithCenteredUnits() {
+      previousRenderReport();
+      stylizeUnits();
+    };
+  }
+
+  setDisplayVersion();
+  stylizeUnits();
+
+  const observerTargets = ['section-summary', 'section-dashboard-home', 'section-settlement', 'reportOverlay'];
+  observerTargets.forEach((id) => {
+    const node = document.getElementById(id);
+    if (!node) return;
+    new MutationObserver(() => {
+      setDisplayVersion();
+      window.requestAnimationFrame(stylizeUnits);
+    }).observe(node, { childList: true, subtree: true, characterData: true });
+  });
+
+  document.addEventListener('click', () => {
+    requestAnimationFrame(() => {
+      setDisplayVersion();
+      stylizeUnits();
+    });
+  }, true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.70-record-summary-centered-units';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-70-record-summary-centered-units')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-71-navigation-order-people-first">
+  /* v2.71: reorder desktop navigation to match the real workflow */
+  .desktop-side-nav .side-nav-button[data-nav-target="home"] {
+    order: 1 !important;
+  }
+
+  .desktop-side-nav .side-nav-button[data-nav-target="meeting"] {
+    order: 2 !important;
+  }
+
+  .desktop-side-nav .side-nav-button[data-nav-target="settlement"] {
+    order: 3 !important;
+  }
+
+  .desktop-side-nav .side-nav-button[data-nav-target="report"] {
+    order: 4 !important;
+  }
+
+  .desktop-side-nav .side-nav-button[data-nav-target="settings"] {
+    order: 5 !important;
+  }
+</style>
+<script id="v2-71-navigation-order-people-first-script">
+(function setupV71NavigationOrderPeopleFirst() {
+  return;
+  const displayVersion = 'Dutch Pay · v2.71 PWA';
+  const desktopOrder = ['home', 'meeting', 'settlement', 'report', 'settings'];
+  const navLabels = {
+    home: '대시보드',
+    meeting: '인원',
+    settlement: '내역',
+    report: '리포트',
+    settings: '설정',
+  };
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      node.textContent = displayVersion;
+      node.setAttribute('aria-label', displayVersion);
+    });
+
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+      node.textContent = displayVersion;
+    });
+  }
+
+  function setButtonLabel(button, label) {
+    if (!button || !label) return;
+    const textNode = button.querySelector('.side-nav-icon + span, .mobile-tab-label');
+    if (textNode) textNode.textContent = label;
+    button.setAttribute('aria-label', label);
+  }
+
+  function applyNavigationOrder() {
+    document.querySelectorAll('.desktop-side-nav .side-nav-button').forEach((button) => {
+      setButtonLabel(button, navLabels[button.dataset.navTarget]);
+    });
+
+    document.querySelectorAll('[data-nav-target="settlement"]').forEach((button) => setButtonLabel(button, '내역'));
+    document.querySelectorAll('[data-nav-target="meeting"]').forEach((button) => setButtonLabel(button, '인원'));
+
+    document.querySelectorAll('.guide-title-with-icon').forEach((title) => {
+      if (!title.textContent.includes('멤버')) return;
+      title.childNodes.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) node.textContent = node.textContent.replace('멤버', '인원');
+      });
+    });
+
+    document.querySelectorAll('.guide-step p').forEach((paragraph) => {
+      paragraph.textContent = paragraph.textContent.replace('멤버 화면', '인원 화면');
+    });
+  }
+
+  applyNavigationOrder();
+  setDisplayVersion();
+
+  document.addEventListener('click', () => {
+    requestAnimationFrame(() => {
+      applyNavigationOrder();
+      setDisplayVersion();
+    });
+  }, true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.71-navigation-order-people-first';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-71-navigation-order-people-first')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<script id="v2-72-navigation-static-order-fix-script">
+(function setupV72NavigationStaticOrderFix() {
+  return;
+  const displayVersion = 'Dutch Pay · v2.72 PWA';
+  const labels = {
+    home: '대시보드',
+    meeting: '인원',
+    settlement: '내역',
+    report: '리포트',
+    settings: '설정',
+  };
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      node.textContent = displayVersion;
+      node.setAttribute('aria-label', displayVersion);
+    });
+
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+      node.textContent = displayVersion;
+    });
+  }
+
+  function labelNavigation() {
+    document.querySelectorAll('[data-nav-target]').forEach((button) => {
+      const target = button.getAttribute('data-nav-target');
+      const label = labels[target];
+      if (!label) return;
+      const textNode = button.querySelector('.mobile-tab-label') || button.querySelector('.side-nav-icon + span');
+      if (textNode) textNode.textContent = label;
+      button.setAttribute('aria-label', label);
+    });
+  }
+
+  function setActiveNavigation(target) {
+    if (!labels[target]) return;
+    document.querySelectorAll('[data-nav-target]').forEach((button) => {
+      button.classList.toggle('is-active', button.getAttribute('data-nav-target') === target);
+    });
+  }
+
+  labelNavigation();
+  setDisplayVersion();
+
+  window.addEventListener('click', (event) => {
+    const navButton = event.target.closest?.('[data-nav-target]');
+    if (!navButton) return;
+    const target = navButton.getAttribute('data-nav-target');
+    requestAnimationFrame(() => {
+      labelNavigation();
+      setActiveNavigation(target);
+      setDisplayVersion();
+    });
+  }, true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.72-navigation-static-order-fix';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-72-navigation-static-order-fix')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<script id="v2-73-restore-mobile-nav-stability-script">
+(function setupV73RestoreMobileNavStability() {
+  return;
+  const displayVersion = 'Dutch Pay · v2.73 PWA';
+  const labels = {
+    home: '대시보드',
+    meeting: '인원',
+    settlement: '내역',
+    report: '리포트',
+    settings: '설정',
+  };
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      node.textContent = displayVersion;
+      node.setAttribute('aria-label', displayVersion);
+    });
+
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+      node.textContent = displayVersion;
+    });
+  }
+
+  function setLabel(button, label) {
+    if (!button || !label) return;
+    const labelNode = button.querySelector('.mobile-tab-label') || button.querySelector('.side-nav-icon + span');
+    if (labelNode) labelNode.textContent = label;
+    button.setAttribute('aria-label', label);
+  }
+
+  function restoreMobileNav() {
+    const mobileNav = document.querySelector('.mobile-bottom-tabs');
+    const settlementTab = document.getElementById('mobileTabSettlement');
+    const reportTab = document.getElementById('mobileTabReport');
+    let addTab = document.getElementById('mobileTabAdd');
+
+    document.getElementById('mobileTabMeeting')?.remove();
+
+    if (!mobileNav || !settlementTab || !reportTab) return;
+
+    if (!addTab) {
+      addTab = document.createElement('button');
+      addTab.id = 'mobileTabAdd';
+    }
+
+    addTab.type = 'button';
+    addTab.hidden = false;
+    addTab.removeAttribute('hidden');
+    addTab.removeAttribute('aria-hidden');
+    addTab.removeAttribute('tabindex');
+    addTab.className = 'mobile-tab-button mobile-tab-button--plus';
+    addTab.setAttribute('aria-label', '지출 추가');
+    addTab.innerHTML = '<span class="mobile-tab-plus-circle" aria-hidden="true">+</span>';
+
+    if (addTab.parentElement !== mobileNav || addTab.previousElementSibling !== settlementTab || addTab.nextElementSibling !== reportTab) {
+      reportTab.before(addTab);
+    }
+  }
+
+  function applyNavigationLabels() {
+    document.querySelectorAll('[data-nav-target]').forEach((button) => {
+      setLabel(button, labels[button.getAttribute('data-nav-target')]);
+    });
+  }
+
+  function syncActiveNavigation(target) {
+    if (!labels[target]) return;
+    document.querySelectorAll('[data-nav-target]').forEach((button) => {
+      button.classList.toggle('is-active', button.getAttribute('data-nav-target') === target);
+    });
+  }
+
+  function stabilize() {
+    restoreMobileNav();
+    applyNavigationLabels();
+    setDisplayVersion();
+  }
+
+  stabilize();
+
+  document.addEventListener('click', (event) => {
+    const navButton = event.target.closest?.('[data-nav-target]');
+    requestAnimationFrame(() => {
+      stabilize();
+      if (navButton) syncActiveNavigation(navButton.getAttribute('data-nav-target'));
+    });
+  }, true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.73-restore-mobile-nav-stability';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-73-restore-mobile-nav-stability')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-74-stability-person-detail-tone">
+  /* v2.74: stop nav script collisions and make person detail amounts quiet */
+  #personSummary .settlement-line,
+  #dashboardPersonSummary .settlement-line,
+  #reportPeople .settlement-line {
+    column-gap: 10px !important;
+  }
+
+  #personSummary .settlement-label,
+  #dashboardPersonSummary .settlement-label,
+  #reportPeople .settlement-label,
+  #personSummary .settlement-line > strong,
+  #dashboardPersonSummary .settlement-line > strong,
+  #reportPeople .settlement-line > strong,
+  #personSummary .settlement-deduction,
+  #dashboardPersonSummary .settlement-deduction,
+  #reportPeople .settlement-deduction,
+  #personSummary .settlement-deduction strong,
+  #dashboardPersonSummary .settlement-deduction strong,
+  #reportPeople .settlement-deduction strong {
+    color: #9aa0a8 !important;
+    font-size: 12px !important;
+    font-weight: 640 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #personSummary .settlement-line > strong,
+  #dashboardPersonSummary .settlement-line > strong,
+  #reportPeople .settlement-line > strong {
+    min-width: 74px !important;
+    text-align: right !important;
+  }
+
+  #personSummary .settlement-deduction,
+  #dashboardPersonSummary .settlement-deduction,
+  #reportPeople .settlement-deduction {
+    min-height: 20px !important;
+    padding: 0 7px !important;
+    border-radius: 999px !important;
+    background: #f2f3f5 !important;
+    box-shadow: inset 0 0 0 1px rgba(17, 17, 19, 0.04) !important;
+    white-space: nowrap !important;
+  }
+
+  #dashboardPersonSummary .settlement-meta {
+    justify-self: end !important;
+    max-width: 250px !important;
+  }
+
+  #dashboardPersonSummary .settlement-result {
+    margin-left: 18px !important;
+  }
+
+  @media (min-width: 721px) {
+    #dashboardPersonSummary .settlement-card {
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      gap: 24px !important;
+    }
+  }
+
+  @media (max-width: 720px) {
+    #personSummary .settlement-line > strong,
+    #dashboardPersonSummary .settlement-line > strong,
+    #reportPeople .settlement-line > strong {
+      min-width: 68px !important;
+    }
+  }
+</style>
+<script id="v2-74-stability-person-detail-tone-script">
+(function setupV74StabilityPersonDetailTone() {
+  const displayVersion = 'Dutch Pay · v2.74 PWA';
+  const labels = {
+    home: '대시보드',
+    meeting: '인원',
+    settlement: '내역',
+    report: '리포트',
+    settings: '설정',
+  };
+
+  function setText(node, text) {
+    if (!node || node.textContent === text) return;
+    node.textContent = text;
+  }
+
+  function applyStableLabels() {
+    document.querySelectorAll('[data-nav-target]').forEach((button) => {
+      const target = button.getAttribute('data-nav-target');
+      const label = labels[target];
+      if (!label) return;
+      setText(button.querySelector('.mobile-tab-label') || button.querySelector('.side-nav-icon + span'), label);
+      button.setAttribute('aria-label', label);
+    });
+  }
+
+  function setActive(target) {
+    if (!labels[target]) return;
+    document.querySelectorAll('[data-nav-target]').forEach((button) => {
+      button.classList.toggle('is-active', button.getAttribute('data-nav-target') === target);
+    });
+  }
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      setText(node, displayVersion);
+      node.setAttribute('aria-label', displayVersion);
+    });
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => setText(node, displayVersion));
+  }
+
+  applyStableLabels();
+  setDisplayVersion();
+
+  document.addEventListener('click', (event) => {
+    const navButton = event.target.closest?.('[data-nav-target]');
+    if (!navButton) return;
+    const target = navButton.getAttribute('data-nav-target');
+    requestAnimationFrame(() => {
+      applyStableLabels();
+      setActive(target);
+      setDisplayVersion();
+    });
+  }, true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.74-stability-person-detail-tone';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-74-stability-person-detail-tone')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-75-restore-readable-amounts">
+  /* v2.75: restore amount readability after unit-splitting regression */
+  .amount-number,
+  .amount-unit,
+  body.app-view-settlement .kpi-grid .amount-number,
+  body.app-view-settlement .kpi-grid .amount-unit,
+  .dashboard-stat-card .amount-number,
+  .dashboard-stat-card .amount-unit,
+  .report-stats .amount-number,
+  .report-stats .amount-unit,
+  .simple-expense-amount .amount-number,
+  .simple-expense-amount .amount-unit,
+  .transfer-row > strong .amount-number,
+  .transfer-row > strong .amount-unit,
+  .summary-row > strong .amount-number,
+  .summary-row > strong .amount-unit,
+  .settlement-result > strong .amount-number,
+  .settlement-result > strong .amount-unit,
+  .report-item .amount .amount-number,
+  .report-item .amount .amount-unit,
+  .report-total-line > strong .amount-number,
+  .report-total-line > strong .amount-unit {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: inherit !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    font: inherit !important;
+    line-height: inherit !important;
+    letter-spacing: 0 !important;
+    transform: none !important;
+    white-space: nowrap !important;
+  }
+
+  #dashboardTotalExpense,
+  #dashboardTotalPeople,
+  #dashboardAveragePerPerson,
+  #dashboardTransferHeadline,
+  #totalExpense,
+  #totalPeople,
+  #averagePerPerson,
+  #transferCount,
+  #reportTotal,
+  #reportPeopleCount,
+  #reportAverage,
+  #reportTransferCount,
+  .dashboard-stat-card > strong,
+  .dashboard-inline-amount,
+  .simple-expense-amount,
+  .transfer-row > strong,
+  .summary-row > strong,
+  .settlement-result > strong,
+  .report-total-line > strong,
+  .report-stats strong,
+  .report-item .amount {
+    white-space: nowrap !important;
+  }
+
+  #dashboardPersonSummary .settlement-line > strong,
+  #personSummary .settlement-line > strong,
+  #reportPeople .settlement-line > strong,
+  #dashboardPersonSummary .settlement-deduction,
+  #personSummary .settlement-deduction,
+  #reportPeople .settlement-deduction,
+  #dashboardPersonSummary .settlement-deduction strong,
+  #personSummary .settlement-deduction strong,
+  #reportPeople .settlement-deduction strong {
+    color: #9aa0a8 !important;
+    font-size: 12px !important;
+    font-weight: 640 !important;
+  }
+</style>
+<script id="v2-75-restore-readable-amounts-script">
+(function setupV75RestoreReadableAmounts() {
+  const displayVersion = 'Dutch Pay · v2.75 PWA';
+
+  function setText(node, text) {
+    if (!node || node.textContent === text) return;
+    node.textContent = text;
+  }
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      setText(node, displayVersion);
+      node.setAttribute('aria-label', displayVersion);
+    });
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => setText(node, displayVersion));
+  }
+
+  function restoreReadableAmounts(root = document) {
+    root.querySelectorAll('.amount-number').forEach((numberNode) => {
+      const unitNode = numberNode.nextElementSibling;
+      if (!unitNode || !unitNode.classList.contains('amount-unit')) return;
+      const parent = numberNode.parentNode;
+      if (!parent) return;
+      const text = `${numberNode.textContent || ''}${unitNode.textContent || ''}`;
+      parent.insertBefore(document.createTextNode(text), numberNode);
+      numberNode.remove();
+      unitNode.remove();
+      parent.normalize();
+      delete parent.dataset.unitStyledRaw;
+    });
+  }
+
+  const previousRender = typeof render === 'function' ? render : null;
+  if (previousRender) {
+    render = function renderWithReadableAmounts() {
+      previousRender();
+      restoreReadableAmounts();
+      setDisplayVersion();
+    };
+  }
+
+  const previousRenderSummary = typeof renderSummary === 'function' ? renderSummary : null;
+  if (previousRenderSummary) {
+    renderSummary = function renderSummaryWithReadableAmounts() {
+      previousRenderSummary();
+      restoreReadableAmounts();
+      setDisplayVersion();
+    };
+  }
+
+  const previousRenderReport = typeof renderReport === 'function' ? renderReport : null;
+  if (previousRenderReport) {
+    renderReport = function renderReportWithReadableAmounts() {
+      previousRenderReport();
+      restoreReadableAmounts();
+      setDisplayVersion();
+    };
+  }
+
+  restoreReadableAmounts();
+  setDisplayVersion();
+
+  document.addEventListener('click', () => {
+    requestAnimationFrame(() => {
+      restoreReadableAmounts();
+      setDisplayVersion();
+    });
+  }, true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.75-restore-readable-amounts';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-75-restore-readable-amounts')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
