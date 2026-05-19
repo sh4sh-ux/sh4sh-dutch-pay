@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-v2-19-clean-dashboard-main";
+const CACHE_NAME = "dutch-pay-v2-82-expense-entry-simplify";
 const ASSETS = [
   "./",
   "./index.html",
@@ -28,15 +28,31 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
+  const request = event.request;
+  const isPageRequest = request.mode === "navigate" || request.destination === "document";
 
-      return fetch(event.request).then((response) => {
+  if (isPageRequest) {
+    event.respondWith(
+      fetch(request).then((response) => {
         if (!response || response.status !== 200) return response;
 
         const copy = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)).catch(() => {});
+        caches.open(CACHE_NAME).then((cache) => cache.put(request, copy)).catch(() => {});
+        return response;
+      }).catch(() => caches.match(request).then((cached) => cached || caches.match("./index.html")))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(request).then((cached) => {
+      if (cached) return cached;
+
+      return fetch(request).then((response) => {
+        if (!response || response.status !== 200) return response;
+
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(request, copy)).catch(() => {});
         return response;
       }).catch(() => caches.match("./index.html"));
     })

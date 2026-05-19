@@ -2,6 +2,7 @@
 
 
 <!doctype html>
+<!-- Dutch Pay v2.82 expense entry simplify -->
 <!-- Dutch Pay v2.20 screen navigation -->
 <!-- Dutch Pay v2.23 hero cleanup -->
 <!-- Dutch Pay v2.22 person input IME fix -->
@@ -36,7 +37,7 @@
     <title>더치페이 계산기</title>
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest?v=2.20" />
+    <link rel="manifest" href="./manifest.webmanifest?v=2.82" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -7640,14 +7641,14 @@ body {
 
     
 <div id="quickCreateOverlay" class="quick-create-overlay" hidden>
-  <div class="quick-create-modal" role="dialog" aria-modal="true" aria-label="새 모임 만들기">
+  <div class="quick-create-modal" role="dialog" aria-modal="true" aria-label="인원 먼저 정리하기">
     <div class="quick-create-head">
       <div>
-        <p>New Meeting</p>
-        <h2>새 모임 만들기</h2>
-        <small>모임명, 인원, 차수만 먼저 정리하세요. 지출은 다음 단계에서 따로 입력합니다.</small>
+        <p>모임 준비</p>
+        <h2>인원 먼저 정리하기</h2>
+        <small>모임명과 참여자만 정리하면 됩니다. 지출은 다음 단계에서 바로 추가할 수 있어요.</small>
       </div>
-      <button type="button" class="quick-create-close" id="quickCreateCloseButton" aria-label="새 모임 만들기 닫기">×</button>
+      <button type="button" class="quick-create-close" id="quickCreateCloseButton" aria-label="인원 입력 닫기">×</button>
     </div>
     <div class="quick-create-grid">
       <label class="quick-create-field quick-create-title-field">
@@ -7666,7 +7667,7 @@ body {
         <div class="quick-create-people-box">
           <div id="quickCreatePeopleList" class="quick-create-chip-list"></div>
           <div class="quick-create-add-row">
-            <input id="quickCreatePersonInput" type="text" placeholder="이름을 입력하고 Enter를 누르세요" />
+            <input id="quickCreatePersonInput" type="text" placeholder="이름 입력 후 Enter" />
             <button type="button" id="quickCreateAddPersonButton">추가</button>
           </div>
           <div class="quick-create-helper">쉼표(,) 또는 줄바꿈으로 여러 이름을 한 번에 넣을 수도 있어요.</div>
@@ -7685,8 +7686,11 @@ body {
     </div>
     <div class="quick-create-actions">
       <button type="button" class="secondary" id="quickCreateCancelButton">취소</button>
-      <button type="button" class="secondary" id="quickCreateSubmitExpenseButton">만들고 지출 추가</button>
-      <button type="button" class="primary" id="quickCreateSubmitButton">모임 만들기</button>
+      <button type="button" class="secondary" id="quickCreateSubmitButton">인원 입력 완료</button>
+      <button type="button" class="primary" id="quickCreateSubmitExpenseButton">다음으로 지출 추가</button>
+    </div>
+    <div class="quick-create-reset-row">
+      <button type="button" class="quick-create-reset-button" id="quickCreateResetInputButton">입력 내용 초기화</button>
     </div>
   </div>
 </div>
@@ -7723,17 +7727,20 @@ body {
     <div class="expense-entry-grid">
       <label class="expense-entry-field expense-entry-amount-field">
         <span>금액</span>
-        <input id="expenseEntryAmount" type="text" inputmode="numeric" placeholder="0" />
+        <div class="expense-entry-amount-control">
+          <input id="expenseEntryAmount" type="text" inputmode="numeric" placeholder="0" />
+          <span class="expense-entry-amount-unit" aria-hidden="true">원</span>
+        </div>
       </label>
-      <label class="expense-entry-field">
+      <label class="expense-entry-field expense-entry-place-field">
         <span>장소</span>
-        <input id="expenseEntryPlace" type="text" placeholder="예: 코스트코" />
+        <input id="expenseEntryPlace" type="text" placeholder="선택 입력" />
       </label>
-      <label class="expense-entry-field">
+      <label class="expense-entry-field expense-entry-round-field">
         <span>차수</span>
         <select id="expenseEntryRound"></select>
       </label>
-      <label class="expense-entry-field">
+      <label class="expense-entry-field expense-entry-payer-field">
         <span>결제자</span>
         <select id="expenseEntryPayer"></select>
       </label>
@@ -7750,11 +7757,17 @@ body {
       </div>
     </div>
 
+    <div class="expense-entry-edit-row" id="expenseEntryEditRow">
+      <span id="expenseEntryAutoHint">전체 참여 중</span>
+      <button type="button" id="expenseEntryAdvancedToggle">차수/인원 수정</button>
+    </div>
+
     <div class="expense-entry-actions">
       <button type="button" class="secondary" id="expenseEntryCancelButton">취소</button>
-      <button type="button" class="secondary" id="expenseEntrySaveNextButton">저장 후 다음 차수</button>
+      <button type="button" class="secondary" id="expenseEntrySaveNextButton">계속 입력</button>
       <button type="button" class="primary" id="expenseEntrySaveButton">저장</button>
     </div>
+    <button type="button" class="expense-entry-reset-button" id="expenseEntryResetButton">입력 내용 초기화</button>
   </div>
 </div>
 
@@ -9135,7 +9148,7 @@ render();
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js?v=2.19").catch(() => {});
+          navigator.serviceWorker.register("./sw.js?v=2.82").catch(() => {});
         });
       }
     </script>
@@ -9145,7 +9158,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v10-dom-report-capture")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9380,7 +9393,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v11-screenshot-button-fix")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9483,7 +9496,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v12-mobile-usability")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9577,7 +9590,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v13-android-install-layout")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9728,7 +9741,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v16-android-direct-install")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9773,7 +9786,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v17-usability-only")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9785,7 +9798,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v18-concept3-redesign")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9797,7 +9810,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v19-soft-light-redesign")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9867,7 +9880,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v20-structure-upgrade")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9940,7 +9953,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-01-concept-ui")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9952,7 +9965,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-02-report-meeting-spacing")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9964,7 +9977,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-03-concept-closer")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9976,7 +9989,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-04-summary-relayout")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9988,7 +10001,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-05-expense-mobile-fix")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10000,7 +10013,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-06-layout-balance-people-wrap")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10012,7 +10025,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-07-top-summary-balance")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10037,7 +10050,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-08-mobile-bottom-nav-redesign")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10049,7 +10062,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-09-top-summary-like-mockup")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10061,7 +10074,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-10-top-summary-forcefix")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10073,7 +10086,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-11-top-summary-overflow-fix")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10173,7 +10186,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-12-dashboard-home-split")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10254,7 +10267,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-13-dashboard-polish")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10357,7 +10370,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-14-dashboard-input-drawer")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10369,7 +10382,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-15-dashboard-refine")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10381,7 +10394,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-16-clean-dashboard")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10393,7 +10406,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-17-sidebar-icons")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10405,7 +10418,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-18-sidebar-exact")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10633,7 +10646,7 @@ render();
   if ("caches" in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-19-clean-dashboard-main")
+        .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-82-expense-entry-simplify")
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -10854,7 +10867,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-20-screen-navigation')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11349,7 +11362,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-22-person-input-ime-fix')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11681,7 +11694,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-24-wide-settlement-report')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11817,7 +11830,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-25-compact-participants-auto-kpi')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11971,7 +11984,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-26-compact-sidebar-no-right-hero')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12374,7 +12387,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-27-single-column-dashboard-restore')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12439,7 +12452,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-28-dashboard-title-cleanup')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12748,7 +12761,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-29-unified-report-design')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12930,7 +12943,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-30-report-compact-cleanup')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13088,7 +13101,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-31-settlement-cards-redesign')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13213,7 +13226,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-32-report-hero-rebalance')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13360,7 +13373,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-33-summary-cards-rebalanced')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13423,7 +13436,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-34-dashboard-copy-baseline-align')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13571,7 +13584,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-35-dashboard-person-summary-fix')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13633,7 +13646,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-36-dashboard-top-align')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13850,7 +13863,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-37-person-summary-hard-fix')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14123,7 +14136,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-38-unified-guide-design')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14175,7 +14188,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-39-guide-copy-icons')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14291,7 +14304,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-40-icon-system-refresh')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14451,7 +14464,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-41-person-amount-alignment')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14531,7 +14544,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-42-person-baseline-alignment')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14799,7 +14812,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-43-layout-spacing-stability')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -15152,7 +15165,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-44-photo-matched-icons-and-quick-actions')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -15362,7 +15375,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-45-responsive-person-settlement-cards')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -15442,7 +15455,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-46-dashboard-hero-dedupe-align')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -16343,7 +16356,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-47-focused-input-flow')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -16868,7 +16881,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-48-guide-member-polish')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17235,7 +17248,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-49-settlement-purpose-flow')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17479,7 +17492,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-50-expense-entry-command-center')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17744,7 +17757,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-51-expense-entry-compact-refine')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17788,7 +17801,7 @@ render();
 </style>
 <script id="v2-52-visible-version-label-script">
 (function setupV52VisibleVersionLabel() {
-  const displayVersion = 'Dutch Pay · v2.52 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow').forEach((node) => {
     node.textContent = displayVersion;
@@ -17810,7 +17823,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-52-visible-version-label')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -18124,7 +18137,7 @@ render();
 </style>
 <script id="v2-53-simplified-records-nav-script">
 (function setupV53SimplifiedRecordsNav() {
-  const displayVersion = 'Dutch Pay · v2.53 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
   const recordIcon = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 3.8h9.1a2 2 0 0 1 2 2v13.9l-2.1-1.25-1.95 1.25-1.9-1.25-1.9 1.25-1.95-1.25-2.1 1.25V5.8a2 2 0 0 1 2-2Z"/><path d="M8.7 8.2h5.9"/><path d="M8.7 11.5h4.3"/><circle cx="16.7" cy="16.5" r="2.65"/></svg>';
 
   function setText(selector, text) {
@@ -18178,7 +18191,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-53-simplified-records-nav')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -18680,7 +18693,7 @@ render();
 </style>
 <script id="v2-54-unified-report-polish-script">
 (function setupV54UnifiedReportPolish() {
-  const displayVersion = 'Dutch Pay · v2.54 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -18699,7 +18712,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-54-unified-report-polish')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19017,7 +19030,7 @@ render();
 </style>
 <script id="v2-55-member-meeting-layout-fix-script">
 (function setupV55MemberMeetingLayoutFix() {
-  const displayVersion = 'Dutch Pay · v2.55 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19033,7 +19046,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-55-member-meeting-layout-fix')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19138,7 +19151,7 @@ render();
 </style>
 <script id="v2-56-transfer-total-balance-script">
 (function setupV56TransferTotalBalance() {
-  const displayVersion = 'Dutch Pay · v2.56 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19154,7 +19167,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-56-transfer-total-balance')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19187,7 +19200,7 @@ render();
 </style>
 <script id="v2-58-report-total-scale-script">
 (function setupV58ReportTotalScale() {
-  const displayVersion = 'Dutch Pay · v2.58 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19389,7 +19402,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-58-report-total-scale')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19478,7 +19491,7 @@ render();
 </style>
 <script id="v2-59-member-panel-height-reset-script">
 (function setupV59MemberPanelHeightReset() {
-  const displayVersion = 'Dutch Pay · v2.59 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19494,7 +19507,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-59-member-panel-height-reset')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19736,7 +19749,7 @@ render();
 </style>
 <script id="v2-60-expense-entry-visual-balance-script">
 (function setupV60ExpenseEntryVisualBalance() {
-  const displayVersion = 'Dutch Pay · v2.60 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19752,7 +19765,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-60-expense-entry-visual-balance')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19907,7 +19920,7 @@ render();
 </style>
 <script id="v2-61-report-summary-balance-script">
 (function setupV61ReportSummaryBalance() {
-  const displayVersion = 'Dutch Pay · v2.62 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -20135,7 +20148,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-61-report-summary-balance')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -20434,7 +20447,7 @@ render();
 </style>
 <script id="v2-62-dashboard-compact-numeric-alignment-script">
 (function setupV62DashboardCompactNumericAlignment() {
-  const displayVersion = 'Dutch Pay · v2.62 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -20479,7 +20492,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-62-dashboard-compact-numeric-alignment')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -20734,7 +20747,7 @@ render();
 </style>
 <script id="v2-63-report-centered-total-clean-people-script">
 (function setupV63ReportCenteredTotalCleanPeople() {
-  const displayVersion = 'Dutch Pay · v2.63 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -20967,7 +20980,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-63-report-centered-total-clean-people')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21142,7 +21155,7 @@ render();
 </style>
 <script id="v2-64-person-labels-persistent-tabs-script">
 (function setupV64PersonLabelsPersistentTabs() {
-  const displayVersion = 'Dutch Pay · v2.64 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
   const navTargets = ['home', 'settlement', 'report', 'settings'];
 
   function setDisplayVersion() {
@@ -21277,7 +21290,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-64-person-labels-persistent-tabs')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21379,7 +21392,7 @@ render();
 </style>
 <script id="v2-65-report-share-label-and-settlement-soften-script">
 (function setupV65ReportShareLabelAndSettlementSoften() {
-  const displayVersion = 'Dutch Pay · v2.65 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -21456,7 +21469,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-65-report-share-label-and-settlement-soften')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21747,7 +21760,7 @@ render();
 </style>
 <script id="v2-66-mobile-summary-expense-simplify-script">
 (function setupV66MobileSummaryExpenseSimplify() {
-  const displayVersion = 'Dutch Pay · v2.66 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
   const navNames = new Set(['home', 'settlement', 'report', 'settings']);
 
   function setDisplayVersion() {
@@ -21819,7 +21832,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-66-mobile-summary-expense-simplify')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21930,7 +21943,7 @@ render();
 </style>
 <script id="v2-67-person-detail-tone-balance-script">
 (function setupV67PersonDetailToneBalance() {
-  const displayVersion = 'Dutch Pay · v2.67 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -21952,7 +21965,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-67-person-detail-tone-balance')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22125,7 +22138,7 @@ render();
 </style>
 <script id="v2-68-share-choice-popup-script">
 (function setupV68ShareChoicePopup() {
-  const displayVersion = 'Dutch Pay · v2.68 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
   let lastShareTrigger = null;
 
   function setDisplayVersion() {
@@ -22344,7 +22357,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-68-share-choice-popup')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22463,7 +22476,7 @@ render();
 </style>
 <script id="v2-69-dashboard-person-tone-reset-script">
 (function setupV69DashboardPersonToneReset() {
-  const displayVersion = 'Dutch Pay · v2.69 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -22522,7 +22535,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-69-dashboard-person-tone-reset')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22603,7 +22616,7 @@ render();
 <script id="v2-70-record-summary-centered-units-script">
 (function setupV70RecordSummaryCenteredUnits() {
   return;
-  const displayVersion = 'Dutch Pay · v2.70 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
   const unitSelectors = [
     '#totalExpense',
     '#totalPeople',
@@ -22710,7 +22723,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-70-record-summary-centered-units')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22742,7 +22755,7 @@ render();
 <script id="v2-71-navigation-order-people-first-script">
 (function setupV71NavigationOrderPeopleFirst() {
   return;
-  const displayVersion = 'Dutch Pay · v2.71 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
   const desktopOrder = ['home', 'meeting', 'settlement', 'report', 'settings'];
   const navLabels = {
     home: '대시보드',
@@ -22805,7 +22818,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-71-navigation-order-people-first')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22815,7 +22828,7 @@ render();
 <script id="v2-72-navigation-static-order-fix-script">
 (function setupV72NavigationStaticOrderFix() {
   return;
-  const displayVersion = 'Dutch Pay · v2.72 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
   const labels = {
     home: '대시보드',
     meeting: '인원',
@@ -22872,7 +22885,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-72-navigation-static-order-fix')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22882,7 +22895,7 @@ render();
 <script id="v2-73-restore-mobile-nav-stability-script">
 (function setupV73RestoreMobileNavStability() {
   return;
-  const displayVersion = 'Dutch Pay · v2.73 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
   const labels = {
     home: '대시보드',
     meeting: '인원',
@@ -22972,7 +22985,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-73-restore-mobile-nav-stability')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -23050,7 +23063,7 @@ render();
 </style>
 <script id="v2-74-stability-person-detail-tone-script">
 (function setupV74StabilityPersonDetailTone() {
-  const displayVersion = 'Dutch Pay · v2.74 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
   const labels = {
     home: '대시보드',
     meeting: '인원',
@@ -23108,7 +23121,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-74-stability-person-detail-tone')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -23191,7 +23204,7 @@ render();
 </style>
 <script id="v2-75-restore-readable-amounts-script">
 (function setupV75RestoreReadableAmounts() {
-  const displayVersion = 'Dutch Pay · v2.78 PWA';
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
 
   function setText(node, text) {
     if (!node || node.textContent === text) return;
@@ -23250,6 +23263,11 @@ render();
 
   restoreReadableAmounts();
   setDisplayVersion();
+  requestAnimationFrame(() => {
+    restoreReadableAmounts();
+    setDisplayVersion();
+  });
+  window.setTimeout(setDisplayVersion, 80);
 
   document.addEventListener('click', () => {
     requestAnimationFrame(() => {
@@ -23259,11 +23277,11 @@ render();
   }, true);
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.78-compact-settlement-status-pill';
+  window.DUTCH_PAY_APP_VERSION = 'v2.81-phone-share-image';
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-78-compact-settlement-status-pill')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-82-expense-entry-simplify')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -23479,6 +23497,1062 @@ render();
     line-height: 22px !important;
   }
 </style>
+
+<script id="v2-81-phone-share-image-script">
+(function setupV80PhoneShareImage() {
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
+  const cacheName = 'dutch-pay-v2-82-expense-entry-simplify';
+  const imageWidth = 1080;
+  const imageHeight = 1920;
+
+  function setText(node, text) {
+    if (!node || node.textContent === text) return;
+    node.textContent = text;
+  }
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      setText(node, displayVersion);
+      node.setAttribute('aria-label', displayVersion);
+    });
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => setText(node, displayVersion));
+  }
+
+  function scheduleDisplayVersion() {
+    requestAnimationFrame(setDisplayVersion);
+    window.setTimeout(setDisplayVersion, 80);
+    window.setTimeout(setDisplayVersion, 200);
+  }
+
+  const versionObserver = new MutationObserver(scheduleDisplayVersion);
+
+  function observeVersionLabels() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker, .side-brand .app-version-label').forEach((node) => {
+      if (node.dataset.v280Observed === '1') return;
+      node.dataset.v280Observed = '1';
+      versionObserver.observe(node, { childList: true, characterData: true, subtree: true });
+    });
+  }
+
+  function drawShareLabel(context, text, x, y, size = 26, weight = 700, color = '#858891') {
+    setCanvasText(context, size, weight, color);
+    context.textAlign = 'left';
+    context.fillText(text, x, y);
+  }
+
+  function drawShareAmount(context, text, x, y, maxWidth, maxSize, minSize, align = 'right', weight = 800) {
+    setCanvasText(context, maxSize, weight, '#111113');
+    const size = fitFontSize(context, text, maxSize, minSize, maxWidth);
+    setCanvasText(context, size, weight, '#111113');
+    context.textAlign = align;
+    context.fillText(text, x, y);
+    context.textAlign = 'left';
+  }
+
+  function drawShareSummary(context, data) {
+    const x = 72;
+    const y = 238;
+    const width = imageWidth - x * 2;
+    const height = 376;
+    const divider = 'rgba(17, 17, 19, 0.09)';
+
+    drawRoundRect(context, x, y, width, height, 42, '#ffffff', 'rgba(17, 17, 19, 0.075)');
+
+    drawShareLabel(context, '총 지출', x + 46, y + 73, 28, 740, '#7d8088');
+    drawShareAmount(context, data.total, x + width - 46, y + 128, width - 92, 72, 48);
+
+    if (data.deduction) {
+      const chipText = `공제 ${data.deduction}`;
+      setCanvasText(context, 24, 720, '#747780');
+      const chipW = Math.ceil(context.measureText(chipText).width + 34);
+      drawRoundRect(context, x + width - 46 - chipW, y + 154, chipW, 42, 21, '#f3f4f6', 'rgba(17, 17, 19, 0.06)');
+      setCanvasText(context, 24, 720, '#747780');
+      context.textAlign = 'center';
+      context.fillText(chipText, x + width - 46 - chipW / 2, y + 182);
+      context.textAlign = 'left';
+    }
+
+    context.strokeStyle = divider;
+    context.lineWidth = 2;
+    context.beginPath();
+    context.moveTo(x + 46, y + 216);
+    context.lineTo(x + width - 46, y + 216);
+    context.stroke();
+
+    const bottomY = y + 216;
+    context.beginPath();
+    context.moveTo(x + width / 2, bottomY + 34);
+    context.lineTo(x + width / 2, y + height - 38);
+    context.stroke();
+
+    const leftCenter = x + width * 0.25;
+    const rightCenter = x + width * 0.75;
+    drawShareMetric(context, '참여자', data.people, leftCenter, bottomY + 84, width / 2 - 92);
+    drawShareMetric(context, '1인 평균', data.average, rightCenter, bottomY + 84, width / 2 - 92);
+  }
+
+  function drawShareMetric(context, label, value, centerX, y, maxWidth) {
+    context.textAlign = 'center';
+    setCanvasText(context, 26, 720, '#858891');
+    context.fillText(label, centerX, y);
+    setCanvasText(context, fitFontSize(context, value, 48, 34, maxWidth), 800, '#111113');
+    context.fillText(value, centerX, y + 66);
+    context.textAlign = 'left';
+  }
+
+  function drawShareTransfers(context, transfers) {
+    const x = 72;
+    const y = 660;
+    const width = imageWidth - x * 2;
+    const height = 1116;
+    const headerH = 120;
+    const baseRows = 7;
+    const baseRowH = 112;
+    const baseGap = 18;
+    const contentX = x + 38;
+    const contentW = width - 76;
+    const listY = y + headerH;
+    const listH = height - headerH - 42;
+    const rowCount = Math.max(transfers.length, transfers.length ? baseRows : 1);
+    const neededH = transfers.length <= baseRows
+      ? baseRows * baseRowH + (baseRows - 1) * baseGap
+      : transfers.length * baseRowH + (transfers.length - 1) * baseGap;
+    const scale = transfers.length > baseRows ? Math.min(1, listH / neededH) : 1;
+    const rowH = Math.max(46, baseRowH * scale);
+    const gap = Math.max(7, baseGap * scale);
+    const numberSize = Math.max(12, 24 * scale);
+    const nameSize = Math.max(18, 34 * scale);
+    const amountSize = Math.max(20, 40 * scale);
+    const circle = Math.max(34, 56 * scale);
+
+    drawRoundRect(context, x, y, width, height, 44, '#fbfbfc', 'rgba(17, 17, 19, 0.075)');
+
+    setCanvasText(context, 44, 830, '#111113');
+    context.fillText('송금', x + 40, y + 78);
+    setCanvasText(context, 25, 720, '#858891');
+    context.textAlign = 'right';
+    context.fillText(transfers.length ? `총 ${transfers.length}건 · 보낼 금액` : '보낼 금액', x + width - 40, y + 78);
+    context.textAlign = 'left';
+
+    if (!transfers.length) {
+      drawRoundRect(context, contentX, listY, contentW, baseRowH, 28, '#ffffff', 'rgba(17, 17, 19, 0.065)');
+      setCanvasText(context, 28, 680, '#8d9098');
+      context.textAlign = 'center';
+      context.fillText('송금할 금액이 없습니다', x + width / 2, listY + 70);
+      context.textAlign = 'left';
+      return;
+    }
+
+    transfers.forEach((transfer, index) => {
+      const rowY = listY + index * (rowH + gap);
+      if (rowY + rowH > y + height - 34) return;
+
+      drawRoundRect(context, contentX, rowY, contentW, rowH, Math.max(18, 26 * scale), '#ffffff', 'rgba(17, 17, 19, 0.07)');
+      drawRoundRect(
+        context,
+        contentX + 28 * scale,
+        rowY + (rowH - circle) / 2,
+        circle,
+        circle,
+        circle / 2,
+        '#f1f2f4',
+        'rgba(17, 17, 19, 0.06)'
+      );
+
+      setCanvasText(context, numberSize, 780, '#111113');
+      context.textAlign = 'center';
+      context.fillText(String(index + 1).padStart(2, '0'), contentX + 28 * scale + circle / 2, rowY + rowH / 2 + numberSize / 2 - 4);
+
+      context.textAlign = 'left';
+      setCanvasText(context, nameSize, 790, '#202126');
+      drawFittedText(
+        context,
+        `${transfer.from} → ${transfer.to}`,
+        contentX + 104 * scale,
+        rowY + rowH / 2 + nameSize / 2 - 6,
+        contentW - 352 * scale,
+        nameSize
+      );
+
+      drawShareAmount(
+        context,
+        money(transfer.amount),
+        contentX + contentW - 28 * scale,
+        rowY + rowH / 2 + amountSize / 2 - 7,
+        Math.max(170, 248 * scale),
+        amountSize,
+        Math.max(18, amountSize - 12)
+      );
+    });
+
+    if (transfers.length < baseRows) {
+      const filledH = transfers.length * rowH + Math.max(0, transfers.length - 1) * gap;
+      const spareY = listY + filledH + (transfers.length ? gap : 0);
+      const spareH = Math.max(0, baseRows * baseRowH + (baseRows - 1) * baseGap - filledH - (transfers.length ? gap : 0));
+      if (spareH > 26) {
+        drawRoundRect(context, contentX, spareY, contentW, spareH, 28, 'rgba(255, 255, 255, 0.44)', 'rgba(17, 17, 19, 0.035)');
+      }
+    }
+  }
+
+  function drawPhoneShareImage(context, data) {
+    context.fillStyle = '#f4f4f5';
+    context.fillRect(0, 0, imageWidth, imageHeight);
+
+    const topGradient = context.createLinearGradient(0, 0, 0, 520);
+    topGradient.addColorStop(0, '#fbfbfc');
+    topGradient.addColorStop(1, '#f4f4f5');
+    context.fillStyle = topGradient;
+    context.fillRect(0, 0, imageWidth, 560);
+
+    drawShareLabel(context, data.date, 76, 112, 32, 730, '#80838b');
+    setCanvasText(context, 76, 850, '#111113');
+    context.fillText('정산 내역', 72, 196);
+
+    drawShareSummary(context, data);
+    drawShareTransfers(context, data.transfers);
+
+    setCanvasText(context, 23, 680, '#aaadb4');
+    context.textAlign = 'center';
+    context.fillText('Dutch Pay', imageWidth / 2, imageHeight - 64);
+    context.textAlign = 'left';
+  }
+
+  makeReportScreenshotBlob = async function makeReportScreenshotBlobV80() {
+    await document.fonts?.ready?.catch?.(() => {});
+    renderReport();
+
+    const result = calculate();
+    const peopleCount = result.people.length;
+    const average = peopleCount ? result.totalExpense / peopleCount : 0;
+    const canvas = document.createElement('canvas');
+    canvas.width = imageWidth;
+    canvas.height = imageHeight;
+    const context = canvas.getContext('2d');
+
+    drawPhoneShareImage(context, {
+      date: formatDateForDisplay(state.meetingDate) || '일자 미입력',
+      total: money(result.grossExpense),
+      deduction: result.deductionTotal ? money(result.deductionTotal) : '',
+      people: `${peopleCount}명`,
+      average: money(average),
+      transfers: result.transfers,
+    });
+
+    return canvasToBlob(canvas);
+  };
+
+  setDisplayVersion();
+  observeVersionLabels();
+  scheduleDisplayVersion();
+  window.setTimeout(observeVersionLabels, 120);
+  document.addEventListener('click', scheduleDisplayVersion, true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.81-phone-share-image';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== cacheName)
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-81-quick-create-flow">
+  /* v2.81: simplify new meeting setup around people entry */
+  .quick-create-modal {
+    width: min(780px, calc(100vw - 32px)) !important;
+  }
+
+  .quick-create-head {
+    margin-bottom: 26px !important;
+  }
+
+  .quick-create-head p {
+    color: #8c8f97 !important;
+    font-size: 12px !important;
+    font-weight: 820 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+
+  .quick-create-head h2 {
+    font-size: 32px !important;
+    letter-spacing: 0 !important;
+  }
+
+  .quick-create-head small {
+    max-width: 560px !important;
+    color: #8b8e96 !important;
+    font-size: 14px !important;
+    font-weight: 640 !important;
+  }
+
+  .quick-create-grid {
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+  }
+
+  .quick-create-field[data-v281-hidden="true"],
+  .quick-create-clear-button {
+    display: none !important;
+  }
+
+  .quick-create-actions {
+    display: grid !important;
+    grid-template-columns: minmax(92px, auto) minmax(0, 1fr) minmax(0, 1.1fr) !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    margin-top: 26px !important;
+  }
+
+  .quick-create-actions button {
+    min-height: 56px !important;
+    padding: 0 18px !important;
+    white-space: nowrap !important;
+  }
+
+  #quickCreateSubmitButton {
+    border: 1px solid rgba(17, 17, 19, 0.08) !important;
+    background: #ffffff !important;
+    color: #22242a !important;
+  }
+
+  #quickCreateSubmitExpenseButton {
+    border-color: #111113 !important;
+    background: #111113 !important;
+    color: #ffffff !important;
+  }
+
+  .quick-create-reset-row {
+    margin-top: 12px;
+  }
+
+  .quick-create-reset-button {
+    width: 100%;
+    min-height: 44px;
+    border: 0;
+    border-radius: 14px;
+    background: transparent;
+    color: #d93434;
+    font-size: 13px;
+    font-weight: 760;
+  }
+
+  .quick-create-reset-button:hover {
+    background: #fff3f3;
+  }
+
+  @media (max-width: 720px) {
+    .quick-create-modal {
+      padding: 22px !important;
+      border-radius: 26px !important;
+    }
+
+    .quick-create-actions {
+      grid-template-columns: 1fr !important;
+    }
+
+    .quick-create-actions button {
+      width: 100% !important;
+    }
+
+    .quick-create-add-row {
+      grid-template-columns: minmax(0, 1fr) 78px !important;
+      gap: 10px !important;
+    }
+
+    .quick-create-add-row input {
+      min-width: 0 !important;
+      padding: 0 14px !important;
+      font-size: 14px !important;
+    }
+
+    .quick-create-add-row button {
+      min-width: 0 !important;
+      padding: 0 12px !important;
+    }
+  }
+</style>
+<script id="v2-81-quick-create-flow-script">
+(function setupV81QuickCreateFlow() {
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
+  const cacheName = 'dutch-pay-v2-82-expense-entry-simplify';
+  const overlay = document.getElementById('quickCreateOverlay');
+  const modal = overlay?.querySelector('.quick-create-modal');
+  const head = overlay?.querySelector('.quick-create-head');
+  const kicker = head?.querySelector('p');
+  const title = head?.querySelector('h2');
+  const helper = head?.querySelector('small');
+  const closeButton = document.getElementById('quickCreateCloseButton');
+  const meetingTitleInput = document.getElementById('quickCreateMeetingTitle');
+  const personInput = document.getElementById('quickCreatePersonInput');
+  const roundCountInput = document.getElementById('quickCreateRoundCount');
+  const previewText = document.getElementById('quickCreatePreviewText');
+  const clearPeopleButton = document.getElementById('quickCreateClearPeopleButton');
+  const actions = overlay?.querySelector('.quick-create-actions');
+  const cancelButton = document.getElementById('quickCreateCancelButton');
+  const doneButton = document.getElementById('quickCreateSubmitButton');
+  const nextExpenseButton = document.getElementById('quickCreateSubmitExpenseButton');
+
+  function setText(node, text) {
+    if (node && node.textContent !== text) node.textContent = text;
+  }
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      setText(node, displayVersion);
+      node.setAttribute('aria-label', displayVersion);
+    });
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => setText(node, displayVersion));
+  }
+
+  function applyCopy() {
+    setText(kicker, '모임 준비');
+    setText(title, '인원 먼저 정리하기');
+    setText(helper, '모임명과 참여자만 정리하면 됩니다. 지출은 다음 단계에서 바로 추가할 수 있어요.');
+    if (closeButton) closeButton.setAttribute('aria-label', '인원 입력 닫기');
+    if (modal) modal.setAttribute('aria-label', '인원 먼저 정리하기');
+    setText(cancelButton, '취소');
+    setText(doneButton, '인원 입력 완료');
+    setText(nextExpenseButton, '다음으로 지출 추가');
+  }
+
+  function hideUnusedFields() {
+    const roundField = roundCountInput?.closest('.quick-create-field');
+    const previewField = previewText?.closest('.quick-create-field');
+    [roundField, previewField].forEach((field) => {
+      if (!field) return;
+      field.dataset.v281Hidden = 'true';
+      field.setAttribute('aria-hidden', 'true');
+    });
+    if (roundCountInput) roundCountInput.value = '1';
+  }
+
+  function arrangeActions() {
+    if (!actions || !cancelButton || !doneButton || !nextExpenseButton) return;
+    if (
+      actions.children[0] === cancelButton &&
+      actions.children[1] === doneButton &&
+      actions.children[2] === nextExpenseButton
+    ) return;
+    actions.append(cancelButton, doneButton, nextExpenseButton);
+  }
+
+  function ensureResetButton() {
+    if (!modal || document.getElementById('quickCreateResetInputButton')) return;
+    const row = document.createElement('div');
+    row.className = 'quick-create-reset-row';
+    row.innerHTML = '<button type="button" class="quick-create-reset-button" id="quickCreateResetInputButton">입력 내용 초기화</button>';
+    actions?.after(row);
+  }
+
+  function resetQuickCreateInputs() {
+    const ok = window.confirm('입력한 모임명과 인원을 모두 지울까요?');
+    if (!ok) return;
+    if (meetingTitleInput) meetingTitleInput.value = '';
+    if (personInput) personInput.value = '';
+    if (roundCountInput) roundCountInput.value = '1';
+    clearPeopleButton?.click();
+    window.setTimeout(() => meetingTitleInput?.focus(), 0);
+  }
+
+  function prepareSubmit() {
+    if (roundCountInput) roundCountInput.value = '1';
+    if (personInput?.value.trim()) {
+      document.getElementById('quickCreateAddPersonButton')?.click();
+    }
+  }
+
+  function applyAll() {
+    applyCopy();
+    hideUnusedFields();
+    arrangeActions();
+    ensureResetButton();
+    setDisplayVersion();
+  }
+
+  applyAll();
+
+  if (overlay) {
+    new MutationObserver(applyAll).observe(overlay, {
+      attributes: true,
+      attributeFilter: ['hidden'],
+    });
+  }
+
+  document.addEventListener('click', (event) => {
+    if (event.target.closest?.('#quickCreateResetInputButton')) {
+      event.preventDefault();
+      resetQuickCreateInputs();
+      return;
+    }
+    if (event.target.closest?.('#quickCreateSubmitButton, #quickCreateSubmitExpenseButton')) {
+      prepareSubmit();
+    }
+    window.requestAnimationFrame(setDisplayVersion);
+  }, true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.81-quick-create-flow';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== cacheName)
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-82-expense-entry-simplify">
+  /* v2.82: simplify expense entry around amount, payer, participants */
+  #expenseEntryOverlay .expense-entry-sheet {
+    width: min(760px, calc(100vw - 28px)) !important;
+    padding: 24px !important;
+    border-radius: 28px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head {
+    margin-bottom: 18px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head p {
+    color: #8c8f97 !important;
+    font-size: 12px !important;
+    font-weight: 780 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head h2 {
+    font-size: 32px !important;
+    font-weight: 820 !important;
+    line-height: 1.08 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head small {
+    max-width: 480px !important;
+    color: #8b8e96 !important;
+    font-size: 14px !important;
+    font-weight: 640 !important;
+    line-height: 1.45 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-overview {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin: 0 0 20px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card,
+  #expenseEntryOverlay .expense-entry-total-card,
+  #expenseEntryOverlay .expense-entry-split-card {
+    min-height: 78px !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    align-content: center !important;
+    gap: 6px !important;
+    padding: 14px 16px !important;
+    border: 1px solid rgba(17, 17, 19, 0.08) !important;
+    border-radius: 20px !important;
+    background: #fbfbfc !important;
+    color: #111113 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card span,
+  #expenseEntryOverlay .expense-entry-total-card span,
+  #expenseEntryOverlay .expense-entry-split-card span {
+    color: #858891 !important;
+    font-size: 12px !important;
+    font-weight: 760 !important;
+    line-height: 1.2 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card strong,
+  #expenseEntryOverlay .expense-entry-total-card strong,
+  #expenseEntryOverlay .expense-entry-split-card strong {
+    margin: 0 !important;
+    color: #111113 !important;
+    font-size: 23px !important;
+    font-weight: 780 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    text-align: left !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card small,
+  #expenseEntryOverlay .expense-entry-total-card small,
+  #expenseEntryOverlay .expense-entry-split-card small {
+    margin: 0 !important;
+    color: #9a9da5 !important;
+    font-size: 12px !important;
+    font-weight: 640 !important;
+    line-height: 1.3 !important;
+  }
+
+  #expenseEntryOverlay .money-inline {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    gap: 2px !important;
+    white-space: nowrap !important;
+  }
+
+  #expenseEntryOverlay .money-number {
+    color: #111113 !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: 1 !important;
+  }
+
+  #expenseEntryOverlay .money-unit {
+    color: #9a9da5 !important;
+    font-size: 0.62em !important;
+    font-weight: 620 !important;
+    line-height: 1 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-round-totals {
+    display: none !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(150px, 184px) !important;
+    gap: 16px 12px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-amount-field {
+    grid-column: 1 / -1 !important;
+    order: 1 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-place-field {
+    grid-column: 1 !important;
+    order: 2 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-payer-field {
+    grid-column: 2 !important;
+    order: 3 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-round-field {
+    grid-column: 1 / -1 !important;
+    order: 4 !important;
+    display: none !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-sheet.v282-show-advanced .expense-entry-round-field {
+    display: flex !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-field-full {
+    grid-column: 1 / -1 !important;
+    order: 5 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-deduction-callout {
+    order: 6 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-field span,
+  #expenseEntryOverlay .expense-entry-field-full > span {
+    color: #7f828b !important;
+    font-size: 13px !important;
+    font-weight: 740 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-field input,
+  #expenseEntryOverlay .expense-entry-field select {
+    min-height: 54px !important;
+    border-radius: 17px !important;
+    font-size: 15px !important;
+    font-weight: 680 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-payer-field select {
+    text-align: left !important;
+    text-align-last: left !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-amount-control {
+    min-height: 80px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    padding: 0 22px !important;
+    border: 1px solid rgba(17, 17, 19, 0.08) !important;
+    border-radius: 20px !important;
+    background: #fbfbfc !important;
+  }
+
+  #expenseEntryOverlay #expenseEntryAmount {
+    width: 1ch !important;
+    min-width: 1ch !important;
+    max-width: 13ch !important;
+    min-height: auto !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #111113 !important;
+    font-size: 38px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    text-align: right !important;
+    box-shadow: none !important;
+  }
+
+  #expenseEntryOverlay #expenseEntryAmount::placeholder {
+    color: #111113 !important;
+    opacity: 1 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-amount-field span.expense-entry-amount-unit {
+    color: #9a9da5 !important;
+    font-size: 21px !important;
+    font-weight: 620 !important;
+    line-height: 1 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participants {
+    min-height: 54px !important;
+    gap: 8px !important;
+    padding: 10px !important;
+    border-radius: 18px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participant {
+    min-height: 36px !important;
+    height: 36px !important;
+    padding: 0 12px !important;
+    gap: 8px !important;
+    color: #22242a !important;
+    font-size: 13px !important;
+    font-weight: 760 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-edit-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    margin: 14px 0 0 !important;
+    color: #8b8e96 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-edit-row button {
+    border: 0 !important;
+    background: transparent !important;
+    color: #111113 !important;
+    font-size: 13px !important;
+    font-weight: 820 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-actions {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin-top: 22px !important;
+  }
+
+  #expenseEntryOverlay #expenseEntryCancelButton {
+    display: none !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-actions button {
+    width: 100% !important;
+    min-height: 54px !important;
+    border-radius: 17px !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+  }
+
+  #expenseEntryOverlay #expenseEntrySaveNextButton {
+    border-color: #111113 !important;
+    background: #111113 !important;
+    color: #ffffff !important;
+  }
+
+  #expenseEntryOverlay #expenseEntrySaveButton {
+    border: 1px solid rgba(17, 17, 19, 0.08) !important;
+    background: #ffffff !important;
+    color: #22242a !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-reset-button {
+    width: max-content !important;
+    min-height: 44px !important;
+    display: block !important;
+    margin: 10px auto 0 !important;
+    padding: 0 18px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    background: transparent !important;
+    color: #e23838 !important;
+    font-size: 13px !important;
+    font-weight: 780 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-reset-button:hover {
+    background: #fff3f3 !important;
+  }
+
+  @media (max-width: 720px) {
+    #expenseEntryOverlay .expense-entry-sheet {
+      width: 100% !important;
+      max-height: calc(100dvh - 18px) !important;
+      padding: 20px 18px calc(18px + env(safe-area-inset-bottom)) !important;
+      border-radius: 24px 24px 0 0 !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-overview {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: 8px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-current-card,
+    #expenseEntryOverlay .expense-entry-total-card,
+    #expenseEntryOverlay .expense-entry-split-card {
+      min-height: 74px !important;
+      padding: 12px !important;
+      border-radius: 17px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-current-card strong,
+    #expenseEntryOverlay .expense-entry-total-card strong,
+    #expenseEntryOverlay .expense-entry-split-card strong {
+      font-size: 20px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-current-card small,
+    #expenseEntryOverlay .expense-entry-total-card small,
+    #expenseEntryOverlay .expense-entry-split-card small {
+      display: none !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(112px, 128px) !important;
+      gap: 14px 10px !important;
+    }
+
+    #expenseEntryOverlay #expenseEntryAmount {
+      font-size: 36px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-amount-field span.expense-entry-amount-unit {
+      font-size: 20px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-place-field {
+      grid-column: 1 !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-payer-field {
+      grid-column: 2 !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-field input,
+    #expenseEntryOverlay .expense-entry-field select {
+      min-height: 52px !important;
+      padding: 0 13px !important;
+      font-size: 14px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-participants {
+      max-height: 112px !important;
+      overflow-y: auto !important;
+    }
+  }
+</style>
+<script id="v2-82-expense-entry-simplify-script">
+(function setupV82ExpenseEntrySimplify() {
+  const displayVersion = 'Dutch Pay · v2.82 PWA';
+  const cacheName = 'dutch-pay-v2-82-expense-entry-simplify';
+  const overlay = document.getElementById('expenseEntryOverlay');
+  const sheet = overlay?.querySelector('.expense-entry-sheet');
+  const amountInput = document.getElementById('expenseEntryAmount');
+  const placeInput = document.getElementById('expenseEntryPlace');
+  const payerSelect = document.getElementById('expenseEntryPayer');
+  const roundSelect = document.getElementById('expenseEntryRound');
+  const participantsBox = document.getElementById('expenseEntryParticipants');
+  const currentCard = overlay?.querySelector('.expense-entry-current-card');
+  const totalCard = overlay?.querySelector('.expense-entry-total-card');
+  const splitCard = document.getElementById('expenseEntrySplitHint');
+  const currentValue = document.getElementById('expenseEntryCurrentRound');
+  const currentHint = document.getElementById('expenseEntryCurrentHint');
+  const totalValue = document.getElementById('expenseEntryGrandTotal');
+  const totalHint = document.getElementById('expenseEntryGrandHint');
+  const saveNextButton = document.getElementById('expenseEntrySaveNextButton');
+  const saveButton = document.getElementById('expenseEntrySaveButton');
+  const resetButton = document.getElementById('expenseEntryResetButton');
+  const advancedToggle = document.getElementById('expenseEntryAdvancedToggle');
+  const autoHint = document.getElementById('expenseEntryAutoHint');
+  const titleEl = document.getElementById('expenseEntryTitle');
+  const kickerEl = document.getElementById('expenseEntryKicker');
+  const helperEl = document.getElementById('expenseEntryHelper');
+
+  function setText(node, text) {
+    if (node && node.textContent !== text) node.textContent = text;
+  }
+
+  function moneyParts(value) {
+    const rounded = Math.round(Number(value) || 0);
+    return `<span class="money-inline"><span class="money-number">${formatter.format(rounded)}</span><span class="money-unit">원</span></span>`;
+  }
+
+  function countParts(value) {
+    return `<span class="money-inline"><span class="money-number">${formatter.format(Number(value) || 0)}</span><span class="money-unit">명</span></span>`;
+  }
+
+  function selectedParticipantCount() {
+    const selected = participantsBox?.querySelectorAll('input[type="checkbox"]:checked').length || 0;
+    return selected || activePeople().length || 0;
+  }
+
+  function savedExpenseTotal() {
+    return state.expenses.reduce((sum, expense) => sum + expenseAmount(expense), 0);
+  }
+
+  function draftAmount() {
+    return numberValue(amountInput?.value || '');
+  }
+
+  function updateAmountWidth() {
+    if (!amountInput) return;
+    const visible = amountInput.value || amountInput.placeholder || '0';
+    const width = `${Math.min(Math.max(visible.length, 1), 13)}ch`;
+    amountInput.style.setProperty('width', width, 'important');
+    amountInput.style.setProperty('min-width', width, 'important');
+  }
+
+  function formatAmountInput() {
+    if (!amountInput) return;
+    const digits = amountInput.value.replace(/[^\d]/g, '');
+    amountInput.value = digits ? formatter.format(Number(digits)) : '';
+    updateAmountWidth();
+  }
+
+  function applyCopy() {
+    setText(kickerEl, '지출 입력');
+    setText(titleEl, '금액 추가');
+    setText(helperEl, '금액을 저장하면 다음 지출은 자동으로 준비됩니다.');
+    if (placeInput) placeInput.placeholder = '선택 입력';
+    setText(saveNextButton, '계속 입력');
+    setText(saveButton, '저장');
+  }
+
+  function updateSummary() {
+    if (!overlay || overlay.hidden) return;
+    applyCopy();
+    updateAmountWidth();
+
+    const peopleCount = selectedParticipantCount();
+    const total = savedExpenseTotal() + draftAmount();
+    const average = peopleCount ? total / peopleCount : 0;
+
+    currentCard?.querySelector('span') && setText(currentCard.querySelector('span'), '총 지출');
+    if (currentValue) currentValue.innerHTML = moneyParts(total);
+    setText(currentHint, '저장된 지출 + 현재 입력');
+
+    totalCard?.querySelector('span') && setText(totalCard.querySelector('span'), '참여자');
+    if (totalValue) totalValue.innerHTML = countParts(peopleCount);
+    setText(totalHint, '현재 참여 중');
+
+    if (splitCard) {
+      splitCard.innerHTML = `
+        <span>1인 예상</span>
+        <strong>${moneyParts(average)}</strong>
+        <small>자동 계산</small>
+      `;
+    }
+
+    if (autoHint) {
+      autoHint.textContent = peopleCount ? `전체 ${peopleCount}명 참여 중` : '참여자를 먼저 추가하세요';
+    }
+    setText(saveNextButton, '계속 입력');
+    setText(saveButton, '저장');
+  }
+
+  function resetExpenseInputs() {
+    const ok = window.confirm('입력한 지출 내용을 모두 지울까요?');
+    if (!ok) return;
+    if (amountInput) amountInput.value = '';
+    if (placeInput) placeInput.value = '';
+    participantsBox?.querySelectorAll('input[type="checkbox"]').forEach((input) => {
+      input.checked = true;
+    });
+    if (payerSelect && activePeople()[0]) payerSelect.value = activePeople()[0].id;
+    updateSummary();
+    window.setTimeout(() => amountInput?.focus(), 0);
+  }
+
+  advancedToggle?.addEventListener('click', (event) => {
+    event.preventDefault();
+    sheet?.classList.toggle('v282-show-advanced');
+    const isOpen = sheet?.classList.contains('v282-show-advanced');
+    advancedToggle.textContent = isOpen ? '차수 숨기기' : '차수/인원 수정';
+    if (isOpen) window.setTimeout(() => roundSelect?.focus(), 0);
+  });
+
+  resetButton?.addEventListener('click', (event) => {
+    event.preventDefault();
+    resetExpenseInputs();
+  });
+
+  amountInput?.addEventListener('input', () => {
+    formatAmountInput();
+    updateSummary();
+  });
+
+  [payerSelect, roundSelect, participantsBox, placeInput].forEach((node) => {
+    node?.addEventListener('change', () => window.setTimeout(updateSummary, 0));
+    node?.addEventListener('input', () => window.setTimeout(updateSummary, 0));
+  });
+
+  document.addEventListener('click', () => window.setTimeout(updateSummary, 0), true);
+
+  if (overlay) {
+    new MutationObserver(() => {
+      sheet?.classList.remove('v282-show-advanced');
+      if (advancedToggle) advancedToggle.textContent = '차수/인원 수정';
+      window.setTimeout(() => {
+        formatAmountInput();
+        updateSummary();
+      }, 0);
+    }).observe(overlay, {
+      attributes: true,
+      attributeFilter: ['hidden'],
+    });
+  }
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.82-expense-entry-simplify';
+  document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+    setText(node, displayVersion);
+    node.setAttribute('aria-label', displayVersion);
+  });
+  document.querySelectorAll('.side-brand .app-version-label').forEach((node) => setText(node, displayVersion));
+
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== cacheName)
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
 
 </body>
 </html>
