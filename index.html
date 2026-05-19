@@ -7761,7 +7761,7 @@ body {
 
     <div id="reportOverlay" class="report-overlay" hidden>
       <div class="report-toolbar">
-        <button class="ghost-button report-save-button" id="saveReportImageButton" type="button" aria-label="최종 리포트 스크린샷 저장">스크린샷 저장</button>
+        <button class="ghost-button report-save-button" id="saveReportImageButton" type="button" aria-label="최종 리포트 내역 공유">내역 공유</button>
         <button class="ghost-button" id="closeReportButton" type="button" aria-label="최종 리포트 닫기">닫기</button>
       </div>
       <article class="final-report" aria-label="최종 리포트">
@@ -8545,7 +8545,7 @@ function copySummary() {
 
 async function saveReportImage(button) {
   renderReport();
-  const originalText = button?.textContent || "스크린샷 저장";
+  const originalText = button?.textContent || "내역 공유";
   const resetButton = (label = originalText, delay = 0) => {
     if (!button) return;
     window.setTimeout(() => {
@@ -20968,6 +20968,495 @@ render();
     caches.keys().then((keys) => {
       keys
         .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-63-report-centered-total-clean-people')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-64-person-labels-persistent-tabs">
+  /* v2.64: soften settlement labels and keep bottom navigation visible over report/settings */
+  #personSummary .settlement-label,
+  #dashboardPersonSummary .settlement-label,
+  #reportPeople .settlement-label {
+    color: #a3a6ae !important;
+    font-size: 10.5px !important;
+    font-weight: 620 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #personSummary .settlement-line,
+  #dashboardPersonSummary .settlement-line,
+  #reportPeople .settlement-line {
+    display: grid !important;
+    grid-template-columns: 34px minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 7px !important;
+  }
+
+  #personSummary .settlement-line > .settlement-label,
+  #dashboardPersonSummary .settlement-line > .settlement-label,
+  #reportPeople .settlement-line > .settlement-label {
+    grid-column: 1 !important;
+  }
+
+  #personSummary .settlement-line > strong,
+  #dashboardPersonSummary .settlement-line > strong,
+  #reportPeople .settlement-line > strong,
+  #personSummary .settlement-line > .settlement-line-amount,
+  #dashboardPersonSummary .settlement-line > .settlement-line-amount,
+  #reportPeople .settlement-line > .settlement-line-amount {
+    grid-column: 3 !important;
+    justify-self: end !important;
+    text-align: right !important;
+    color: #111113 !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  #personSummary .settlement-line:not(.settlement-line-paid) > strong,
+  #dashboardPersonSummary .settlement-line:not(.settlement-line-paid) > strong,
+  #reportPeople .settlement-line:not(.settlement-line-paid) > strong,
+  #personSummary .settlement-line-paid:not(:has(.settlement-deduction)) > strong,
+  #dashboardPersonSummary .settlement-line-paid:not(:has(.settlement-deduction)) > strong,
+  #reportPeople .settlement-line-paid:not(:has(.settlement-deduction)) > strong {
+    grid-column: 2 / 4 !important;
+  }
+
+  #personSummary .settlement-deduction,
+  #dashboardPersonSummary .settlement-deduction,
+  #reportPeople .settlement-deduction {
+    grid-column: 2 !important;
+    justify-self: end !important;
+    margin: 0 !important;
+    padding: 2px 6px !important;
+    min-height: 18px !important;
+    border-radius: 999px !important;
+    background: #f3f4f6 !important;
+    color: #9a9da5 !important;
+    font-size: 10px !important;
+    font-weight: 640 !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+  }
+
+  #personSummary .settlement-deduction strong,
+  #dashboardPersonSummary .settlement-deduction strong,
+  #reportPeople .settlement-deduction strong {
+    color: #5f626a !important;
+    font-size: 10px !important;
+    font-weight: 720 !important;
+  }
+
+  #personSummary .settlement-name,
+  #dashboardPersonSummary .settlement-name,
+  #reportPeople .settlement-name {
+    font-weight: 760 !important;
+  }
+
+  #personSummary .settlement-result span,
+  #dashboardPersonSummary .settlement-result span,
+  #reportPeople .settlement-result span {
+    font-size: 10px !important;
+    font-weight: 740 !important;
+  }
+
+  #personSummary .settlement-result strong,
+  #dashboardPersonSummary .settlement-result strong,
+  #reportPeople .settlement-result strong {
+    font-weight: 760 !important;
+  }
+
+  .dashboard-quick-feature-button.is-quick-active,
+  .quick-feature-panel .quick-feature-button.is-quick-active {
+    color: #111113 !important;
+    border-color: rgba(17, 17, 19, 0.24) !important;
+    background: #f7f7f8 !important;
+    box-shadow: inset 0 0 0 1px rgba(17, 17, 19, 0.08), 0 8px 22px rgba(17, 17, 19, 0.045) !important;
+  }
+
+  .dashboard-quick-feature-button.is-quick-active span,
+  .quick-feature-panel .quick-feature-button.is-quick-active span {
+    color: #111113 !important;
+  }
+
+  @media (max-width: 720px) {
+    body.report-open .mobile-bottom-tabs,
+    body.guide-open .mobile-bottom-tabs,
+    .mobile-bottom-tabs {
+      display: grid !important;
+      z-index: 60 !important;
+    }
+
+    .report-overlay,
+    .guide-overlay {
+      padding-bottom: calc(104px + env(safe-area-inset-bottom)) !important;
+    }
+
+    .final-report {
+      margin-bottom: 18px !important;
+    }
+
+    .mobile-tab-button {
+      color: #a5a8b0 !important;
+    }
+
+    .mobile-tab-button.is-active {
+      color: #111113 !important;
+      font-weight: 860 !important;
+    }
+
+    .mobile-tab-button.is-active .mobile-tab-icon,
+    .mobile-tab-button .mobile-tab-icon {
+      background: transparent !important;
+      color: currentColor !important;
+      box-shadow: none !important;
+    }
+
+    .mobile-tab-button.is-active .mobile-tab-icon svg {
+      stroke-width: 2.7px !important;
+    }
+
+    .mobile-tab-button:not(.is-active) .mobile-tab-icon svg {
+      stroke-width: 2.15px !important;
+      opacity: 0.86 !important;
+    }
+
+    .mobile-tab-label {
+      color: currentColor !important;
+    }
+
+    #personSummary .settlement-line,
+    #dashboardPersonSummary .settlement-line,
+    #reportPeople .settlement-line {
+      grid-template-columns: 32px minmax(0, 1fr) auto !important;
+      gap: 6px !important;
+    }
+
+    #reportPeople .settlement-result {
+      grid-template-columns: auto minmax(0, 1fr) !important;
+    }
+  }
+</style>
+<script id="v2-64-person-labels-persistent-tabs-script">
+(function setupV64PersonLabelsPersistentTabs() {
+  const displayVersion = 'Dutch Pay · v2.64 PWA';
+  const navTargets = ['home', 'settlement', 'report', 'settings'];
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      node.textContent = displayVersion;
+      node.setAttribute('aria-label', displayVersion);
+    });
+
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+      node.textContent = displayVersion;
+    });
+  }
+
+  function setActiveNav(name) {
+    if (!navTargets.includes(name)) return;
+    document.querySelectorAll('[data-nav-target]').forEach((button) => {
+      button.classList.toggle('is-active', button.getAttribute('data-nav-target') === name);
+    });
+  }
+
+  function activeNavName() {
+    const active = document.querySelector('.mobile-tab-button.is-active[data-nav-target], .side-nav-button.is-active[data-nav-target]');
+    return active?.getAttribute('data-nav-target') || '';
+  }
+
+  function syncOverlayForActiveNav() {
+    const activeName = activeNavName();
+    const reportOverlay = document.getElementById('reportOverlay');
+    const guideOverlay = document.getElementById('guideOverlay');
+    if (!activeName) return;
+
+    if (activeName === 'report') {
+      if (reportOverlay) reportOverlay.hidden = false;
+      document.body.classList.add('report-open');
+      if (guideOverlay) guideOverlay.hidden = true;
+      document.body.classList.remove('guide-open');
+      return;
+    }
+
+    if (activeName === 'settings') {
+      if (guideOverlay) guideOverlay.hidden = false;
+      document.body.classList.add('guide-open');
+      if (reportOverlay) reportOverlay.hidden = true;
+      document.body.classList.remove('report-open');
+      return;
+    }
+
+    if (reportOverlay) reportOverlay.hidden = true;
+    if (guideOverlay) guideOverlay.hidden = true;
+    document.body.classList.remove('report-open', 'guide-open');
+  }
+
+  renderSettlementCard = function renderSettlementCardV64(person, balanceData, extraClass = '') {
+    const safeBalanceData = balanceData || { balance: 0, owed: 0 };
+    const balance = Math.round(safeBalanceData.balance || 0);
+    const statusClass = balance > 0 ? 'receive' : balance < 0 ? 'pay' : 'done';
+    const statusLabel = balance > 0 ? '받을 금액' : balance < 0 ? '낼 금액' : '완료';
+    const paid = paidExpenseAmount(person.id);
+    const deduction = paidDeductionAmount(person.id);
+    const deductionNote = deduction ? `<span class="settlement-deduction">공제 <strong>${money(deduction)}</strong></span>` : '';
+
+    return `
+      <div class="settlement-card ${extraClass}">
+        <div class="settlement-main">
+          <strong class="settlement-name">${escapeHtml(person.name)}</strong>
+          <div class="settlement-meta">
+            <div class="settlement-line"><span class="settlement-label">부담</span><strong>${money(safeBalanceData.owed)}</strong></div>
+            <div class="settlement-line settlement-line-paid"><span class="settlement-label">결제</span>${deductionNote}<strong>${money(paid)}</strong></div>
+          </div>
+        </div>
+        <div class="settlement-result ${statusClass}">
+          <span>${statusLabel}</span>
+          <strong>${money(Math.abs(balance))}</strong>
+        </div>
+      </div>
+    `;
+  };
+
+  document.addEventListener('click', (event) => {
+    const quickButton = event.target.closest('[data-dashboard-quick-action], #quickShareButton, #quickOpenReportButton, #quickAddExpenseButton, #quickPeopleButton');
+    if (!quickButton) return;
+
+    document.querySelectorAll('.dashboard-quick-feature-button, .quick-feature-panel .quick-feature-button').forEach((button) => {
+      button.classList.remove('is-quick-active');
+      button.removeAttribute('aria-pressed');
+    });
+    quickButton.classList.add('is-quick-active');
+    quickButton.setAttribute('aria-pressed', 'true');
+    window.clearTimeout(quickButton._dutchPayActiveTimer);
+    quickButton._dutchPayActiveTimer = window.setTimeout(() => {
+      quickButton.classList.remove('is-quick-active');
+      quickButton.removeAttribute('aria-pressed');
+    }, 1300);
+  }, true);
+
+  document.addEventListener('click', () => {
+    requestAnimationFrame(setDisplayVersion);
+  }, true);
+
+  document.getElementById('closeReportButton')?.addEventListener('click', () => {
+    requestAnimationFrame(() => {
+      const active = activeNavName();
+      if (active === 'report') setActiveNav('home');
+      syncOverlayForActiveNav();
+    });
+  }, true);
+
+  document.getElementById('closeGuideButton')?.addEventListener('click', () => {
+    requestAnimationFrame(() => {
+      const active = activeNavName();
+      if (active === 'settings') setActiveNav('home');
+      syncOverlayForActiveNav();
+    });
+  }, true);
+
+  document.querySelectorAll('[data-nav-target]').forEach((button) => {
+    new MutationObserver(syncOverlayForActiveNav).observe(button, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  setDisplayVersion();
+  try {
+    if (typeof render === 'function') render();
+    if (typeof renderReport === 'function' && !document.getElementById('reportOverlay')?.hidden) renderReport();
+  } catch (error) {}
+  requestAnimationFrame(() => {
+    setDisplayVersion();
+    syncOverlayForActiveNav();
+  });
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.64-person-labels-persistent-tabs';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-64-person-labels-persistent-tabs')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-65-report-share-label-and-settlement-soften">
+  /* v2.65: rename report action and soften person-settlement detail labels further */
+  #saveReportImageButton {
+    min-width: 96px !important;
+  }
+
+  #personSummary .settlement-label,
+  #dashboardPersonSummary .settlement-label,
+  #reportPeople .settlement-label {
+    color: #b0b3ba !important;
+    font-size: 9.5px !important;
+    font-weight: 590 !important;
+    line-height: 1.15 !important;
+  }
+
+  #personSummary .settlement-line,
+  #dashboardPersonSummary .settlement-line,
+  #reportPeople .settlement-line {
+    grid-template-columns: 30px minmax(0, 1fr) auto !important;
+    gap: 6px !important;
+  }
+
+  #personSummary .settlement-line > strong,
+  #dashboardPersonSummary .settlement-line > strong,
+  #reportPeople .settlement-line > strong {
+    color: #17181c !important;
+    font-size: 12px !important;
+    font-weight: 690 !important;
+  }
+
+  #personSummary .settlement-deduction,
+  #dashboardPersonSummary .settlement-deduction,
+  #reportPeople .settlement-deduction {
+    grid-column: 2 !important;
+    justify-self: end !important;
+    color: #a8abb3 !important;
+    background: #f6f7f8 !important;
+    border: 1px solid rgba(17, 17, 19, 0.04) !important;
+    font-size: 9.5px !important;
+    font-weight: 600 !important;
+    min-height: 17px !important;
+    padding: 1px 6px !important;
+  }
+
+  #personSummary .settlement-deduction strong,
+  #dashboardPersonSummary .settlement-deduction strong,
+  #reportPeople .settlement-deduction strong {
+    color: #747780 !important;
+    font-size: 9.5px !important;
+    font-weight: 680 !important;
+  }
+
+  #personSummary .settlement-name,
+  #dashboardPersonSummary .settlement-name,
+  #reportPeople .settlement-name {
+    color: #111113 !important;
+    font-size: 16px !important;
+    font-weight: 760 !important;
+  }
+
+  #personSummary .settlement-result span,
+  #dashboardPersonSummary .settlement-result span,
+  #reportPeople .settlement-result span {
+    min-height: 20px !important;
+    padding: 0 7px !important;
+    font-size: 9.5px !important;
+    font-weight: 720 !important;
+  }
+
+  #personSummary .settlement-result strong,
+  #dashboardPersonSummary .settlement-result strong,
+  #reportPeople .settlement-result strong {
+    font-size: 18px !important;
+    font-weight: 750 !important;
+  }
+
+  .dashboard-quick-feature-button.is-quick-active,
+  .quick-feature-panel .quick-feature-button.is-quick-active {
+    transform: translateY(-1px) !important;
+  }
+
+  @media (max-width: 720px) {
+    #personSummary .settlement-line,
+    #dashboardPersonSummary .settlement-line,
+    #reportPeople .settlement-line {
+      grid-template-columns: 29px minmax(0, 1fr) auto !important;
+    }
+
+    #saveReportImageButton {
+      min-width: 86px !important;
+    }
+  }
+</style>
+<script id="v2-65-report-share-label-and-settlement-soften-script">
+(function setupV65ReportShareLabelAndSettlementSoften() {
+  const displayVersion = 'Dutch Pay · v2.65 PWA';
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      node.textContent = displayVersion;
+      node.setAttribute('aria-label', displayVersion);
+    });
+
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+      node.textContent = displayVersion;
+    });
+  }
+
+  function labelReportShareButton() {
+    const button = document.getElementById('saveReportImageButton');
+    if (!button) return;
+    if (!button.disabled && (button.textContent || '').trim() === '스크린샷 저장') {
+      button.textContent = '내역 공유';
+    }
+    button.setAttribute('aria-label', '최종 리포트 내역 공유');
+  }
+
+  const previousRenderSettlementCard = renderSettlementCard;
+  renderSettlementCard = function renderSettlementCardV65(person, balanceData, extraClass = '') {
+    const safeBalanceData = balanceData || { balance: 0, owed: 0 };
+    const balance = Math.round(safeBalanceData.balance || 0);
+    const statusClass = balance > 0 ? 'receive' : balance < 0 ? 'pay' : 'done';
+    const statusLabel = balance > 0 ? '받을 금액' : balance < 0 ? '낼 금액' : '완료';
+    const paid = paidExpenseAmount(person.id);
+    const deduction = paidDeductionAmount(person.id);
+    const deductionNote = deduction ? `<span class="settlement-deduction">공제 <strong>${money(deduction)}</strong></span>` : '';
+
+    return `
+      <div class="settlement-card ${extraClass}">
+        <div class="settlement-main">
+          <strong class="settlement-name">${escapeHtml(person.name)}</strong>
+          <div class="settlement-meta">
+            <div class="settlement-line"><span class="settlement-label">부담</span><strong>${money(safeBalanceData.owed)}</strong></div>
+            <div class="settlement-line settlement-line-paid"><span class="settlement-label">결제</span>${deductionNote}<strong>${money(paid)}</strong></div>
+          </div>
+        </div>
+        <div class="settlement-result ${statusClass}">
+          <span>${statusLabel}</span>
+          <strong>${money(Math.abs(balance))}</strong>
+        </div>
+      </div>
+    `;
+  };
+
+  document.addEventListener('click', (event) => {
+    const shareButton = event.target.closest('[data-dashboard-quick-action="share"], #quickShareButton');
+    if (!shareButton) return;
+    shareButton.classList.add('is-quick-active');
+    shareButton.setAttribute('aria-pressed', 'true');
+  }, true);
+
+  setDisplayVersion();
+  labelReportShareButton();
+  try {
+    if (typeof render === 'function') render();
+    if (typeof renderReport === 'function' && !document.getElementById('reportOverlay')?.hidden) renderReport();
+  } catch (error) {
+    if (typeof previousRenderSettlementCard === 'function') renderSettlementCard = previousRenderSettlementCard;
+  }
+
+  document.addEventListener('click', () => {
+    requestAnimationFrame(() => {
+      setDisplayVersion();
+      labelReportShareButton();
+    });
+  }, true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.65-report-share-label-and-settlement-soften';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-65-report-share-label-and-settlement-soften')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
