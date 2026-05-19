@@ -7645,16 +7645,16 @@ body {
       <div>
         <p>New Meeting</p>
         <h2>새 모임 만들기</h2>
-        <small>모임명, 일자, 인원, 차수를 먼저 정리하면 이후 지출 입력과 정산이 훨씬 빨라집니다.</small>
+        <small>모임명, 인원, 차수만 먼저 정리하세요. 지출은 다음 단계에서 따로 입력합니다.</small>
       </div>
       <button type="button" class="quick-create-close" id="quickCreateCloseButton" aria-label="새 모임 만들기 닫기">×</button>
     </div>
     <div class="quick-create-grid">
-      <label class="quick-create-field">
+      <label class="quick-create-field quick-create-title-field">
         <span class="quick-create-label">모임명</span>
         <input id="quickCreateMeetingTitle" type="text" placeholder="예: 주말 저녁 모임" />
       </label>
-      <label class="quick-create-field">
+      <label class="quick-create-field quick-create-date-field">
         <span class="quick-create-label">일자</span>
         <input id="quickCreateMeetingDate" type="date" />
       </label>
@@ -7682,7 +7682,49 @@ body {
     </div>
     <div class="quick-create-actions">
       <button type="button" class="secondary" id="quickCreateCancelButton">취소</button>
+      <button type="button" class="secondary" id="quickCreateSubmitExpenseButton">만들고 지출 추가</button>
       <button type="button" class="primary" id="quickCreateSubmitButton">모임 만들기</button>
+    </div>
+  </div>
+</div>
+
+<div id="expenseEntryOverlay" class="expense-entry-overlay" hidden>
+  <div class="expense-entry-sheet" role="dialog" aria-modal="true" aria-label="지출 입력">
+    <div class="expense-entry-head">
+      <div>
+        <p id="expenseEntryKicker">Expense</p>
+        <h2 id="expenseEntryTitle">지출 추가</h2>
+        <small id="expenseEntryHelper">금액과 결제자만 넣어도 바로 정산됩니다.</small>
+      </div>
+      <button type="button" class="expense-entry-close" id="expenseEntryCloseButton" aria-label="지출 입력 닫기">×</button>
+    </div>
+
+    <div class="expense-entry-grid">
+      <label class="expense-entry-field expense-entry-amount-field">
+        <span>금액</span>
+        <input id="expenseEntryAmount" type="text" inputmode="numeric" placeholder="0" />
+      </label>
+      <label class="expense-entry-field">
+        <span>장소</span>
+        <input id="expenseEntryPlace" type="text" placeholder="예: 코스트코" />
+      </label>
+      <label class="expense-entry-field">
+        <span>차수</span>
+        <select id="expenseEntryRound"></select>
+      </label>
+      <label class="expense-entry-field">
+        <span>결제자</span>
+        <select id="expenseEntryPayer"></select>
+      </label>
+      <div class="expense-entry-field-full">
+        <span>참여자</span>
+        <div id="expenseEntryParticipants" class="expense-entry-participants"></div>
+      </div>
+    </div>
+
+    <div class="expense-entry-actions">
+      <button type="button" class="secondary" id="expenseEntryCancelButton">취소</button>
+      <button type="button" class="primary" id="expenseEntrySaveButton">저장</button>
     </div>
   </div>
 </div>
@@ -7795,7 +7837,7 @@ function normalizeState(nextState) {
     type: expense.type === "deduction" ? "deduction" : "expense",
     round: expense.type === "deduction" ? deductionRound : expense.round,
   }));
-  const roundList = normalizeRoundList([], expenses);
+  const roundList = normalizeRoundList(nextState.rounds, expenses);
   const activeRound = nextState.activeRound === overallRound || roundList.includes(nextState.activeRound) ? nextState.activeRound : overallRound;
 
   return {
@@ -7854,7 +7896,7 @@ function syncRoundsFromExpenses() {
   });
 
   state.expenses = [...normalExpenses, ...deductionExpenses];
-  state.rounds = normalizeRoundList([], state.expenses);
+  state.rounds = normalizeRoundList(state.rounds, state.expenses);
   if (state.activeRound !== overallRound && !state.rounds.includes(state.activeRound)) {
     state.activeRound = overallRound;
   }
@@ -10460,15 +10502,7 @@ render();
     state.activeRound = overallRound;
     state.people = tempPeople.map((name) => ({ id: newId('p'), name }));
     state.rounds = Array.from({ length: roundCount }, (_, index) => `${index + 1}차`);
-    state.expenses = state.rounds.map((round) => ({
-      id: newId('e'),
-      round,
-      date: meetingDate,
-      place: '',
-      amount: 0,
-      payer: state.people[0]?.id || '',
-      participants: state.people.map((person) => person.id),
-    }));
+    state.expenses = [];
 
     saveAndRender();
     closeQuickCreate();
@@ -15293,6 +15327,780 @@ render();
     caches.keys().then((keys) => {
       keys
         .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-45-responsive-person-settlement-cards')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+
+<style id="v2-46-dashboard-hero-dedupe-align">
+  /* v2.46: remove duplicated desktop dashboard brand and align the hero row with the sidebar brand */
+  @media (min-width: 721px) {
+    body:not(.app-view-settlement):not(.app-view-meeting) .dashboard-home-page,
+    body.home-dashboard-mode .dashboard-home-page {
+      padding-top: 48px !important;
+    }
+
+    .dashboard-home-page .dashboard-kicker,
+    .dashboard-home-page .dashboard-title-spacer {
+      display: none !important;
+    }
+
+    .dashboard-home-page .dashboard-hero {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      align-items: start !important;
+      gap: 24px !important;
+      min-height: 0 !important;
+      margin: 0 0 26px !important;
+      padding: 0 !important;
+    }
+
+    .dashboard-home-page .dashboard-hero-copy {
+      min-height: 0 !important;
+      max-width: none !important;
+      display: block !important;
+    }
+
+    .dashboard-home-page .dashboard-hero p:last-child {
+      margin: 0 !important;
+      padding-top: 8px !important;
+      color: #8b8d94 !important;
+      font-size: 15px !important;
+      font-weight: 700 !important;
+      line-height: 1.45 !important;
+    }
+
+    .dashboard-home-page .dashboard-hero-actions {
+      align-self: start !important;
+      justify-content: flex-end !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .dashboard-home-page .hero-primary-button {
+      min-height: 56px !important;
+    }
+  }
+
+  @media (min-width: 721px) and (max-width: 1180px) {
+    body:not(.app-view-settlement):not(.app-view-meeting) .dashboard-home-page,
+    body.home-dashboard-mode .dashboard-home-page {
+      padding-top: 44px !important;
+    }
+
+    .dashboard-home-page .dashboard-hero {
+      grid-template-columns: 1fr !important;
+      gap: 16px !important;
+    }
+
+    .dashboard-home-page .dashboard-hero-actions {
+      justify-content: flex-start !important;
+    }
+  }
+</style>
+<script id="v2-46-dashboard-hero-dedupe-align-script">
+(function setupV46DashboardHeroDedupeAlign() {
+  window.DUTCH_PAY_APP_VERSION = 'v2.46-dashboard-hero-dedupe-align';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-46-dashboard-hero-dedupe-align')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+
+<style id="v2-47-focused-input-flow">
+  /* v2.47: simplify setup and route all spending input through one focused sheet */
+  .quick-create-date-field {
+    display: none !important;
+  }
+
+  .quick-create-title-field {
+    grid-column: 1 / -1 !important;
+  }
+
+  .quick-create-actions {
+    flex-wrap: wrap !important;
+  }
+
+  #quickCreateSubmitExpenseButton {
+    min-width: 168px !important;
+  }
+
+  .expense-entry-overlay[hidden] {
+    display: none !important;
+  }
+
+  .expense-entry-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1450;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(17, 17, 19, 0.36);
+    backdrop-filter: blur(12px);
+  }
+
+  .expense-entry-sheet {
+    width: min(680px, calc(100vw - 32px));
+    max-height: calc(100vh - 40px);
+    overflow: auto;
+    padding: 28px;
+    border-radius: 30px;
+    background: #ffffff;
+    border: 1px solid rgba(17, 17, 19, 0.07);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.18);
+  }
+
+  .expense-entry-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+
+  .expense-entry-head p {
+    margin: 0 0 6px;
+    color: #8f929a;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .expense-entry-head h2 {
+    margin: 0;
+    color: #111113;
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1.12;
+    letter-spacing: -0.045em;
+  }
+
+  .expense-entry-head small {
+    display: block;
+    margin-top: 9px;
+    color: #8b8d94;
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1.45;
+  }
+
+  .expense-entry-close {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border-radius: 14px;
+    border: 1px solid rgba(17, 17, 19, 0.08);
+    background: #ffffff;
+    color: #5f6169;
+    font-size: 24px;
+    font-weight: 760;
+  }
+
+  .expense-entry-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .expense-entry-field,
+  .expense-entry-field-full {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .expense-entry-field-full,
+  .expense-entry-amount-field {
+    grid-column: 1 / -1;
+  }
+
+  .expense-entry-field span,
+  .expense-entry-field-full > span {
+    color: #777a83;
+    font-size: 13px;
+    font-weight: 820;
+    letter-spacing: -0.01em;
+  }
+
+  .expense-entry-field input,
+  .expense-entry-field select {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 16px;
+    border: 1px solid rgba(17, 17, 19, 0.08);
+    border-radius: 16px;
+    background: #fcfcfd;
+    color: #111113;
+    font-size: 15px;
+    font-weight: 760;
+    outline: none;
+  }
+
+  .expense-entry-amount-field input {
+    min-height: 66px;
+    font-size: 30px;
+    font-weight: 880;
+    letter-spacing: -0.04em;
+  }
+
+  .expense-entry-field input:focus,
+  .expense-entry-field select:focus {
+    border-color: rgba(17, 17, 19, 0.24);
+    box-shadow: 0 0 0 4px rgba(17, 17, 19, 0.04);
+  }
+
+  .expense-entry-participants {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    min-height: 54px;
+    padding: 13px;
+    border: 1px solid rgba(17, 17, 19, 0.08);
+    border-radius: 18px;
+    background: #fcfcfd;
+  }
+
+  .expense-entry-participant {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 36px;
+    padding: 0 13px;
+    border-radius: 999px;
+    background: #ffffff;
+    border: 1px solid rgba(17, 17, 19, 0.08);
+    color: #22242a;
+    font-size: 13px;
+    font-weight: 760;
+  }
+
+  .expense-entry-participant input {
+    width: 16px;
+    height: 16px;
+    accent-color: #111113;
+  }
+
+  .expense-entry-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .expense-entry-actions button {
+    min-height: 52px;
+    padding: 0 20px;
+    border-radius: 16px;
+    font-size: 15px;
+    font-weight: 820;
+  }
+
+  .expense-entry-actions .secondary {
+    border: 1px solid rgba(17, 17, 19, 0.08);
+    background: #ffffff;
+    color: #22242a;
+  }
+
+  .expense-entry-actions .primary {
+    border: 1px solid #111113;
+    background: #111113;
+    color: #ffffff;
+  }
+
+  .expense-panel .expense-scroll {
+    display: none !important;
+  }
+
+  .simple-expense-list {
+    display: grid;
+    gap: 12px;
+    padding: 0 18px 18px;
+  }
+
+  .simple-expense-empty {
+    padding: 22px 18px;
+    border-radius: 18px;
+    border: 1px dashed rgba(17, 17, 19, 0.1);
+    background: #fafafc;
+    color: #9a9ca4;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .simple-expense-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(17, 17, 19, 0.07);
+    background: #ffffff;
+    box-shadow: 0 8px 20px rgba(17, 17, 19, 0.025);
+  }
+
+  .simple-expense-main {
+    min-width: 0;
+  }
+
+  .simple-expense-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .simple-expense-round {
+    flex: 0 0 auto;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: #f3f4f6;
+    color: #7c7f88;
+    font-size: 11px;
+    font-weight: 820;
+    line-height: 1;
+  }
+
+  .simple-expense-title strong {
+    min-width: 0;
+    overflow: hidden;
+    color: #111113;
+    font-size: 16px;
+    font-weight: 850;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .simple-expense-meta {
+    margin-top: 8px;
+    color: #8e9098;
+    font-size: 12px;
+    font-weight: 680;
+    line-height: 1.4;
+  }
+
+  .simple-expense-side {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .simple-expense-amount {
+    color: #111113;
+    font-size: 18px;
+    font-weight: 860;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .simple-expense-amount.deduction {
+    color: #d70015;
+  }
+
+  .simple-expense-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  .simple-expense-actions button {
+    min-width: 42px;
+    min-height: 36px;
+    padding: 0 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(17, 17, 19, 0.08);
+    background: #ffffff;
+    color: #4b4d55;
+    font-size: 12px;
+    font-weight: 820;
+  }
+
+  .simple-expense-actions button.danger {
+    color: #d70015;
+    background: #fff5f6;
+    border-color: rgba(215, 0, 21, 0.12);
+  }
+
+  @media (max-width: 720px) {
+    .expense-entry-overlay {
+      align-items: flex-end;
+      padding: 0;
+    }
+
+    .expense-entry-sheet {
+      width: 100%;
+      max-height: calc(100vh - 32px);
+      padding: 22px 18px calc(22px + env(safe-area-inset-bottom));
+      border-radius: 26px 26px 0 0;
+    }
+
+    .expense-entry-grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .expense-entry-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .simple-expense-list {
+      padding: 0 14px 16px;
+    }
+
+    .simple-expense-card {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .simple-expense-side {
+      justify-content: space-between;
+    }
+  }
+</style>
+<script id="v2-47-focused-input-flow-script">
+(function setupV47FocusedInputFlow() {
+  const overlay = document.getElementById('expenseEntryOverlay');
+  const sheet = overlay?.querySelector('.expense-entry-sheet');
+  const amountInput = document.getElementById('expenseEntryAmount');
+  const placeInput = document.getElementById('expenseEntryPlace');
+  const roundSelect = document.getElementById('expenseEntryRound');
+  const payerSelect = document.getElementById('expenseEntryPayer');
+  const participantBox = document.getElementById('expenseEntryParticipants');
+  const titleEl = document.getElementById('expenseEntryTitle');
+  const kickerEl = document.getElementById('expenseEntryKicker');
+  const helperEl = document.getElementById('expenseEntryHelper');
+  const closeButtons = [document.getElementById('expenseEntryCloseButton'), document.getElementById('expenseEntryCancelButton')].filter(Boolean);
+  const saveButton = document.getElementById('expenseEntrySaveButton');
+  let entryState = { mode: 'create', type: 'expense', expenseId: null };
+
+  function normalRounds() {
+    const rounds = normalizeRoundList(state.rounds, state.expenses).filter((round) => round !== deductionRound);
+    return rounds.length ? rounds : [nextRoundLabel()];
+  }
+
+  function defaultRound() {
+    const rounds = normalRounds();
+    const used = new Set(state.expenses.filter((expense) => expense.type !== 'deduction' && expenseAmount(expense)).map((expense) => expense.round));
+    return rounds.find((round) => !used.has(round)) || nextRoundLabel() || rounds[0] || '1차';
+  }
+
+  function defaultPayer() {
+    return [...state.expenses].reverse().find((expense) => expense.payer)?.payer || activePeople()[0]?.id || '';
+  }
+
+  function formatEntryAmount(value) {
+    const amount = Math.abs(Math.round(Number(value) || 0));
+    return amount ? formatter.format(amount) : '';
+  }
+
+  function selectedParticipantIds() {
+    return Array.from(participantBox?.querySelectorAll('input[type="checkbox"]:checked') || []).map((input) => input.value);
+  }
+
+  function setSelectOptions(select, options, selectedValue) {
+    if (!select) return;
+    select.innerHTML = options
+      .map((option) => `<option value="${escapeHtml(option.value)}" ${option.value === selectedValue ? 'selected' : ''}>${escapeHtml(option.label)}</option>`)
+      .join('');
+  }
+
+  function renderEntryParticipants(selectedIds) {
+    const selected = new Set(selectedIds || []);
+    const people = activePeople();
+    participantBox.innerHTML = people.length
+      ? people
+          .map(
+            (person) => `
+              <label class="expense-entry-participant">
+                <input type="checkbox" value="${escapeHtml(person.id)}" ${selected.has(person.id) ? 'checked' : ''} />
+                <span>${escapeHtml(person.name)}</span>
+              </label>
+            `,
+          )
+          .join('')
+      : '<div class="simple-expense-empty">먼저 참여자를 추가하세요</div>';
+  }
+
+  function openExpenseEntry(options = {}) {
+    const people = activePeople();
+    if (!people.length) {
+      alert('먼저 새 모임에서 참여자를 추가해 주세요.');
+      document.getElementById('dashboardNewMeetingButton')?.click();
+      return;
+    }
+
+    const existing = options.expenseId ? state.expenses.find((expense) => expense.id === options.expenseId) : null;
+    const type = existing?.type === 'deduction' || options.type === 'deduction' ? 'deduction' : 'expense';
+    entryState = { mode: existing ? 'edit' : 'create', type, expenseId: existing?.id || null };
+
+    const selectedRound = type === 'deduction' ? deductionRound : existing?.round || defaultRound();
+    const selectedPayer = existing?.payer || defaultPayer();
+    const selectedParticipants = existing?.participants?.length ? existing.participants : people.map((person) => person.id);
+
+    titleEl.textContent = existing ? (type === 'deduction' ? '공제 수정' : '지출 수정') : (type === 'deduction' ? '공제 추가' : '지출 추가');
+    kickerEl.textContent = type === 'deduction' ? 'Deduction' : 'Expense';
+    helperEl.textContent = type === 'deduction' ? '할인이나 1원 오차처럼 총액에서 빼야 할 금액을 입력하세요.' : '금액과 결제자만 넣어도 바로 정산됩니다.';
+    sheet.dataset.entryType = type;
+
+    amountInput.value = formatEntryAmount(existing ? expenseAmount(existing) : type === 'deduction' ? suggestedDeductionAmount() : 0);
+    placeInput.value = existing?.place || '';
+    placeInput.placeholder = type === 'deduction' ? '예: 할인, 쿠폰, 1원 조정' : '예: 코스트코';
+
+    setSelectOptions(
+      roundSelect,
+      type === 'deduction' ? [{ value: deductionRound, label: '공제' }] : normalRounds().map((round) => ({ value: round, label: round })),
+      selectedRound,
+    );
+    setSelectOptions(
+      payerSelect,
+      people.map((person) => ({ value: person.id, label: person.name })),
+      selectedPayer,
+    );
+    renderEntryParticipants(selectedParticipants);
+
+    overlay.hidden = false;
+    document.body.classList.add('guide-open');
+    setTimeout(() => {
+      amountInput.focus();
+      amountInput.select();
+    }, 20);
+  }
+
+  function closeExpenseEntry() {
+    overlay.hidden = true;
+    document.body.classList.remove('guide-open');
+  }
+
+  function saveExpenseEntry() {
+    const people = activePeople();
+    const amount = numberValue(amountInput.value);
+    if (!people.length) {
+      alert('참여자를 먼저 추가해 주세요.');
+      return;
+    }
+    if (!amount) {
+      alert('금액을 입력해 주세요.');
+      amountInput.focus();
+      return;
+    }
+
+    const participants = selectedParticipantIds();
+    if (!participants.length) {
+      alert('참여자를 1명 이상 선택해 주세요.');
+      return;
+    }
+
+    const isDeduction = entryState.type === 'deduction';
+    const round = isDeduction ? deductionRound : roundSelect.value || defaultRound();
+    if (!state.rounds.includes(round)) state.rounds.push(round);
+
+    const nextExpense = {
+      id: entryState.expenseId || newId('e'),
+      type: isDeduction ? 'deduction' : 'expense',
+      round,
+      date: state.meetingDate || today,
+      place: placeInput.value.trim(),
+      amount: isDeduction ? -Math.abs(amount) : amount,
+      payer: payerSelect.value || people[0]?.id || '',
+      participants,
+    };
+
+    if (entryState.mode === 'edit') {
+      const index = state.expenses.findIndex((expense) => expense.id === entryState.expenseId);
+      if (index >= 0) state.expenses[index] = { ...state.expenses[index], ...nextExpense };
+    } else {
+      state.expenses.push(nextExpense);
+    }
+
+    saveAndRender();
+    closeExpenseEntry();
+  }
+
+  function ensureSimpleExpenseList() {
+    let list = document.getElementById('simpleExpenseList');
+    if (list) return list;
+    const expensePanel = document.getElementById('section-settlement');
+    const expenseScroll = expensePanel?.querySelector('.expense-scroll');
+    if (!expensePanel || !expenseScroll) return null;
+    list = document.createElement('div');
+    list.id = 'simpleExpenseList';
+    list.className = 'simple-expense-list';
+    expensePanel.insertBefore(list, expenseScroll);
+    return list;
+  }
+
+  function personName(id) {
+    return activePeople().find((person) => person.id === id)?.name || '결제자 미지정';
+  }
+
+  function renderSimpleExpenseList() {
+    const list = ensureSimpleExpenseList();
+    if (!list) return;
+    const expenses = state.expenses.filter((expense) => expenseAmount(expense) || String(expense.place || '').trim());
+    if (!expenses.length) {
+      list.innerHTML = '<div class="simple-expense-empty">아직 지출이 없습니다. 지출 추가 버튼으로 첫 내역을 입력하세요.</div>';
+      return;
+    }
+
+    list.innerHTML = expenses
+      .map((expense) => {
+        const isDeduction = expense.type === 'deduction';
+        const amount = expenseAmount(expense);
+        const participantCount = orderedParticipantIds(expense.participants, activePeople(), new Map(activePeople().map((person) => [person.id, person]))).length;
+        const title = String(expense.place || '').trim() || (isDeduction ? '공제 사유 미입력' : '장소 미입력');
+        return `
+          <article class="simple-expense-card" data-simple-expense-id="${escapeHtml(expense.id)}">
+            <div class="simple-expense-main">
+              <div class="simple-expense-title">
+                <span class="simple-expense-round">${escapeHtml(isDeduction ? '공제' : expense.round || '차수')}</span>
+                <strong>${escapeHtml(title)}</strong>
+              </div>
+              <div class="simple-expense-meta">${escapeHtml(personName(expense.payer))} 결제 · 참여 ${participantCount}명</div>
+            </div>
+            <div class="simple-expense-side">
+              <strong class="simple-expense-amount ${isDeduction ? 'deduction' : ''}">${money(amount)}</strong>
+              <div class="simple-expense-actions">
+                <button type="button" data-simple-expense-edit="${escapeHtml(expense.id)}">수정</button>
+                <button type="button" class="danger" data-simple-expense-delete="${escapeHtml(expense.id)}">삭제</button>
+              </div>
+            </div>
+          </article>
+        `;
+      })
+      .join('');
+  }
+
+  function renderFocusedRoundSummaries() {
+    const result = calculate();
+    const rows = state.rounds
+      .map((round) => {
+        const expenses = state.expenses.filter((expense) => {
+          const expenseRound = expense.type === 'deduction' ? deductionRound : expense.round;
+          return expenseRound === round && (expenseAmount(expense) || String(expense.place || '').trim());
+        });
+        if (!expenses.length) return '';
+        const total = result.roundTotals.get(round) || { amount: 0 };
+        return `
+          <div class="summary-row">
+            <div>
+              <strong>${escapeHtml(round)}</strong>
+              <div class="row-meta">${escapeHtml(roundPlaceLabel(round))}</div>
+            </div>
+            <strong>${money(total.amount)}</strong>
+          </div>
+        `;
+      })
+      .filter(Boolean)
+      .join('');
+    const html = rows || '<div class="empty-state">지출을 추가하세요</div>';
+    ['roundSummary', 'dashboardRoundSummary'].forEach((id) => {
+      const target = document.getElementById(id);
+      if (target) target.innerHTML = html;
+    });
+  }
+
+  const baseRender = render;
+  render = function renderWithSimpleExpenseList() {
+    baseRender();
+    renderFocusedRoundSummaries();
+    renderSimpleExpenseList();
+  };
+  renderFocusedRoundSummaries();
+  renderSimpleExpenseList();
+
+  document.addEventListener(
+    'click',
+    (event) => {
+      const button = event.target.closest('button');
+      if (!button) return;
+
+      const opensExpense =
+        button.id === 'addExpenseButton' ||
+        button.id === 'mobileTabAdd' ||
+        button.id === 'quickAddExpenseButton' ||
+        button.getAttribute('data-dashboard-quick-action') === 'expense';
+
+      if (opensExpense) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        openExpenseEntry({ type: 'expense' });
+        return;
+      }
+
+      if (button.id === 'addDeductionButton') {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        openExpenseEntry({ type: 'deduction' });
+        return;
+      }
+
+      if (button.id === 'quickCreateSubmitExpenseButton') {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        document.getElementById('quickCreateSubmitButton')?.click();
+        setTimeout(() => {
+          const quickOverlay = document.getElementById('quickCreateOverlay');
+          if (quickOverlay?.hidden && activePeople().length) openExpenseEntry({ type: 'expense' });
+        }, 120);
+        return;
+      }
+
+      const editId = button.getAttribute('data-simple-expense-edit');
+      if (editId) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        openExpenseEntry({ expenseId: editId });
+        return;
+      }
+
+      const deleteId = button.getAttribute('data-simple-expense-delete');
+      if (deleteId) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        deleteExpense(deleteId);
+      }
+    },
+    true,
+  );
+
+  overlay?.addEventListener('click', (event) => {
+    if (event.target === overlay) closeExpenseEntry();
+  });
+  closeButtons.forEach((button) => button.addEventListener('click', closeExpenseEntry));
+  saveButton?.addEventListener('click', saveExpenseEntry);
+  amountInput?.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') saveExpenseEntry();
+  });
+  placeInput?.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') saveExpenseEntry();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && overlay && !overlay.hidden) closeExpenseEntry();
+  });
+
+  window.DUTCH_PAY_APP_VERSION = 'v2.47-focused-input-flow';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-47-focused-input-flow')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
