@@ -17817,5 +17817,2674 @@ render();
 })();
 </script>
 
+<style id="v2-53-simplified-records-nav">
+  /* v2.53: simplify the product model: dashboard = results, records = edit/detail */
+  .dashboard-quick-feature-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+
+  .dashboard-quick-feature-button[data-dashboard-quick-action="people"] {
+    display: none !important;
+  }
+
+  .dashboard-quick-feature-button {
+    min-height: 118px !important;
+    padding: 20px 18px !important;
+    border-radius: 22px !important;
+  }
+
+  .dashboard-quick-feature-button span {
+    width: 34px !important;
+    height: 34px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .dashboard-quick-feature-button strong {
+    font-size: 15px !important;
+    font-weight: 850 !important;
+  }
+
+  .dashboard-round-card {
+    display: none !important;
+  }
+
+  .dashboard-section-card {
+    border-radius: 24px !important;
+  }
+
+  .dashboard-section-head h2,
+  .summary-panel-header h2 {
+    font-size: 22px !important;
+    font-weight: 880 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .dashboard-section-head p,
+  .summary-panel-header p {
+    color: #8d8e96 !important;
+    font-size: 14px !important;
+    font-weight: 680 !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0 !important;
+  }
+
+  body.app-view-settlement .layout {
+    width: min(100%, 1180px) !important;
+    max-width: 1180px !important;
+    gap: 18px !important;
+  }
+
+  body.app-view-settlement #section-home {
+    order: 1 !important;
+  }
+
+  body.app-view-settlement #section-summary {
+    order: 2 !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  body.app-view-settlement .person-panel,
+  body.app-view-settlement .transfers-panel,
+  body.app-view-settlement .rounds-panel,
+  body.app-view-settlement .quick-feature-panel {
+    display: none !important;
+  }
+
+  body.app-view-settlement .expense-panel {
+    order: 1 !important;
+    border-radius: 26px !important;
+  }
+
+  body.app-view-settlement .kpi-panel {
+    order: 2 !important;
+    padding: 24px !important;
+    border-radius: 24px !important;
+  }
+
+  body.app-view-settlement .kpi-panel > h2 {
+    margin-bottom: 14px !important;
+    font-size: 20px !important;
+    font-weight: 880 !important;
+  }
+
+  body.app-view-settlement .kpi-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  body.app-view-settlement .metric,
+  body.app-view-settlement .total-metric,
+  body.app-view-settlement .side-metric {
+    min-height: 104px !important;
+    padding: 18px !important;
+    border-radius: 18px !important;
+  }
+
+  body.app-view-settlement .metric span {
+    font-size: 13px !important;
+    font-weight: 760 !important;
+  }
+
+  body.app-view-settlement .metric strong,
+  body.app-view-settlement .total-line strong,
+  body.app-view-settlement .side-metric strong,
+  body.app-view-settlement .total-metric .total-line strong {
+    margin-top: 10px !important;
+    font-size: 26px !important;
+    font-weight: 880 !important;
+    line-height: 1.08 !important;
+  }
+
+  body.app-view-settlement #section-settlement .panel-heading {
+    padding: 26px 28px 18px !important;
+  }
+
+  body.app-view-settlement #section-settlement .panel-heading h2 {
+    font-size: 24px !important;
+    font-weight: 900 !important;
+  }
+
+  body.app-view-settlement #section-settlement .panel-subtext {
+    max-width: 520px !important;
+    color: #8d8e96 !important;
+    font-size: 14px !important;
+    font-weight: 680 !important;
+  }
+
+  body.app-view-settlement .expense-actions .deduction-button,
+  body.app-view-settlement .expense-actions .primary-button {
+    min-height: 44px !important;
+    padding: 0 16px !important;
+    border-radius: 14px !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+  }
+
+  body.app-view-settlement .simple-expense-list {
+    padding: 20px 28px 28px !important;
+    gap: 10px !important;
+  }
+
+  body.app-view-settlement .simple-expense-card {
+    padding: 18px 20px !important;
+    border-radius: 18px !important;
+  }
+
+  body.app-view-settlement .simple-expense-title strong {
+    font-size: 17px !important;
+    font-weight: 860 !important;
+  }
+
+  body.app-view-settlement .simple-expense-meta,
+  body.app-view-settlement .simple-expense-people {
+    font-size: 12px !important;
+    font-weight: 650 !important;
+  }
+
+  body.app-view-settlement .simple-expense-amount {
+    font-size: 21px !important;
+    font-weight: 880 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-sheet {
+    max-width: 940px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head p {
+    font-size: 12px !important;
+    font-weight: 820 !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head h2 {
+    font-size: 38px !important;
+    font-weight: 900 !important;
+    line-height: 1.05 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head small {
+    font-size: 15px !important;
+    font-weight: 680 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card,
+  #expenseEntryOverlay .expense-entry-total-card,
+  #expenseEntryOverlay .expense-entry-split-card {
+    min-height: 118px !important;
+    padding: 20px !important;
+    border-radius: 22px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card strong,
+  #expenseEntryOverlay .expense-entry-total-card strong {
+    font-size: 34px !important;
+    font-weight: 880 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-rounds {
+    gap: 8px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-round-card {
+    min-height: 82px !important;
+    padding: 13px 14px !important;
+    border-radius: 17px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-round-card strong {
+    font-size: 20px !important;
+    font-weight: 860 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participants {
+    min-height: 40px !important;
+    gap: 6px !important;
+    padding: 6px !important;
+    border-radius: 14px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participant {
+    min-height: 28px !important;
+    height: 28px !important;
+    gap: 6px !important;
+    padding: 0 9px !important;
+    border-radius: 999px !important;
+    font-size: 12px !important;
+    font-weight: 720 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participant input[type="checkbox"] {
+    width: 15px !important;
+    min-width: 15px !important;
+    max-width: 15px !important;
+    height: 15px !important;
+    min-height: 15px !important;
+    max-height: 15px !important;
+    border-radius: 4px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participant input[type="checkbox"]::after {
+    width: 7px !important;
+    height: 4px !important;
+    border-left-width: 2px !important;
+    border-bottom-width: 2px !important;
+  }
+
+  @media (max-width: 960px) {
+    .dashboard-quick-feature-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .dashboard-quick-feature-button {
+      min-height: 104px !important;
+    }
+
+    body.app-view-settlement .kpi-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .dashboard-quick-feature-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .dashboard-quick-feature-button {
+      min-height: 76px !important;
+      flex-direction: row !important;
+      justify-content: flex-start !important;
+      gap: 12px !important;
+      padding: 0 18px !important;
+    }
+
+    .dashboard-quick-feature-button span {
+      margin: 0 !important;
+    }
+
+    body.app-view-settlement .layout {
+      padding: calc(14px + env(safe-area-inset-top)) 16px calc(92px + env(safe-area-inset-bottom)) !important;
+    }
+
+    body.app-view-settlement #section-settlement .panel-heading {
+      padding: 22px 18px 16px !important;
+    }
+
+    body.app-view-settlement .simple-expense-list {
+      padding: 16px 18px 20px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-head h2 {
+      font-size: 31px !important;
+    }
+  }
+</style>
+<script id="v2-53-simplified-records-nav-script">
+(function setupV53SimplifiedRecordsNav() {
+  const displayVersion = 'Dutch Pay · v2.53 PWA';
+  const recordIcon = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 3.8h9.1a2 2 0 0 1 2 2v13.9l-2.1-1.25-1.95 1.25-1.9-1.25-1.9 1.25-1.95-1.25-2.1 1.25V5.8a2 2 0 0 1 2-2Z"/><path d="M8.7 8.2h5.9"/><path d="M8.7 11.5h4.3"/><circle cx="16.7" cy="16.5" r="2.65"/></svg>';
+
+  function setText(selector, text) {
+    document.querySelectorAll(selector).forEach((node) => {
+      node.textContent = text;
+    });
+  }
+
+  function applyLabels() {
+    document.querySelectorAll('[data-nav-target="settlement"]').forEach((button) => {
+      const label = button.querySelector('.mobile-tab-label') || button.querySelector('span:last-child');
+      if (label) label.textContent = '내역';
+      button.setAttribute('aria-label', '내역');
+    });
+
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow').forEach((node) => {
+      node.textContent = displayVersion;
+      node.setAttribute('aria-label', displayVersion);
+    });
+
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+      node.textContent = displayVersion;
+    });
+
+    setText('[data-dashboard-quick-action="settle"] strong', '내역 보기');
+    setText('#quickOpenReportButton strong', '리포트 보기');
+    setText('#openReportButton', '리포트');
+    setText('#menuGuideButton', '사용법');
+    setText('#section-settlement .panel-heading h2', '지출 내역');
+    setText('#section-settlement .panel-subtext', '누가, 언제, 어디서, 얼마를 썼는지 확인하고 수정하세요.');
+    setText('.kpi-panel > h2', '계산 요약');
+
+    document.querySelectorAll('[data-dashboard-quick-action="settle"] span').forEach((icon) => {
+      icon.innerHTML = recordIcon;
+    });
+  }
+
+  document.querySelectorAll('[data-dashboard-quick-action="settle"]').forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      document.querySelector('[data-nav-target="settlement"]')?.click();
+      applyLabels();
+    }, true);
+  });
+
+  applyLabels();
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.53-simplified-records-nav';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-53-simplified-records-nav')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-54-unified-report-polish">
+  /* v2.54: make the report feel like the same product surface as dashboard/records */
+  .report-overlay {
+    background: #f4f4f5 !important;
+    padding: 22px 22px 48px !important;
+  }
+
+  .report-toolbar,
+  .final-report {
+    width: min(1160px, calc(100vw - 44px)) !important;
+  }
+
+  .report-toolbar {
+    position: sticky !important;
+    top: 14px !important;
+    z-index: 2 !important;
+    margin: 0 auto 18px !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+    pointer-events: auto !important;
+  }
+
+  .report-toolbar .ghost-button {
+    min-height: 44px !important;
+    padding: 0 18px !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(17, 17, 19, 0.08) !important;
+    background: #ffffff !important;
+    color: #111113 !important;
+    box-shadow: 0 12px 28px rgba(17, 17, 19, 0.07) !important;
+    font-size: 14px !important;
+    font-weight: 790 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .report-toolbar .report-save-button {
+    border-color: #111113 !important;
+    background: #111113 !important;
+    color: #ffffff !important;
+    box-shadow: 0 16px 36px rgba(17, 17, 19, 0.18) !important;
+  }
+
+  .final-report {
+    margin: 0 auto 44px !important;
+    padding: 26px !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(17, 17, 19, 0.07) !important;
+    border-radius: 30px !important;
+    box-shadow: 0 22px 54px rgba(17, 17, 19, 0.07) !important;
+    overflow: hidden !important;
+    color: #111113 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .report-hero {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.06fr) minmax(360px, 0.94fr) !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+    margin: 0 0 16px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+  }
+
+  .report-hero-main,
+  .report-total,
+  .report-stats > div,
+  .report-section {
+    background: #fbfbfc !important;
+    border: 1px solid rgba(17, 17, 19, 0.07) !important;
+    border-radius: 24px !important;
+    box-shadow: none !important;
+  }
+
+  .report-hero-main {
+    min-height: 150px !important;
+    padding: 24px 26px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+
+  .report-brand-row {
+    margin: 0 0 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+  }
+
+  .report-kicker {
+    color: #81828a !important;
+    font-size: 13px !important;
+    font-weight: 820 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+
+  .report-seal {
+    min-height: 30px !important;
+    padding: 0 12px !important;
+    border-radius: 999px !important;
+    background: #f1f2f4 !important;
+    color: #6f727b !important;
+    border: 1px solid rgba(17, 17, 19, 0.05) !important;
+    font-size: 12px !important;
+    font-weight: 780 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .report-hero h2 {
+    margin: 0 !important;
+    color: #111113 !important;
+    font-size: clamp(30px, 2.8vw, 42px) !important;
+    font-weight: 900 !important;
+    line-height: 1.08 !important;
+    letter-spacing: 0 !important;
+    word-break: keep-all !important;
+  }
+
+  .report-date {
+    margin: 12px 0 0 !important;
+    color: #8d8e96 !important;
+    font-size: 14px !important;
+    font-weight: 720 !important;
+    line-height: 1.4 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .report-total {
+    min-height: 150px !important;
+    padding: 24px 28px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    gap: 12px !important;
+  }
+
+  .report-total > span,
+  .report-stats span,
+  .report-section-heading span {
+    color: #858790 !important;
+    font-size: 13px !important;
+    font-weight: 770 !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .report-total-line {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    margin: 0 !important;
+  }
+
+  .report-total-line strong {
+    color: #111113 !important;
+    font-size: clamp(38px, 4.1vw, 58px) !important;
+    font-weight: 900 !important;
+    line-height: 0.98 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .report-total-line small,
+  #reportDeductionNote {
+    min-height: 28px !important;
+    padding: 0 10px !important;
+    border-radius: 999px !important;
+    background: #f1f2f4 !important;
+    color: #7c7e86 !important;
+    font-size: 12px !important;
+    font-weight: 720 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .report-total-line small:empty,
+  #reportDeductionNote:empty {
+    display: none !important;
+  }
+
+  #reportDeductionNote strong,
+  .report-total-line small strong {
+    color: #111113 !important;
+    font-size: 12px !important;
+    font-weight: 820 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .report-stats {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+    margin: 0 0 16px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+  }
+
+  .report-stats > div {
+    min-height: 104px !important;
+    padding: 18px 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+  }
+
+  .report-stats strong {
+    margin-top: 10px !important;
+    color: #111113 !important;
+    font-size: 25px !important;
+    font-weight: 880 !important;
+    line-height: 1.08 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .report-section {
+    padding: 24px !important;
+    margin-top: 16px !important;
+  }
+
+  .report-section + .report-section {
+    margin-top: 16px !important;
+  }
+
+  .report-section-heading {
+    margin-bottom: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+  }
+
+  .report-section-heading h3 {
+    margin: 0 !important;
+    color: #111113 !important;
+    font-size: 21px !important;
+    font-weight: 880 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .report-list {
+    display: grid !important;
+    gap: 10px !important;
+  }
+
+  .report-item,
+  .report-settlement-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(17, 17, 19, 0.07) !important;
+    border-radius: 18px !important;
+    box-shadow: none !important;
+  }
+
+  .report-item {
+    min-height: 64px !important;
+    padding: 14px 18px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 16px !important;
+  }
+
+  .report-transfer-item {
+    min-height: 72px !important;
+  }
+
+  .report-item-main {
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  .report-index {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    flex: 0 0 34px !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #f3f4f6 !important;
+    color: #111113 !important;
+    border: 1px solid rgba(17, 17, 19, 0.06) !important;
+    font-size: 12px !important;
+    font-weight: 820 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .report-item strong,
+  .report-item .amount {
+    color: #111113 !important;
+    font-size: 16px !important;
+    font-weight: 820 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .report-transfer-item .amount {
+    font-size: 17px !important;
+    font-weight: 860 !important;
+  }
+
+  .report-item small,
+  .report-empty {
+    color: #8d8e96 !important;
+    font-size: 13px !important;
+    font-weight: 650 !important;
+    line-height: 1.45 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .report-empty {
+    padding: 22px !important;
+    background: #ffffff !important;
+    border: 1px dashed rgba(17, 17, 19, 0.1) !important;
+    border-radius: 16px !important;
+    text-align: center !important;
+  }
+
+  #reportPeople {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  #reportPeople .report-settlement-card {
+    min-height: 126px !important;
+    padding: 18px 20px !important;
+    border-radius: 18px !important;
+    gap: 16px !important;
+  }
+
+  #reportPeople .settlement-name {
+    color: #111113 !important;
+    font-size: 18px !important;
+    font-weight: 860 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #reportPeople .settlement-label {
+    color: #8d8e96 !important;
+    font-size: 13px !important;
+    font-weight: 690 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #reportPeople .settlement-line strong {
+    color: #111113 !important;
+    font-size: 14px !important;
+    font-weight: 790 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #reportPeople .settlement-result span {
+    min-height: 25px !important;
+    padding: 0 10px !important;
+    font-size: 11px !important;
+    font-weight: 790 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #reportPeople .settlement-result.receive span {
+    background: #eef5ff !important;
+    color: #2563eb !important;
+  }
+
+  #reportPeople .settlement-result.pay span {
+    background: #fff0f1 !important;
+    color: #ef4444 !important;
+  }
+
+  #reportPeople .settlement-result strong {
+    color: #111113 !important;
+    font-size: 22px !important;
+    font-weight: 880 !important;
+    line-height: 1.08 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #reportRounds .report-item {
+    min-height: 76px !important;
+  }
+
+  #reportRounds .report-item-main {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
+
+  @media (max-width: 980px) {
+    .report-toolbar,
+    .final-report {
+      width: min(100%, calc(100vw - 24px)) !important;
+    }
+
+    .final-report {
+      padding: 18px !important;
+      border-radius: 26px !important;
+    }
+
+    .report-hero,
+    .report-stats,
+    #reportPeople {
+      grid-template-columns: 1fr !important;
+    }
+
+    .report-hero-main,
+    .report-total,
+    .report-stats > div,
+    .report-section {
+      border-radius: 20px !important;
+    }
+
+    .report-hero-main,
+    .report-total {
+      min-height: auto !important;
+      padding: 21px !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .report-overlay {
+      padding: 12px 10px 28px !important;
+    }
+
+    .report-toolbar {
+      top: 8px !important;
+      margin-bottom: 10px !important;
+    }
+
+    .report-toolbar .ghost-button {
+      min-height: 40px !important;
+      padding: 0 14px !important;
+      border-radius: 12px !important;
+      font-size: 13px !important;
+    }
+
+    .final-report {
+      width: 100% !important;
+      padding: 12px !important;
+      border-radius: 22px !important;
+    }
+
+    .report-hero {
+      gap: 10px !important;
+      margin-bottom: 10px !important;
+    }
+
+    .report-hero h2 {
+      font-size: 28px !important;
+    }
+
+    .report-total-line strong {
+      font-size: 34px !important;
+    }
+
+    .report-stats {
+      gap: 10px !important;
+      margin-bottom: 10px !important;
+    }
+
+    .report-section {
+      margin-top: 10px !important;
+      padding: 18px !important;
+    }
+
+    .report-item {
+      grid-template-columns: 1fr !important;
+      align-items: flex-start !important;
+      gap: 8px !important;
+    }
+
+    .report-item .amount {
+      justify-self: end !important;
+    }
+
+    #reportPeople .report-settlement-card {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
+<script id="v2-54-unified-report-polish-script">
+(function setupV54UnifiedReportPolish() {
+  const displayVersion = 'Dutch Pay · v2.54 PWA';
+
+  document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+    node.textContent = displayVersion;
+    node.setAttribute('aria-label', displayVersion);
+  });
+
+  document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+    node.textContent = displayVersion;
+  });
+
+  const reportSeal = document.querySelector('.report-seal');
+  if (reportSeal) reportSeal.textContent = '공유용';
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.54-unified-report-polish';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-54-unified-report-polish')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-55-member-meeting-layout-fix">
+  /* v2.55: untangle the meeting/member screen and make it match the simplified app layout */
+  body.app-view-meeting .layout {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-column: 2 !important;
+    width: min(100%, 1240px) !important;
+    max-width: 1240px !important;
+    margin: 0 auto !important;
+    padding: 24px 32px 72px 0 !important;
+    gap: 0 !important;
+    align-items: start !important;
+    align-content: start !important;
+    overflow: visible !important;
+  }
+
+  body.app-view-meeting #section-home {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    gap: 22px !important;
+    align-content: start !important;
+    overflow: visible !important;
+  }
+
+  body.app-view-meeting .meeting-panel,
+  body.app-view-meeting .people-panel {
+    display: block !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(17, 17, 19, 0.07) !important;
+    border-radius: 26px !important;
+    box-shadow: 0 18px 46px rgba(17, 17, 19, 0.06) !important;
+    backdrop-filter: none !important;
+  }
+
+  body.app-view-meeting .meeting-panel .panel-heading::before {
+    display: none !important;
+    content: none !important;
+  }
+
+  body.app-view-meeting .meeting-panel .panel-heading,
+  body.app-view-meeting .people-panel .panel-heading {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 18px !important;
+    min-height: 0 !important;
+    padding: 24px 28px !important;
+    background: #ffffff !important;
+    border-bottom: 1px solid rgba(17, 17, 19, 0.06) !important;
+  }
+
+  body.app-view-meeting .meeting-panel .panel-heading h2,
+  body.app-view-meeting .people-panel .panel-heading h2 {
+    margin: 0 !important;
+    justify-self: start !important;
+    color: #111113 !important;
+    font-size: 22px !important;
+    font-weight: 880 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+  }
+
+  body.app-view-meeting .meeting-panel .panel-subtext,
+  body.app-view-meeting .people-panel .panel-subtext {
+    display: block !important;
+    max-width: 520px !important;
+    margin: 0 !important;
+    justify-self: center !important;
+    color: #8d8e96 !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 1.45 !important;
+    text-align: center !important;
+    letter-spacing: 0 !important;
+  }
+
+  body.app-view-meeting .meeting-panel .save-status {
+    min-width: 56px !important;
+    margin: 0 !important;
+    justify-self: end !important;
+    color: #8d8e96 !important;
+    font-size: 13px !important;
+    font-weight: 720 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+    text-align: right !important;
+  }
+
+  body.app-view-meeting .meeting-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    align-items: end !important;
+    gap: 18px !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    padding: 24px 28px 28px !important;
+  }
+
+  body.app-view-meeting .meeting-grid label {
+    display: grid !important;
+    min-width: 0 !important;
+    gap: 9px !important;
+  }
+
+  body.app-view-meeting .meeting-grid label span {
+    margin: 0 !important;
+    color: #858790 !important;
+    font-size: 13px !important;
+    font-weight: 760 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+  }
+
+  body.app-view-meeting .meeting-panel input,
+  body.app-view-meeting .meeting-panel .date-control {
+    width: 100% !important;
+    min-height: 56px !important;
+    padding: 0 18px !important;
+    color: #111113 !important;
+    background: #fbfbfc !important;
+    border: 1px solid rgba(17, 17, 19, 0.08) !important;
+    border-radius: 16px !important;
+    box-shadow: none !important;
+    font-size: 17px !important;
+    font-weight: 720 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+  }
+
+  body.app-view-meeting .meeting-panel input::placeholder,
+  body.app-view-meeting .meeting-panel .date-display.empty {
+    color: #b2b3ba !important;
+  }
+
+  body.app-view-meeting .meeting-panel .date-control {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow: hidden !important;
+  }
+
+  body.app-view-meeting .meeting-panel .date-display {
+    position: relative !important;
+    z-index: 1 !important;
+    color: #111113 !important;
+    font-size: 17px !important;
+    font-weight: 720 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+  }
+
+  body.app-view-meeting .meeting-panel .date-control .native-date-input {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    cursor: pointer !important;
+  }
+
+  body.app-view-meeting .people-panel .icon-button {
+    justify-self: end !important;
+    width: 54px !important;
+    height: 54px !important;
+    min-height: 54px !important;
+    padding: 0 !important;
+    color: #ffffff !important;
+    background: #111113 !important;
+    border: 1px solid rgba(17, 17, 19, 0.12) !important;
+    border-radius: 17px !important;
+    box-shadow: 0 14px 30px rgba(17, 17, 19, 0.14) !important;
+    font-size: 27px !important;
+    font-weight: 780 !important;
+    line-height: 1 !important;
+  }
+
+  body.app-view-meeting .people-list {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+    min-height: 0 !important;
+    padding: 24px 28px 28px !important;
+  }
+
+  body.app-view-meeting .person-row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 46px !important;
+    align-items: center !important;
+    gap: 12px !important;
+    min-height: 64px !important;
+    padding: 0 10px 0 20px !important;
+    background: #fbfbfc !important;
+    border: 1px solid rgba(17, 17, 19, 0.07) !important;
+    border-radius: 17px !important;
+    box-shadow: none !important;
+  }
+
+  body.app-view-meeting .person-row input {
+    width: 100% !important;
+    min-height: 62px !important;
+    padding: 0 !important;
+    color: #111113 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    font-size: 17px !important;
+    font-weight: 780 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+  }
+
+  body.app-view-meeting .person-row .delete-button {
+    width: 46px !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    padding: 0 !important;
+    color: #d93434 !important;
+    background: #fff2f2 !important;
+    border: 1px solid rgba(217, 52, 52, 0.12) !important;
+    border-radius: 15px !important;
+    box-shadow: none !important;
+    font-size: 21px !important;
+    font-weight: 860 !important;
+    line-height: 1 !important;
+  }
+
+  @media (max-width: 1180px) {
+    body.app-view-meeting .layout {
+      width: 100% !important;
+      max-width: none !important;
+      padding: calc(14px + env(safe-area-inset-top)) 20px calc(92px + env(safe-area-inset-bottom)) !important;
+    }
+
+    body.app-view-meeting .people-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+
+  @media (max-width: 760px) {
+    body.app-view-meeting .layout {
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+    }
+
+    body.app-view-meeting #section-home {
+      gap: 14px !important;
+    }
+
+    body.app-view-meeting .meeting-panel,
+    body.app-view-meeting .people-panel {
+      border-radius: 22px !important;
+    }
+
+    body.app-view-meeting .meeting-panel .panel-heading,
+    body.app-view-meeting .people-panel .panel-heading {
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      gap: 8px 12px !important;
+      padding: 20px !important;
+    }
+
+    body.app-view-meeting .meeting-panel .panel-subtext,
+    body.app-view-meeting .people-panel .panel-subtext {
+      grid-column: 1 / -1 !important;
+      justify-self: start !important;
+      text-align: left !important;
+      font-size: 13px !important;
+    }
+
+    body.app-view-meeting .meeting-grid,
+    body.app-view-meeting .people-list {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+      padding: 18px 20px 20px !important;
+    }
+
+    body.app-view-meeting .people-panel .icon-button {
+      width: 48px !important;
+      height: 48px !important;
+      min-height: 48px !important;
+      border-radius: 16px !important;
+    }
+
+    body.app-view-meeting .person-row {
+      grid-template-columns: minmax(0, 1fr) 44px !important;
+      min-height: 60px !important;
+      padding-left: 16px !important;
+    }
+
+    body.app-view-meeting .person-row input {
+      min-height: 58px !important;
+    }
+
+    body.app-view-meeting .person-row .delete-button {
+      width: 44px !important;
+      height: 44px !important;
+      min-height: 44px !important;
+    }
+  }
+</style>
+<script id="v2-55-member-meeting-layout-fix-script">
+(function setupV55MemberMeetingLayoutFix() {
+  const displayVersion = 'Dutch Pay · v2.55 PWA';
+
+  document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+    node.textContent = displayVersion;
+    node.setAttribute('aria-label', displayVersion);
+  });
+
+  document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+    node.textContent = displayVersion;
+  });
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.55-member-meeting-layout-fix';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-55-member-meeting-layout-fix')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-56-transfer-total-balance">
+  /* v2.56: make the dashboard transfer total feel integrated at medium desktop widths */
+  .dashboard-transfer-card .dashboard-section-head {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(210px, auto) !important;
+    align-items: center !important;
+    gap: 18px !important;
+  }
+
+  .dashboard-transfer-card .dashboard-section-side {
+    width: auto !important;
+    min-width: 220px !important;
+    justify-self: end !important;
+    display: flex !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    gap: 0 !important;
+  }
+
+  .dashboard-transfer-card .dashboard-inline-amount {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    min-width: 220px !important;
+    min-height: 84px !important;
+    padding: 16px 18px !important;
+    color: #111113 !important;
+    background: #fbfbfc !important;
+    border: 1px solid rgba(17, 17, 19, 0.07) !important;
+    border-radius: 18px !important;
+    box-shadow: none !important;
+    font-size: 28px !important;
+    font-weight: 880 !important;
+    line-height: 1.08 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .dashboard-transfer-card .dashboard-inline-amount::before {
+    content: "총 정산 금액" !important;
+    position: static !important;
+    display: block !important;
+    margin: 0 0 8px !important;
+    color: #8d8e96 !important;
+    font-size: 13px !important;
+    font-weight: 760 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .dashboard-transfer-card #dashboardReportButton {
+    display: none !important;
+  }
+
+  @media (min-width: 1181px) and (max-width: 1380px) {
+    .dashboard-transfer-card .dashboard-section-head {
+      grid-template-columns: 1fr !important;
+      align-items: start !important;
+    }
+
+    .dashboard-transfer-card .dashboard-section-side {
+      width: 100% !important;
+      justify-self: stretch !important;
+    }
+
+    .dashboard-transfer-card .dashboard-inline-amount {
+      width: 100% !important;
+      min-width: 0 !important;
+      min-height: 76px !important;
+      padding: 15px 18px !important;
+      font-size: 25px !important;
+    }
+  }
+
+  @media (max-width: 1180px) {
+    .dashboard-transfer-card .dashboard-section-head {
+      grid-template-columns: 1fr !important;
+      align-items: start !important;
+    }
+
+    .dashboard-transfer-card .dashboard-section-side {
+      width: 100% !important;
+      justify-self: stretch !important;
+    }
+
+    .dashboard-transfer-card .dashboard-inline-amount {
+      width: 100% !important;
+      min-width: 0 !important;
+      min-height: 72px !important;
+      padding: 14px 16px !important;
+      font-size: 23px !important;
+      border-radius: 16px !important;
+    }
+  }
+</style>
+<script id="v2-56-transfer-total-balance-script">
+(function setupV56TransferTotalBalance() {
+  const displayVersion = 'Dutch Pay · v2.56 PWA';
+
+  document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+    node.textContent = displayVersion;
+    node.setAttribute('aria-label', displayVersion);
+  });
+
+  document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+    node.textContent = displayVersion;
+  });
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.56-transfer-total-balance';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-56-transfer-total-balance')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-58-report-total-scale">
+  /* v2.58: calm down the report total amount so it sits inside the card naturally */
+  .report-total-line strong {
+    font-size: clamp(34px, 3.2vw, 46px) !important;
+    font-weight: 880 !important;
+    line-height: 1.02 !important;
+  }
+
+  .report-total {
+    gap: 10px !important;
+  }
+
+  @media (max-width: 980px) {
+    .report-total-line strong {
+      font-size: 34px !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .report-total-line strong {
+      font-size: 30px !important;
+    }
+  }
+</style>
+<script id="v2-58-report-total-scale-script">
+(function setupV58ReportTotalScale() {
+  const displayVersion = 'Dutch Pay · v2.58 PWA';
+
+  document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+    node.textContent = displayVersion;
+    node.setAttribute('aria-label', displayVersion);
+  });
+
+  document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+    node.textContent = displayVersion;
+  });
+
+  function drawUnifiedReportPill(context, text, x, y, options = {}) {
+    const fontSize = options.fontSize || 12;
+    const weight = options.weight || 780;
+    const paddingX = options.paddingX || 10;
+    const height = options.height || 28;
+    setCanvasText(context, fontSize, weight, options.color || '#6f727b');
+    const width = Math.ceil(context.measureText(text).width + paddingX * 2);
+    drawRoundRect(
+      context,
+      x,
+      y,
+      width,
+      height,
+      height / 2,
+      options.background || '#f1f2f4',
+      options.border || 'rgba(17, 17, 19, 0.06)'
+    );
+    context.fillStyle = options.color || '#6f727b';
+    context.fillText(text, x + paddingX, y + Math.round(height / 2 + fontSize / 2 - 3));
+    return width;
+  }
+
+  function drawUnifiedReportCard(context, x, y, width, height, radius = 22) {
+    drawRoundRect(context, x, y, width, height, radius, '#fbfbfc', 'rgba(17, 17, 19, 0.07)');
+  }
+
+  function drawUnifiedReportImage(context, data) {
+    const {
+      width,
+      height,
+      title,
+      date,
+      total,
+      deduction,
+      people,
+      average,
+      transferCount,
+      transfers,
+    } = data;
+
+    const pagePadding = 24;
+    const cardX = pagePadding;
+    const cardY = pagePadding;
+    const cardW = width - pagePadding * 2;
+    const cardH = height - pagePadding * 2;
+    const inner = 24;
+    const contentX = cardX + inner;
+    const contentW = cardW - inner * 2;
+    const gap = 16;
+    const heroY = cardY + inner;
+    const heroH = 150;
+    const titleW = Math.max(330, Math.round(contentW * 0.56));
+    const totalW = contentW - titleW - gap;
+
+    context.fillStyle = '#f4f4f5';
+    context.fillRect(0, 0, width, height);
+    drawRoundRect(context, cardX, cardY, cardW, cardH, 28, '#ffffff', 'rgba(17, 17, 19, 0.07)');
+
+    drawUnifiedReportCard(context, contentX, heroY, titleW, heroH, 22);
+    drawUnifiedReportCard(context, contentX + titleW + gap, heroY, totalW, heroH, 22);
+
+    setCanvasText(context, 13, 820, '#81828a');
+    context.fillText(displayVersion, contentX + 22, heroY + 34);
+    drawUnifiedReportPill(context, '공유용', contentX + titleW - 78, heroY + 22, {
+      height: 30,
+      fontSize: 12,
+      paddingX: 12,
+      color: '#6f727b',
+    });
+
+    setCanvasText(context, 38, 900, '#111113');
+    drawFittedText(context, title, contentX + 22, heroY + 88, titleW - 44, 38);
+    setCanvasText(context, 15, 720, '#8d8e96');
+    context.fillText(date, contentX + 22, heroY + 122);
+
+    const totalX = contentX + titleW + gap + 24;
+    const totalY = heroY + 47;
+    setCanvasText(context, 14, 770, '#858790');
+    context.fillText('총 지출', totalX, totalY);
+    setCanvasText(context, fitFontSize(context, total, 40, 30, totalW - 48), 880, '#111113');
+    context.fillText(total, totalX, totalY + 50);
+    if (deduction) {
+      drawUnifiedReportPill(context, `공제 ${deduction}`, totalX, totalY + 74, {
+        height: 26,
+        fontSize: 12,
+        paddingX: 10,
+        color: '#6f727b',
+      });
+    }
+
+    const statsY = heroY + heroH + gap;
+    const statsH = 92;
+    const statsGap = 12;
+    const statsW = (contentW - statsGap * 2) / 3;
+    [
+      ['참여자', people],
+      ['1인 평균', average],
+      ['송금', transferCount],
+    ].forEach(([label, value], index) => {
+      const x = contentX + index * (statsW + statsGap);
+      drawUnifiedReportCard(context, x, statsY, statsW, statsH, 18);
+      setCanvasText(context, 13, 770, '#858790');
+      context.fillText(label, x + 18, statsY + 33);
+      setCanvasText(context, fitFontSize(context, value, 27, 19, statsW - 36), 880, '#111113');
+      context.fillText(value, x + 18, statsY + 67);
+    });
+
+    const sectionY = statsY + statsH + gap;
+    const rowH = 72;
+    const rowGap = 10;
+    const rowsH = transfers.length ? transfers.length * rowH + (transfers.length - 1) * rowGap : 60;
+    const sectionH = 58 + rowsH + 24;
+    drawUnifiedReportCard(context, contentX, sectionY, contentW, sectionH, 22);
+
+    setCanvasText(context, 22, 880, '#111113');
+    context.fillText('송금', contentX + 20, sectionY + 38);
+    setCanvasText(context, 13, 770, '#858790');
+    context.textAlign = 'right';
+    context.fillText('보낼 금액', contentX + contentW - 20, sectionY + 38);
+    context.textAlign = 'left';
+
+    if (!transfers.length) {
+      drawRoundRect(context, contentX + 20, sectionY + 58, contentW - 40, 60, 16, '#ffffff', 'rgba(17, 17, 19, 0.07)');
+      setCanvasText(context, 15, 720, '#8d8e96');
+      context.textAlign = 'center';
+      context.fillText('송금할 금액이 없습니다', contentX + contentW / 2, sectionY + 96);
+      context.textAlign = 'left';
+      return;
+    }
+
+    transfers.forEach((transfer, index) => {
+      const rowX = contentX + 20;
+      const rowY = sectionY + 58 + index * (rowH + rowGap);
+      const rowW = contentW - 40;
+      drawRoundRect(context, rowX, rowY, rowW, rowH, 17, '#ffffff', 'rgba(17, 17, 19, 0.07)');
+      drawRoundRect(context, rowX + 16, rowY + 19, 34, 34, 17, '#f3f4f6', 'rgba(17, 17, 19, 0.06)');
+      setCanvasText(context, 12, 820, '#111113');
+      context.textAlign = 'center';
+      context.fillText(String(index + 1).padStart(2, '0'), rowX + 33, rowY + 41);
+      context.textAlign = 'left';
+
+      setCanvasText(context, 18, 840, '#202126');
+      drawFittedText(context, `${transfer.from} → ${transfer.to}`, rowX + 66, rowY + 43, rowW - 250, 18);
+      setCanvasText(context, 24, 880, '#111113');
+      context.textAlign = 'right';
+      drawFittedText(context, money(transfer.amount), rowX + rowW - 18, rowY + 45, 180, 24, 'right');
+      context.textAlign = 'left';
+    });
+  }
+
+  makeReportScreenshotBlob = async function makeReportScreenshotBlobV58() {
+    await document.fonts?.ready?.catch?.(() => {});
+    renderReport();
+
+    const result = calculate();
+    const peopleCount = result.people.length;
+    const average = peopleCount ? result.totalExpense / peopleCount : 0;
+    const transfers = result.transfers;
+    const width = 720;
+    const rowH = 72;
+    const rowGap = 10;
+    const rowsH = transfers.length ? transfers.length * rowH + (transfers.length - 1) * rowGap : 60;
+    const height = 24 + 24 + 150 + 16 + 92 + 16 + 58 + rowsH + 24 + 24 + 24;
+    const scale = Math.min(3, Math.max(2, window.devicePixelRatio || 2));
+    const canvas = document.createElement('canvas');
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+    const context = canvas.getContext('2d');
+    context.scale(scale, scale);
+
+    drawUnifiedReportImage(context, {
+      width,
+      height,
+      title: state.meetingTitle.trim() || '더치페이 정산',
+      date: formatDateForDisplay(state.meetingDate) || '일자 미입력',
+      total: money(result.grossExpense),
+      deduction: result.deductionTotal ? money(result.deductionTotal) : '',
+      people: `${peopleCount}명`,
+      average: money(average),
+      transferCount: `${transfers.length}건`,
+      transfers,
+    });
+
+    return canvasToBlob(canvas);
+  };
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.58-report-total-scale';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-58-report-total-scale')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-59-member-panel-height-reset">
+  /* v2.59: reset old fixed desktop heights so member inputs stay inside their cards */
+  body.app-view-meeting .meeting-panel,
+  body.app-view-meeting .people-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    border-radius: 28px !important;
+    background: #ffffff !important;
+  }
+
+  body.app-view-meeting .meeting-panel {
+    flex: 0 0 auto !important;
+  }
+
+  body.app-view-meeting .meeting-panel .panel-heading,
+  body.app-view-meeting .people-panel .panel-heading {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    box-sizing: border-box !important;
+  }
+
+  body.app-view-meeting .meeting-grid {
+    position: static !important;
+    transform: none !important;
+    flex: 0 0 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    align-content: start !important;
+    align-items: end !important;
+    box-sizing: border-box !important;
+    padding: 22px 28px 28px !important;
+    overflow: visible !important;
+  }
+
+  body.app-view-meeting .meeting-grid label,
+  body.app-view-meeting .meeting-grid input,
+  body.app-view-meeting .meeting-panel .date-control {
+    position: relative !important;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+  }
+
+  body.app-view-meeting .meeting-panel input,
+  body.app-view-meeting .meeting-panel .date-control {
+    height: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+  }
+
+  body.app-view-meeting .people-list {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    box-sizing: border-box !important;
+  }
+
+  body.app-view-meeting .person-row,
+  body.app-view-meeting .person-row input,
+  body.app-view-meeting .person-row .delete-button {
+    box-sizing: border-box !important;
+  }
+
+  @media (max-width: 760px) {
+    body.app-view-meeting .meeting-panel,
+    body.app-view-meeting .people-panel {
+      border-radius: 22px !important;
+    }
+
+    body.app-view-meeting .meeting-grid {
+      padding: 18px 20px 20px !important;
+    }
+  }
+</style>
+<script id="v2-59-member-panel-height-reset-script">
+(function setupV59MemberPanelHeightReset() {
+  const displayVersion = 'Dutch Pay · v2.59 PWA';
+
+  document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+    node.textContent = displayVersion;
+    node.setAttribute('aria-label', displayVersion);
+  });
+
+  document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+    node.textContent = displayVersion;
+  });
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.59-member-panel-height-reset';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-59-member-panel-height-reset')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-60-expense-entry-visual-balance">
+  /* v2.60: refine expense entry proportions so the form reads calmly */
+  #expenseEntryOverlay {
+    align-items: center !important;
+    padding: 18px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-sheet {
+    width: min(900px, calc(100vw - 36px)) !important;
+    max-height: calc(100dvh - 36px) !important;
+    padding: 22px 24px 24px !important;
+    border-radius: 26px !important;
+    overflow: auto !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head {
+    align-items: flex-start !important;
+    gap: 16px !important;
+    margin-bottom: 14px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head p {
+    margin-bottom: 4px !important;
+    font-size: 11px !important;
+    font-weight: 820 !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head h2 {
+    font-size: 32px !important;
+    font-weight: 880 !important;
+    line-height: 1.08 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head small {
+    max-width: 520px !important;
+    margin-top: 7px !important;
+    font-size: 14px !important;
+    font-weight: 650 !important;
+    line-height: 1.4 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-close {
+    width: 46px !important;
+    height: 46px !important;
+    flex-basis: 46px !important;
+    border-radius: 15px !important;
+    font-size: 24px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-overview {
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1fr) minmax(0, 1.06fr) !important;
+    gap: 10px !important;
+    margin-bottom: 12px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card,
+  #expenseEntryOverlay .expense-entry-total-card,
+  #expenseEntryOverlay .expense-entry-split-card {
+    min-height: 90px !important;
+    padding: 16px 18px !important;
+    border-radius: 18px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card span,
+  #expenseEntryOverlay .expense-entry-total-card span,
+  #expenseEntryOverlay .expense-entry-split-card span {
+    font-size: 12px !important;
+    font-weight: 760 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card strong,
+  #expenseEntryOverlay .expense-entry-total-card strong,
+  #expenseEntryOverlay .expense-entry-split-card strong {
+    margin-top: 7px !important;
+    font-size: 29px !important;
+    font-weight: 860 !important;
+    line-height: 1.05 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-total-card strong {
+    font-size: 30px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-split-card strong {
+    font-size: 27px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card small,
+  #expenseEntryOverlay .expense-entry-total-card small,
+  #expenseEntryOverlay .expense-entry-split-card small {
+    margin-top: 6px !important;
+    font-size: 11px !important;
+    font-weight: 650 !important;
+    line-height: 1.34 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-round-totals {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(98px, 1fr)) !important;
+    gap: 8px !important;
+    margin: 0 0 15px !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  #expenseEntryOverlay .expense-round-total,
+  #expenseEntryOverlay .expense-round-total-empty {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 66px !important;
+    padding: 11px 12px !important;
+    border-radius: 15px !important;
+  }
+
+  #expenseEntryOverlay .expense-round-total span,
+  #expenseEntryOverlay .expense-round-total small,
+  #expenseEntryOverlay .expense-round-total-empty {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+  }
+
+  #expenseEntryOverlay .expense-round-total strong {
+    margin-top: 5px !important;
+    font-size: 16px !important;
+    font-weight: 820 !important;
+    line-height: 1.12 !important;
+  }
+
+  #expenseEntryOverlay .expense-round-total.is-active {
+    box-shadow: 0 10px 24px rgba(17, 17, 19, 0.12) !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-grid {
+    gap: 12px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-field,
+  #expenseEntryOverlay .expense-entry-field-full {
+    gap: 7px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-field span,
+  #expenseEntryOverlay .expense-entry-field-full > span {
+    font-size: 12px !important;
+    font-weight: 730 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-field input,
+  #expenseEntryOverlay .expense-entry-field select {
+    min-height: 48px !important;
+    padding: 0 14px !important;
+    border-radius: 14px !important;
+    font-size: 14px !important;
+    font-weight: 660 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-amount-field input {
+    min-height: 56px !important;
+    font-size: 24px !important;
+    font-weight: 780 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participants {
+    min-height: 40px !important;
+    padding: 6px !important;
+    gap: 6px !important;
+    border-radius: 14px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-participant {
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 0 9px !important;
+    gap: 6px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-deduction-callout {
+    padding: 12px 14px !important;
+    border-radius: 15px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-deduction-callout strong {
+    font-size: 13px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-deduction-callout p {
+    font-size: 12px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-actions {
+    margin-top: 18px !important;
+    gap: 9px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-actions button {
+    min-height: 46px !important;
+    padding: 0 17px !important;
+    border-radius: 15px !important;
+    font-size: 14px !important;
+    font-weight: 740 !important;
+  }
+
+  @media (max-width: 760px) {
+    #expenseEntryOverlay {
+      align-items: flex-end !important;
+      padding: 0 !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-sheet {
+      width: 100% !important;
+      max-height: calc(100dvh - 18px) !important;
+      padding: 18px 16px calc(18px + env(safe-area-inset-bottom)) !important;
+      border-radius: 22px 22px 0 0 !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-overview,
+    #expenseEntryOverlay .expense-entry-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-round-totals {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-head h2 {
+      font-size: 28px !important;
+    }
+  }
+</style>
+<script id="v2-60-expense-entry-visual-balance-script">
+(function setupV60ExpenseEntryVisualBalance() {
+  const displayVersion = 'Dutch Pay · v2.60 PWA';
+
+  document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+    node.textContent = displayVersion;
+    node.setAttribute('aria-label', displayVersion);
+  });
+
+  document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+    node.textContent = displayVersion;
+  });
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.60-expense-entry-visual-balance';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-60-expense-entry-visual-balance')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-61-report-summary-balance">
+  /* v2.61: make report totals quieter, right-aligned, and remove redundant transfer count summary */
+  .report-total {
+    align-items: flex-end !important;
+    justify-content: center !important;
+    text-align: right !important;
+    gap: 10px !important;
+    padding: 24px 28px !important;
+  }
+
+  .report-total > span {
+    width: 100% !important;
+    text-align: right !important;
+    font-weight: 720 !important;
+  }
+
+  .report-total-line {
+    width: 100% !important;
+    align-items: flex-end !important;
+    gap: 9px !important;
+  }
+
+  .report-total-line strong {
+    font-size: clamp(30px, 2.5vw, 38px) !important;
+    font-weight: 760 !important;
+    line-height: 1.05 !important;
+  }
+
+  .report-total-line small,
+  #reportDeductionNote {
+    align-self: flex-end !important;
+    min-height: 25px !important;
+    padding: 0 9px !important;
+    font-size: 11px !important;
+    font-weight: 680 !important;
+  }
+
+  #reportDeductionNote strong,
+  .report-total-line small strong {
+    font-size: 11px !important;
+    font-weight: 760 !important;
+  }
+
+  .report-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .report-stats > div:nth-child(3) {
+    display: none !important;
+  }
+
+  .report-stats > div {
+    min-height: 96px !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 18px 20px !important;
+  }
+
+  .report-stats span {
+    font-weight: 700 !important;
+  }
+
+  .report-stats strong {
+    margin-top: 9px !important;
+    font-size: 22px !important;
+    font-weight: 760 !important;
+  }
+
+  .report-hero h2 {
+    font-weight: 820 !important;
+  }
+
+  .report-kicker,
+  .report-date {
+    font-weight: 690 !important;
+  }
+
+  .report-section-heading h3 {
+    font-size: 20px !important;
+    font-weight: 820 !important;
+  }
+
+  .report-section-heading span {
+    font-weight: 690 !important;
+  }
+
+  .report-item strong,
+  .report-item .amount {
+    font-weight: 760 !important;
+  }
+
+  .report-transfer-item .amount {
+    font-size: 16px !important;
+    font-weight: 760 !important;
+  }
+
+  .report-index {
+    font-weight: 760 !important;
+  }
+
+  #reportPeople .settlement-name {
+    font-size: 17px !important;
+    font-weight: 780 !important;
+  }
+
+  #reportPeople .settlement-line strong {
+    font-size: 13px !important;
+    font-weight: 740 !important;
+  }
+
+  #reportPeople .settlement-result strong {
+    font-size: 20px !important;
+    font-weight: 760 !important;
+  }
+
+  #reportPeople .settlement-deduction {
+    margin-left: 8px !important;
+    padding: 3px 8px !important;
+    border-radius: 999px !important;
+    background: #f1f2f4 !important;
+    color: #7c7e86 !important;
+    font-size: 11px !important;
+    font-weight: 680 !important;
+    white-space: nowrap !important;
+    vertical-align: middle !important;
+  }
+
+  #reportPeople .settlement-deduction strong {
+    font-size: 11px !important;
+    font-weight: 760 !important;
+  }
+
+  @media (max-width: 760px) {
+    .report-stats {
+      grid-template-columns: 1fr !important;
+    }
+
+    .report-total {
+      min-height: 124px !important;
+    }
+
+    .report-total-line strong {
+      font-size: 29px !important;
+    }
+  }
+</style>
+<script id="v2-61-report-summary-balance-script">
+(function setupV61ReportSummaryBalance() {
+  const displayVersion = 'Dutch Pay · v2.62 PWA';
+
+  document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+    node.textContent = displayVersion;
+    node.setAttribute('aria-label', displayVersion);
+  });
+
+  document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+    node.textContent = displayVersion;
+  });
+
+  function drawReportPill(context, text, x, y, options = {}) {
+    const fontSize = options.fontSize || 11;
+    const weight = options.weight || 700;
+    const paddingX = options.paddingX || 9;
+    const height = options.height || 24;
+    setCanvasText(context, fontSize, weight, options.color || '#73757d');
+    const width = Math.ceil(context.measureText(text).width + paddingX * 2);
+    drawRoundRect(
+      context,
+      x,
+      y,
+      width,
+      height,
+      height / 2,
+      options.background || '#f1f2f4',
+      options.border || 'rgba(17, 17, 19, 0.06)'
+    );
+    context.fillStyle = options.color || '#73757d';
+    context.textAlign = 'left';
+    context.fillText(text, x + paddingX, y + Math.round(height / 2 + fontSize / 2 - 3));
+    return width;
+  }
+
+  function drawReportPillRight(context, text, rightX, y, options = {}) {
+    const fontSize = options.fontSize || 11;
+    const weight = options.weight || 700;
+    const paddingX = options.paddingX || 9;
+    setCanvasText(context, fontSize, weight, options.color || '#73757d');
+    const width = Math.ceil(context.measureText(text).width + paddingX * 2);
+    return drawReportPill(context, text, rightX - width, y, options);
+  }
+
+  function drawReportCard(context, x, y, width, height, radius = 22) {
+    drawRoundRect(context, x, y, width, height, radius, '#fbfbfc', 'rgba(17, 17, 19, 0.07)');
+  }
+
+  function drawRightValue(context, text, rightX, y, maxWidth, maxSize, minSize, weight = 760) {
+    setCanvasText(context, maxSize, weight, '#111113');
+    const size = fitFontSize(context, text, maxSize, minSize, maxWidth);
+    setCanvasText(context, size, weight, '#111113');
+    context.textAlign = 'right';
+    context.fillText(text, rightX, y);
+    context.textAlign = 'left';
+  }
+
+  function drawCenteredValue(context, label, value, x, y, width, height) {
+    drawReportCard(context, x, y, width, height, 18);
+    context.textAlign = 'center';
+    setCanvasText(context, 12, 700, '#858790');
+    context.fillText(label, x + width / 2, y + 32);
+    setCanvasText(context, fitFontSize(context, value, 24, 18, width - 28), 760, '#111113');
+    context.fillText(value, x + width / 2, y + 64);
+    context.textAlign = 'left';
+  }
+
+  function drawUnifiedReportImageV61(context, data) {
+    const {
+      width,
+      height,
+      title,
+      date,
+      total,
+      deduction,
+      people,
+      average,
+      transfers,
+    } = data;
+
+    const pagePadding = 24;
+    const cardX = pagePadding;
+    const cardY = pagePadding;
+    const cardW = width - pagePadding * 2;
+    const cardH = height - pagePadding * 2;
+    const inner = 24;
+    const contentX = cardX + inner;
+    const contentW = cardW - inner * 2;
+    const gap = 14;
+    const heroY = cardY + inner;
+    const heroH = 142;
+    const titleW = Math.max(340, Math.round(contentW * 0.56));
+    const totalW = contentW - titleW - gap;
+    const totalCardX = contentX + titleW + gap;
+
+    context.fillStyle = '#f4f4f5';
+    context.fillRect(0, 0, width, height);
+    drawRoundRect(context, cardX, cardY, cardW, cardH, 28, '#ffffff', 'rgba(17, 17, 19, 0.07)');
+
+    drawReportCard(context, contentX, heroY, titleW, heroH, 22);
+    drawReportCard(context, totalCardX, heroY, totalW, heroH, 22);
+
+    setCanvasText(context, 12, 760, '#81828a');
+    context.fillText(displayVersion, contentX + 22, heroY + 32);
+    drawReportPillRight(context, '공유용', contentX + titleW - 22, heroY + 22, {
+      height: 28,
+      fontSize: 11,
+      paddingX: 11,
+      color: '#6f727b',
+    });
+
+    setCanvasText(context, 34, 820, '#111113');
+    drawFittedText(context, title, contentX + 22, heroY + 86, titleW - 44, 34);
+    setCanvasText(context, 14, 690, '#8d8e96');
+    context.fillText(date, contentX + 22, heroY + 118);
+
+    const totalRight = totalCardX + totalW - 24;
+    setCanvasText(context, 13, 700, '#858790');
+    context.textAlign = 'right';
+    context.fillText('총 지출', totalRight, heroY + 43);
+    context.textAlign = 'left';
+    drawRightValue(context, total, totalRight, heroY + 80, totalW - 48, 34, 25, 760);
+    if (deduction) {
+      drawReportPillRight(context, `공제 ${deduction}`, totalRight, heroY + 98, {
+        height: 24,
+        fontSize: 11,
+        paddingX: 9,
+        color: '#6f727b',
+      });
+    }
+
+    const statsY = heroY + heroH + gap;
+    const statsH = 82;
+    const statsGap = 12;
+    const statsW = (contentW - statsGap) / 2;
+    [
+      ['참여자', people],
+      ['1인 평균', average],
+    ].forEach(([label, value], index) => {
+      drawCenteredValue(context, label, value, contentX + index * (statsW + statsGap), statsY, statsW, statsH);
+    });
+
+    const sectionY = statsY + statsH + gap;
+    const rowH = 66;
+    const rowGap = 9;
+    const rowsH = transfers.length ? transfers.length * rowH + (transfers.length - 1) * rowGap : 56;
+    const sectionH = 52 + rowsH + 22;
+    drawReportCard(context, contentX, sectionY, contentW, sectionH, 22);
+
+    setCanvasText(context, 20, 820, '#111113');
+    context.fillText('송금', contentX + 20, sectionY + 36);
+    setCanvasText(context, 12, 700, '#858790');
+    context.textAlign = 'right';
+    context.fillText('보낼 금액', contentX + contentW - 20, sectionY + 36);
+    context.textAlign = 'left';
+
+    if (!transfers.length) {
+      drawRoundRect(context, contentX + 20, sectionY + 52, contentW - 40, 56, 16, '#ffffff', 'rgba(17, 17, 19, 0.07)');
+      setCanvasText(context, 14, 680, '#8d8e96');
+      context.textAlign = 'center';
+      context.fillText('송금할 금액이 없습니다', contentX + contentW / 2, sectionY + 88);
+      context.textAlign = 'left';
+      return;
+    }
+
+    transfers.forEach((transfer, index) => {
+      const rowX = contentX + 20;
+      const rowY = sectionY + 52 + index * (rowH + rowGap);
+      const rowW = contentW - 40;
+      drawRoundRect(context, rowX, rowY, rowW, rowH, 16, '#ffffff', 'rgba(17, 17, 19, 0.07)');
+      drawRoundRect(context, rowX + 16, rowY + 17, 32, 32, 16, '#f3f4f6', 'rgba(17, 17, 19, 0.06)');
+      setCanvasText(context, 11, 760, '#111113');
+      context.textAlign = 'center';
+      context.fillText(String(index + 1).padStart(2, '0'), rowX + 32, rowY + 38);
+      context.textAlign = 'left';
+
+      setCanvasText(context, 16, 760, '#202126');
+      drawFittedText(context, `${transfer.from} → ${transfer.to}`, rowX + 64, rowY + 40, rowW - 230, 16);
+      drawRightValue(context, money(transfer.amount), rowX + rowW - 18, rowY + 41, 160, 19, 15, 760);
+    });
+  }
+
+  makeReportScreenshotBlob = async function makeReportScreenshotBlobV61() {
+    await document.fonts?.ready?.catch?.(() => {});
+    renderReport();
+
+    const result = calculate();
+    const peopleCount = result.people.length;
+    const average = peopleCount ? result.totalExpense / peopleCount : 0;
+    const transfers = result.transfers;
+    const width = 720;
+    const pagePadding = 24;
+    const inner = 24;
+    const heroH = 142;
+    const gap = 14;
+    const statsH = 82;
+    const rowH = 66;
+    const rowGap = 9;
+    const rowsH = transfers.length ? transfers.length * rowH + (transfers.length - 1) * rowGap : 56;
+    const sectionH = 52 + rowsH + 22;
+    const cardH = inner + heroH + gap + statsH + gap + sectionH + inner;
+    const height = pagePadding * 2 + cardH;
+    const scale = Math.min(3, Math.max(2, window.devicePixelRatio || 2));
+    const canvas = document.createElement('canvas');
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+    const context = canvas.getContext('2d');
+    context.scale(scale, scale);
+
+    drawUnifiedReportImageV61(context, {
+      width,
+      height,
+      title: state.meetingTitle.trim() || '더치페이 정산',
+      date: formatDateForDisplay(state.meetingDate) || '일자 미입력',
+      total: money(result.grossExpense),
+      deduction: result.deductionTotal ? money(result.deductionTotal) : '',
+      people: `${peopleCount}명`,
+      average: money(average),
+      transfers,
+    });
+
+    return canvasToBlob(canvas);
+  };
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.61-report-summary-balance';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-61-report-summary-balance')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-62-dashboard-compact-numeric-alignment">
+  /* v2.62: compact dashboard actions and align calculated numbers consistently to the right */
+  .dashboard-home-page .dashboard-quick-feature-panel {
+    margin: 0 0 14px !important;
+  }
+
+  .dashboard-home-page .dashboard-quick-feature-head {
+    margin-bottom: 10px !important;
+  }
+
+  .dashboard-home-page .dashboard-quick-feature-head h2 {
+    font-size: 17px !important;
+    font-weight: 780 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .dashboard-home-page .dashboard-quick-feature-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .dashboard-home-page .dashboard-quick-feature-button[data-dashboard-quick-action="people"] {
+    display: none !important;
+  }
+
+  .dashboard-home-page .dashboard-quick-feature-button {
+    min-height: 58px !important;
+    padding: 0 12px !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border-radius: 16px !important;
+  }
+
+  .dashboard-home-page .dashboard-quick-feature-button span {
+    width: 22px !important;
+    height: 22px !important;
+    flex: 0 0 22px !important;
+    margin: 0 !important;
+  }
+
+  .dashboard-home-page .dashboard-quick-feature-button strong {
+    font-size: 13px !important;
+    font-weight: 760 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .dashboard-home-page .dashboard-stat-grid {
+    gap: 10px !important;
+  }
+
+  .dashboard-home-page .dashboard-stat-card {
+    min-height: 82px !important;
+    padding: 16px 18px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-areas:
+      "label value"
+      "note value" !important;
+    align-items: center !important;
+    column-gap: 14px !important;
+    row-gap: 3px !important;
+  }
+
+  .dashboard-home-page .dashboard-stat-card::after {
+    display: none !important;
+  }
+
+  .dashboard-home-page .dashboard-stat-card > span {
+    grid-area: label !important;
+    text-align: left !important;
+    font-size: 12px !important;
+    font-weight: 690 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .dashboard-home-page .dashboard-stat-card > small {
+    grid-area: note !important;
+    margin: 0 !important;
+    text-align: left !important;
+    font-size: 11px !important;
+    font-weight: 650 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .dashboard-home-page .dashboard-stat-card > strong,
+  .dashboard-home-page #dashboardTotalExpense,
+  .dashboard-home-page #dashboardTotalPeople,
+  .dashboard-home-page #dashboardAveragePerPerson {
+    grid-area: value !important;
+    margin: 0 !important;
+    text-align: right !important;
+    font-size: clamp(22px, 2vw, 28px) !important;
+    font-weight: 760 !important;
+    line-height: 1.05 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .dashboard-transfer-card .dashboard-section-head {
+    align-items: start !important;
+  }
+
+  .dashboard-transfer-card .dashboard-section-side {
+    min-width: 0 !important;
+  }
+
+  .dashboard-transfer-card .dashboard-inline-amount {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 64px !important;
+    padding: 14px 16px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+    text-align: right !important;
+    font-size: 23px !important;
+    font-weight: 760 !important;
+    line-height: 1.05 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .dashboard-transfer-card .dashboard-inline-amount::before {
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+    text-align: left !important;
+    font-size: 12px !important;
+    font-weight: 690 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .dashboard-home-page .transfer-row,
+  .dashboard-home-page .summary-row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 14px !important;
+  }
+
+  .dashboard-home-page .transfer-row > div,
+  .dashboard-home-page .summary-row > div {
+    min-width: 0 !important;
+    text-align: left !important;
+  }
+
+  .dashboard-home-page .transfer-row > strong,
+  .dashboard-home-page .summary-row > strong {
+    text-align: right !important;
+    font-size: 17px !important;
+    font-weight: 760 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .dashboard-home-page .person-summary {
+    gap: 10px !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-card {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 14px !important;
+    padding: 17px 18px !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-line {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: auto minmax(78px, 1fr) auto !important;
+    align-items: baseline !important;
+    gap: 8px !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-line > strong {
+    justify-self: end !important;
+    text-align: right !important;
+    font-size: 13px !important;
+    font-weight: 730 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-result {
+    min-width: 108px !important;
+    align-items: flex-end !important;
+    text-align: right !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-result strong {
+    text-align: right !important;
+    font-size: 20px !important;
+    font-weight: 760 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-name {
+    font-size: 17px !important;
+    font-weight: 780 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .dashboard-home-page #dashboardPersonSummary .settlement-deduction {
+    justify-self: end !important;
+    margin-left: 0 !important;
+    padding: 2px 7px !important;
+    border-radius: 999px !important;
+    background: #f1f2f4 !important;
+    color: #7c7e86 !important;
+    font-size: 11px !important;
+    font-weight: 680 !important;
+  }
+
+  @media (min-width: 721px) {
+    .dashboard-home-page .dashboard-quick-feature-button {
+      min-height: 68px !important;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .dashboard-home-page .dashboard-quick-feature-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: 8px !important;
+    }
+
+    .dashboard-home-page .dashboard-quick-feature-button {
+      min-height: 52px !important;
+      padding: 0 8px !important;
+      border-radius: 15px !important;
+      gap: 7px !important;
+    }
+
+    .dashboard-home-page .dashboard-quick-feature-button span {
+      width: 20px !important;
+      height: 20px !important;
+      flex-basis: 20px !important;
+    }
+
+    .dashboard-home-page .dashboard-quick-feature-button strong {
+      font-size: 12px !important;
+      font-weight: 760 !important;
+    }
+
+    .dashboard-home-page .dashboard-stat-card {
+      min-height: 76px !important;
+      padding: 15px 16px !important;
+    }
+
+    .dashboard-home-page .dashboard-stat-card > strong,
+    .dashboard-home-page #dashboardTotalExpense,
+    .dashboard-home-page #dashboardTotalPeople,
+    .dashboard-home-page #dashboardAveragePerPerson {
+      font-size: 24px !important;
+    }
+
+    .dashboard-transfer-card .dashboard-inline-amount {
+      min-height: 58px !important;
+      font-size: 22px !important;
+    }
+
+    .dashboard-home-page #dashboardPersonSummary .settlement-card {
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      padding: 16px !important;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .dashboard-home-page .dashboard-quick-feature-button {
+      gap: 5px !important;
+      padding: 0 6px !important;
+    }
+
+    .dashboard-home-page .dashboard-quick-feature-button strong {
+      font-size: 11px !important;
+    }
+
+    .dashboard-home-page #dashboardPersonSummary .settlement-card {
+      grid-template-columns: 1fr !important;
+    }
+
+    .dashboard-home-page #dashboardPersonSummary .settlement-result {
+      width: 100% !important;
+    }
+  }
+</style>
+<script id="v2-62-dashboard-compact-numeric-alignment-script">
+(function setupV62DashboardCompactNumericAlignment() {
+  const displayVersion = 'Dutch Pay · v2.62 PWA';
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      node.textContent = displayVersion;
+      node.setAttribute('aria-label', displayVersion);
+    });
+
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+      node.textContent = displayVersion;
+    });
+  }
+
+  function syncDashboardTransferAmount() {
+    const target = document.getElementById('dashboardTransferHeadline');
+    if (!target || typeof calculate !== 'function' || typeof money !== 'function') return;
+    const result = calculate();
+    const totalTransfer = (result.transfers || []).reduce((sum, transfer) => sum + Number(transfer.amount || 0), 0);
+    target.textContent = money(totalTransfer);
+  }
+
+  setDisplayVersion();
+  syncDashboardTransferAmount();
+
+  ['transferSummary', 'dashboardTransferSummary', 'totalExpense', 'personSummary', 'dashboardPersonSummary'].forEach((id) => {
+    const node = document.getElementById(id);
+    if (!node) return;
+    new MutationObserver(() => {
+      setDisplayVersion();
+      syncDashboardTransferAmount();
+    }).observe(node, { childList: true, subtree: true, characterData: true });
+  });
+
+  document.addEventListener('click', () => {
+    requestAnimationFrame(() => {
+      setDisplayVersion();
+      syncDashboardTransferAmount();
+    });
+  }, true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.62-dashboard-compact-numeric-alignment';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-62-dashboard-compact-numeric-alignment')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
 </body>
 </html>
