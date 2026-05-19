@@ -21463,5 +21463,368 @@ render();
 })();
 </script>
 
+<style id="v2-66-mobile-summary-expense-simplify">
+  /* v2.66: clarify settlement amounts, make nav active immediately, and simplify mobile entry surfaces */
+  #personSummary .settlement-line,
+  #dashboardPersonSummary .settlement-line,
+  #reportPeople .settlement-line {
+    grid-template-columns: 30px minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 5px !important;
+  }
+
+  #personSummary .settlement-label,
+  #dashboardPersonSummary .settlement-label,
+  #reportPeople .settlement-label {
+    color: #aeb1b8 !important;
+    font-size: 10px !important;
+    font-weight: 610 !important;
+  }
+
+  #personSummary .settlement-line > strong,
+  #dashboardPersonSummary .settlement-line > strong,
+  #reportPeople .settlement-line > strong,
+  #personSummary .settlement-line:not(.settlement-line-paid) > strong,
+  #dashboardPersonSummary .settlement-line:not(.settlement-line-paid) > strong,
+  #reportPeople .settlement-line:not(.settlement-line-paid) > strong,
+  #personSummary .settlement-line-paid > strong,
+  #dashboardPersonSummary .settlement-line-paid > strong,
+  #reportPeople .settlement-line-paid > strong {
+    grid-column: 3 !important;
+    justify-self: end !important;
+    color: #8f939b !important;
+    font-size: 11.5px !important;
+    font-weight: 640 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  #personSummary .settlement-deduction,
+  #dashboardPersonSummary .settlement-deduction,
+  #reportPeople .settlement-deduction {
+    grid-column: 2 !important;
+    justify-self: end !important;
+    min-height: 16px !important;
+    padding: 1px 5px !important;
+    color: #a3a6ae !important;
+    background: #f7f8f9 !important;
+    border-color: rgba(17, 17, 19, 0.04) !important;
+    font-size: 8.8px !important;
+    font-weight: 600 !important;
+    line-height: 1.1 !important;
+  }
+
+  #personSummary .settlement-deduction strong,
+  #dashboardPersonSummary .settlement-deduction strong,
+  #reportPeople .settlement-deduction strong {
+    color: #858891 !important;
+    font-size: 8.8px !important;
+    font-weight: 660 !important;
+  }
+
+  #personSummary .settlement-deduction-empty,
+  #dashboardPersonSummary .settlement-deduction-empty,
+  #reportPeople .settlement-deduction-empty {
+    width: 0 !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    visibility: hidden !important;
+  }
+
+  #personSummary .settlement-result strong,
+  #dashboardPersonSummary .settlement-result strong,
+  #reportPeople .settlement-result strong {
+    color: #111113 !important;
+    font-size: 18px !important;
+    font-weight: 760 !important;
+  }
+
+  @media (max-width: 720px) {
+    .dashboard-home-page .dashboard-stat-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 10px !important;
+    }
+
+    .dashboard-home-page .dashboard-stat-card.emphasis {
+      grid-column: 1 / -1 !important;
+    }
+
+    .dashboard-home-page .dashboard-stat-card {
+      min-height: 76px !important;
+      padding: 14px 16px !important;
+      border-radius: 18px !important;
+    }
+
+    .dashboard-home-page .dashboard-stat-card > span {
+      font-size: 11px !important;
+      font-weight: 660 !important;
+    }
+
+    .dashboard-home-page .dashboard-stat-card > small {
+      font-size: 10px !important;
+      font-weight: 620 !important;
+    }
+
+    .dashboard-home-page .dashboard-stat-card > strong,
+    .dashboard-home-page #dashboardTotalExpense,
+    .dashboard-home-page #dashboardTotalPeople,
+    .dashboard-home-page #dashboardAveragePerPerson {
+      font-size: 23px !important;
+      font-weight: 750 !important;
+    }
+
+    .dashboard-home-page .dashboard-stat-card.emphasis > strong,
+    .dashboard-home-page #dashboardTotalExpense {
+      font-size: 26px !important;
+    }
+
+    .mobile-tab-button.is-active {
+      color: #111113 !important;
+    }
+
+    .mobile-tab-button.is-active .mobile-tab-icon svg {
+      stroke-width: 2.75px !important;
+      opacity: 1 !important;
+    }
+  }
+
+  #expenseEntryOverlay .expense-entry-sheet {
+    width: min(760px, calc(100vw - 28px)) !important;
+    padding: 18px 18px 20px !important;
+    border-radius: 24px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head {
+    margin-bottom: 12px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head p {
+    font-size: 10px !important;
+    font-weight: 760 !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head h2 {
+    font-size: 27px !important;
+    font-weight: 820 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-head small {
+    font-size: 12px !important;
+    font-weight: 620 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-close {
+    width: 40px !important;
+    height: 40px !important;
+    flex-basis: 40px !important;
+    border-radius: 13px !important;
+    font-size: 22px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-overview {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    margin-bottom: 10px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card,
+  #expenseEntryOverlay .expense-entry-total-card,
+  #expenseEntryOverlay .expense-entry-split-card {
+    min-height: 58px !important;
+    padding: 12px 14px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 4px 12px !important;
+    border-radius: 16px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card span,
+  #expenseEntryOverlay .expense-entry-total-card span,
+  #expenseEntryOverlay .expense-entry-split-card span {
+    font-size: 11px !important;
+    font-weight: 680 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card strong,
+  #expenseEntryOverlay .expense-entry-total-card strong,
+  #expenseEntryOverlay .expense-entry-split-card strong {
+    margin: 0 !important;
+    justify-self: end !important;
+    text-align: right !important;
+    font-size: 21px !important;
+    font-weight: 760 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card small,
+  #expenseEntryOverlay .expense-entry-total-card small,
+  #expenseEntryOverlay .expense-entry-split-card small {
+    grid-column: 1 / -1 !important;
+    margin: 0 !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-round-totals {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+  }
+
+  #expenseEntryOverlay .expense-round-total,
+  #expenseEntryOverlay .expense-round-total-empty {
+    min-height: 58px !important;
+    padding: 10px 12px !important;
+    text-align: right !important;
+    border-radius: 15px !important;
+  }
+
+  #expenseEntryOverlay .expense-round-total span,
+  #expenseEntryOverlay .expense-round-total small,
+  #expenseEntryOverlay .expense-round-total-empty {
+    font-size: 10px !important;
+    font-weight: 650 !important;
+  }
+
+  #expenseEntryOverlay .expense-round-total strong {
+    margin-top: 4px !important;
+    font-size: 16px !important;
+    font-weight: 740 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-grid {
+    gap: 10px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-field span,
+  #expenseEntryOverlay .expense-entry-field-full > span {
+    font-size: 11px !important;
+    font-weight: 650 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-field input,
+  #expenseEntryOverlay .expense-entry-field select {
+    min-height: 44px !important;
+    border-radius: 13px !important;
+    font-size: 13px !important;
+    font-weight: 620 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-amount-field input {
+    min-height: 50px !important;
+    font-size: 24px !important;
+    font-weight: 720 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-field select {
+    text-align-last: right !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-actions {
+    margin-top: 14px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-actions button {
+    min-height: 42px !important;
+    padding: 0 14px !important;
+    border-radius: 13px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+  }
+
+  @media (max-width: 720px) {
+    #expenseEntryOverlay .expense-entry-sheet {
+      width: 100% !important;
+      max-height: calc(100dvh - 22px) !important;
+      padding: 16px 14px calc(16px + env(safe-area-inset-bottom)) !important;
+      border-radius: 22px 22px 0 0 !important;
+    }
+  }
+</style>
+<script id="v2-66-mobile-summary-expense-simplify-script">
+(function setupV66MobileSummaryExpenseSimplify() {
+  const displayVersion = 'Dutch Pay · v2.66 PWA';
+  const navNames = new Set(['home', 'settlement', 'report', 'settings']);
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      node.textContent = displayVersion;
+      node.setAttribute('aria-label', displayVersion);
+    });
+
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+      node.textContent = displayVersion;
+    });
+  }
+
+  function setActiveNav(name) {
+    if (!navNames.has(name)) return;
+    document.querySelectorAll('[data-nav-target]').forEach((button) => {
+      button.classList.toggle('is-active', button.getAttribute('data-nav-target') === name);
+    });
+  }
+
+  window.addEventListener('click', (event) => {
+    const navButton = event.target.closest?.('[data-nav-target]');
+    if (!navButton) return;
+    const name = navButton.getAttribute('data-nav-target') || '';
+    setActiveNav(name);
+    requestAnimationFrame(() => setActiveNav(name));
+    window.setTimeout(() => setActiveNav(name), 60);
+  }, true);
+
+  const previousRenderSettlementCard = renderSettlementCard;
+  renderSettlementCard = function renderSettlementCardV66(person, balanceData, extraClass = '') {
+    const safeBalanceData = balanceData || { balance: 0, owed: 0 };
+    const balance = Math.round(safeBalanceData.balance || 0);
+    const statusClass = balance > 0 ? 'receive' : balance < 0 ? 'pay' : 'done';
+    const statusLabel = balance > 0 ? '받을 금액' : balance < 0 ? '낼 금액' : '완료';
+    const paid = paidExpenseAmount(person.id);
+    const deduction = paidDeductionAmount(person.id);
+    const deductionNote = deduction ? `<span class="settlement-deduction">공제 <strong>${money(deduction)}</strong></span>` : '<span class="settlement-deduction settlement-deduction-empty" aria-hidden="true"></span>';
+
+    return `
+      <div class="settlement-card ${extraClass}">
+        <div class="settlement-main">
+          <strong class="settlement-name">${escapeHtml(person.name)}</strong>
+          <div class="settlement-meta">
+            <div class="settlement-line"><span class="settlement-label">부담</span><strong>${money(safeBalanceData.owed)}</strong></div>
+            <div class="settlement-line settlement-line-paid"><span class="settlement-label">결제</span>${deductionNote}<strong>${money(paid)}</strong></div>
+          </div>
+        </div>
+        <div class="settlement-result ${statusClass}">
+          <span>${statusLabel}</span>
+          <strong>${money(Math.abs(balance))}</strong>
+        </div>
+      </div>
+    `;
+  };
+
+  setDisplayVersion();
+  try {
+    if (typeof render === 'function') render();
+    if (typeof renderReport === 'function' && !document.getElementById('reportOverlay')?.hidden) renderReport();
+  } catch (error) {
+    if (typeof previousRenderSettlementCard === 'function') renderSettlementCard = previousRenderSettlementCard;
+  }
+
+  document.addEventListener('click', () => requestAnimationFrame(setDisplayVersion), true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.66-mobile-summary-expense-simplify';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-66-mobile-summary-expense-simplify')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
 </body>
 </html>
