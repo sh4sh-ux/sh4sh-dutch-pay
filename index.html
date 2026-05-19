@@ -21959,5 +21959,397 @@ render();
 })();
 </script>
 
+<style id="v2-68-share-choice-popup">
+  /* v2.68: make "share history" explicit with text/image choices */
+  .share-action-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+  }
+
+  .share-action-overlay[hidden] {
+    display: none !important;
+  }
+
+  .share-action-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 17, 19, 0.22);
+    backdrop-filter: blur(10px);
+  }
+
+  .share-action-sheet {
+    position: relative;
+    width: min(390px, calc(100vw - 32px));
+    padding: 22px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(17, 17, 19, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 28px 80px rgba(17, 17, 19, 0.18);
+  }
+
+  .share-action-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 42px;
+    align-items: start;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .share-action-head span {
+    display: block;
+    color: #9a9da5;
+    font-size: 11px;
+    font-weight: 760;
+    letter-spacing: 0.08em;
+  }
+
+  .share-action-head h2 {
+    margin: 5px 0 5px;
+    color: #111113;
+    font-size: 25px;
+    font-weight: 780;
+    letter-spacing: 0;
+    line-height: 1.12;
+  }
+
+  .share-action-head p {
+    margin: 0;
+    color: #8d9098;
+    font-size: 13px;
+    font-weight: 610;
+    line-height: 1.45;
+  }
+
+  .share-action-close {
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(17, 17, 19, 0.08);
+    border-radius: 14px;
+    background: #fff;
+    color: #5d6068;
+    font-size: 24px;
+    font-weight: 520;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .share-action-list {
+    display: grid;
+    gap: 8px;
+  }
+
+  .share-action-option {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    min-height: 64px;
+    padding: 10px 12px;
+    border: 1px solid rgba(17, 17, 19, 0.075);
+    border-radius: 17px;
+    background: #fff;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .share-action-option:active {
+    transform: translateY(1px);
+  }
+
+  .share-action-option[disabled] {
+    opacity: 0.62;
+    cursor: wait;
+  }
+
+  .share-action-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: #f5f6f8;
+    color: #111113;
+    font-size: 17px;
+    font-weight: 760;
+  }
+
+  .share-action-option strong {
+    display: block;
+    color: #111113;
+    font-size: 15px;
+    font-weight: 720;
+    line-height: 1.25;
+  }
+
+  .share-action-option small {
+    display: block;
+    margin-top: 3px;
+    color: #989ca4;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .share-action-status {
+    min-height: 19px;
+    margin: 12px 2px 0;
+    color: #7f838b;
+    font-size: 12px;
+    font-weight: 650;
+  }
+
+  .share-action-status.is-done {
+    color: #1f7a4d;
+  }
+
+  .share-action-status.is-error {
+    color: #c83232;
+  }
+
+  @media (max-width: 720px) {
+    .share-action-overlay {
+      align-items: end;
+      padding: 12px;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    }
+
+    .share-action-sheet {
+      width: 100%;
+      border-radius: 24px;
+    }
+  }
+</style>
+<script id="v2-68-share-choice-popup-script">
+(function setupV68ShareChoicePopup() {
+  const displayVersion = 'Dutch Pay · v2.68 PWA';
+  let lastShareTrigger = null;
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      node.textContent = displayVersion;
+      node.setAttribute('aria-label', displayVersion);
+    });
+
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+      node.textContent = displayVersion;
+    });
+  }
+
+  function buildShareText() {
+    const result = calculate();
+    const meetingTitle = state.meetingTitle?.trim() || '더치페이 정산';
+    const title = state.meetingDate ? `${meetingTitle} (${state.meetingDate})` : meetingTitle;
+    return [
+      title,
+      `총 지출: ${money(result.grossExpense)}${result.deductionTotal ? ` (공제금액 ${money(result.deductionTotal)})` : ''}`,
+      '',
+      '송금',
+      ...(result.transfers.length ? result.transfers.map((item) => `${item.from} → ${item.to}: ${money(item.amount)}`) : ['송금할 금액 없음']),
+    ].join('\n');
+  }
+
+  async function writeTextToClipboard(text) {
+    if (navigator.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return;
+      } catch (error) {
+        // Fall back to the selection-based copy path below.
+      }
+    }
+
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
+    textarea.style.top = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    textarea.remove();
+  }
+
+  function markShareTrigger(active) {
+    const trigger = lastShareTrigger;
+    if (!trigger?.classList) return;
+    trigger.classList.toggle('is-quick-active', active);
+    if (active) trigger.setAttribute('aria-pressed', 'true');
+    else trigger.removeAttribute('aria-pressed');
+  }
+
+  function ensureShareOverlay() {
+    let overlay = document.getElementById('shareActionOverlay');
+    if (overlay) return overlay;
+
+    overlay = document.createElement('div');
+    overlay.id = 'shareActionOverlay';
+    overlay.className = 'share-action-overlay';
+    overlay.hidden = true;
+    overlay.innerHTML = `
+      <div class="share-action-backdrop" data-share-close></div>
+      <section class="share-action-sheet" role="dialog" aria-modal="true" aria-labelledby="shareActionTitle">
+        <div class="share-action-head">
+          <div>
+            <span>SHARE</span>
+            <h2 id="shareActionTitle">내역 공유</h2>
+            <p>필요한 방식으로 정산 내역을 복사하세요.</p>
+          </div>
+          <button type="button" class="share-action-close" data-share-close aria-label="닫기">×</button>
+        </div>
+        <div class="share-action-list">
+          <button type="button" class="share-action-option" data-share-action="text">
+            <span class="share-action-icon" aria-hidden="true">T</span>
+            <span><strong>글자 복사</strong><small>송금 내역을 텍스트로 복사합니다.</small></span>
+          </button>
+          <button type="button" class="share-action-option" data-share-action="image">
+            <span class="share-action-icon" aria-hidden="true">IMG</span>
+            <span><strong>이미지 복사</strong><small>공유용 리포트 이미지를 복사합니다.</small></span>
+          </button>
+          <button type="button" class="share-action-option" data-share-action="report">
+            <span class="share-action-icon" aria-hidden="true">↗</span>
+            <span><strong>공유 화면 보기</strong><small>리포트 화면에서 정산 내역을 확인합니다.</small></span>
+          </button>
+        </div>
+        <p class="share-action-status" id="shareActionStatus" aria-live="polite"></p>
+      </section>
+    `;
+
+    overlay.addEventListener('click', handleShareOverlayClick);
+    document.body.appendChild(overlay);
+    return overlay;
+  }
+
+  function setShareStatus(message, type = '') {
+    const status = document.getElementById('shareActionStatus');
+    if (!status) return;
+    status.textContent = message;
+    status.classList.toggle('is-done', type === 'done');
+    status.classList.toggle('is-error', type === 'error');
+  }
+
+  function openShareOverlay(trigger) {
+    lastShareTrigger = trigger || null;
+    const overlay = ensureShareOverlay();
+    overlay.hidden = false;
+    document.body.classList.add('share-action-open');
+    markShareTrigger(true);
+    setShareStatus('');
+    setDisplayVersion();
+    window.requestAnimationFrame(() => {
+      overlay.querySelector('[data-share-action="text"]')?.focus();
+    });
+  }
+
+  function closeShareOverlay() {
+    const overlay = document.getElementById('shareActionOverlay');
+    if (overlay) overlay.hidden = true;
+    document.body.classList.remove('share-action-open');
+    markShareTrigger(false);
+    const trigger = lastShareTrigger;
+    lastShareTrigger = null;
+    if (trigger?.focus) window.requestAnimationFrame(() => trigger.focus());
+  }
+
+  async function copyReportImageToClipboard(actionButton) {
+    if (typeof renderReport === 'function') renderReport();
+    const blob = await makeReportScreenshotBlob();
+    const type = blob.type || 'image/png';
+
+    if (navigator.clipboard?.write && typeof ClipboardItem !== 'undefined') {
+      try {
+        await navigator.clipboard.write([new ClipboardItem({ [type]: blob })]);
+        return '이미지 복사 완료';
+      } catch (error) {
+        // Some browsers block image clipboard on file pages. Save/share instead.
+      }
+    }
+
+    const fileName = reportImageFileName();
+    const file = typeof File !== 'undefined' ? new File([blob], fileName, { type }) : null;
+    if (file && navigator.share && navigator.canShare?.({ files: [file] })) {
+      await navigator.share({ files: [file] });
+      return '공유창을 열었어요';
+    }
+
+    downloadBlob(blob, fileName);
+    return '이미지를 파일로 저장했어요';
+  }
+
+  async function handleShareOverlayClick(event) {
+    if (event.target.closest('[data-share-close]')) {
+      event.preventDefault();
+      closeShareOverlay();
+      return;
+    }
+
+    const actionButton = event.target.closest('[data-share-action]');
+    if (!actionButton) return;
+
+    const action = actionButton.getAttribute('data-share-action');
+    event.preventDefault();
+    actionButton.disabled = true;
+
+    try {
+      if (action === 'text') {
+        await writeTextToClipboard(buildShareText());
+        const saveStatus = document.getElementById('saveStatus');
+        if (saveStatus) saveStatus.textContent = '글자 복사됨';
+        setShareStatus('글자를 복사했어요.', 'done');
+        window.setTimeout(closeShareOverlay, 700);
+      } else if (action === 'image') {
+        setShareStatus('이미지를 준비하고 있어요.');
+        const message = await copyReportImageToClipboard(actionButton);
+        setShareStatus(message, 'done');
+        window.setTimeout(closeShareOverlay, 900);
+      } else if (action === 'report') {
+        closeShareOverlay();
+        if (typeof openReport === 'function') openReport();
+      }
+    } catch (error) {
+      console.warn('Share action failed.', error);
+      setShareStatus('공유 준비가 어려워요. 다시 한 번 눌러주세요.', 'error');
+    } finally {
+      actionButton.disabled = false;
+    }
+  }
+
+  window.addEventListener('click', (event) => {
+    const trigger = event.target.closest?.('[data-dashboard-quick-action="share"], #quickShareButton, #copySummaryButton, #saveReportImageButton');
+    if (!trigger) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    openShareOverlay(trigger);
+  }, true);
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !document.getElementById('shareActionOverlay')?.hidden) {
+      event.preventDefault();
+      closeShareOverlay();
+    }
+  });
+
+  setDisplayVersion();
+  document.addEventListener('click', () => requestAnimationFrame(setDisplayVersion), true);
+  window.addEventListener('click', () => requestAnimationFrame(setDisplayVersion), true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.68-share-choice-popup';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-68-share-choice-popup')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
 </body>
 </html>
