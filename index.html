@@ -20486,5 +20486,493 @@ render();
 })();
 </script>
 
+<style id="v2-63-report-centered-total-clean-people">
+  /* v2.63: rebalance report cards so totals, transfers, and person rows read cleanly on mobile */
+  .report-total {
+    align-items: center !important;
+    text-align: center !important;
+    gap: 9px !important;
+  }
+
+  .report-total > span {
+    width: 100% !important;
+    text-align: center !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+  }
+
+  .report-total-line {
+    width: max-content !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    align-items: flex-end !important;
+    gap: 8px !important;
+  }
+
+  .report-total-line strong {
+    width: 100% !important;
+    text-align: center !important;
+    font-size: clamp(31px, 4.4vw, 39px) !important;
+    font-weight: 760 !important;
+    line-height: 1.04 !important;
+  }
+
+  .report-total-line small,
+  #reportDeductionNote {
+    align-self: flex-end !important;
+    min-height: 24px !important;
+    padding: 0 9px !important;
+    font-size: 11px !important;
+    font-weight: 680 !important;
+  }
+
+  .report-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .report-stats > div {
+    min-height: 76px !important;
+    padding: 14px 12px !important;
+    border-radius: 18px !important;
+  }
+
+  .report-stats span {
+    font-size: 12px !important;
+    font-weight: 680 !important;
+  }
+
+  .report-stats strong {
+    margin-top: 7px !important;
+    font-size: 21px !important;
+    font-weight: 760 !important;
+  }
+
+  .report-transfer-item {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    min-height: 66px !important;
+    gap: 12px !important;
+  }
+
+  .report-transfer-item .report-item-main {
+    min-width: 0 !important;
+    align-items: center !important;
+  }
+
+  .report-transfer-item .report-item-main > div {
+    min-width: 0 !important;
+  }
+
+  .report-transfer-item .report-item-main strong {
+    display: block !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .report-transfer-item .amount {
+    align-self: center !important;
+    justify-self: end !important;
+    margin: 0 !important;
+    text-align: right !important;
+    font-size: 15px !important;
+    font-weight: 760 !important;
+    line-height: 1.1 !important;
+    white-space: nowrap !important;
+  }
+
+  .report-index {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-basis: 32px !important;
+    font-size: 11px !important;
+  }
+
+  #reportPeople {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  #reportPeople .report-settlement-card {
+    min-height: 0 !important;
+    padding: 16px 17px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 14px !important;
+    border-radius: 17px !important;
+  }
+
+  #reportPeople .settlement-main {
+    min-width: 0 !important;
+    gap: 8px !important;
+  }
+
+  #reportPeople .settlement-name {
+    font-size: 17px !important;
+    font-weight: 780 !important;
+  }
+
+  #reportPeople .settlement-meta {
+    display: grid !important;
+    gap: 5px !important;
+  }
+
+  #reportPeople .settlement-line {
+    display: grid !important;
+    grid-template-columns: 34px minmax(78px, auto) auto !important;
+    align-items: center !important;
+    justify-content: start !important;
+    gap: 8px !important;
+  }
+
+  #reportPeople .settlement-label {
+    font-size: 12px !important;
+    font-weight: 670 !important;
+  }
+
+  #reportPeople .settlement-line > strong {
+    justify-self: end !important;
+    text-align: right !important;
+    font-size: 13px !important;
+    font-weight: 720 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportPeople .settlement-deduction {
+    justify-self: start !important;
+    margin-left: 0 !important;
+    padding: 2px 7px !important;
+    font-size: 10px !important;
+    font-weight: 680 !important;
+  }
+
+  #reportPeople .settlement-result {
+    min-width: 116px !important;
+    align-items: flex-end !important;
+    gap: 7px !important;
+    text-align: right !important;
+  }
+
+  #reportPeople .settlement-result span {
+    min-height: 22px !important;
+    padding: 0 8px !important;
+    font-size: 10px !important;
+    font-weight: 760 !important;
+  }
+
+  #reportPeople .settlement-result strong {
+    font-size: 18px !important;
+    font-weight: 760 !important;
+    white-space: nowrap !important;
+  }
+
+  @media (max-width: 980px) {
+    .report-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .report-total {
+      min-height: 124px !important;
+      padding: 21px !important;
+    }
+
+    .report-total-line strong {
+      font-size: 31px !important;
+    }
+
+    .report-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 9px !important;
+    }
+
+    .report-stats > div {
+      min-height: 72px !important;
+      padding: 13px 10px !important;
+    }
+
+    .report-stats strong {
+      font-size: 20px !important;
+    }
+
+    .report-transfer-item {
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      align-items: center !important;
+      gap: 10px !important;
+      padding: 13px 14px !important;
+    }
+
+    #reportPeople .report-settlement-card {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+      padding: 16px !important;
+    }
+
+    #reportPeople .settlement-line {
+      grid-template-columns: 34px minmax(0, 1fr) auto !important;
+    }
+
+    #reportPeople .settlement-result {
+      width: 100% !important;
+      min-width: 0 !important;
+      display: grid !important;
+      grid-template-columns: auto minmax(0, 1fr) !important;
+      align-items: center !important;
+      padding-top: 12px !important;
+      border-top: 1px solid rgba(17, 17, 19, 0.07) !important;
+    }
+
+    #reportPeople .settlement-result strong {
+      justify-self: end !important;
+    }
+  }
+</style>
+<script id="v2-63-report-centered-total-clean-people-script">
+(function setupV63ReportCenteredTotalCleanPeople() {
+  const displayVersion = 'Dutch Pay · v2.63 PWA';
+
+  function setDisplayVersion() {
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      node.textContent = displayVersion;
+      node.setAttribute('aria-label', displayVersion);
+    });
+
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => {
+      node.textContent = displayVersion;
+    });
+  }
+
+  function drawReportPill(context, text, x, y, options = {}) {
+    const fontSize = options.fontSize || 11;
+    const weight = options.weight || 700;
+    const paddingX = options.paddingX || 9;
+    const height = options.height || 24;
+    setCanvasText(context, fontSize, weight, options.color || '#73757d');
+    const width = Math.ceil(context.measureText(text).width + paddingX * 2);
+    drawRoundRect(
+      context,
+      x,
+      y,
+      width,
+      height,
+      height / 2,
+      options.background || '#f1f2f4',
+      options.border || 'rgba(17, 17, 19, 0.06)'
+    );
+    context.fillStyle = options.color || '#73757d';
+    context.textAlign = 'left';
+    context.fillText(text, x + paddingX, y + Math.round(height / 2 + fontSize / 2 - 3));
+    return width;
+  }
+
+  function drawReportPillRight(context, text, rightX, y, options = {}) {
+    const fontSize = options.fontSize || 11;
+    const weight = options.weight || 700;
+    const paddingX = options.paddingX || 9;
+    setCanvasText(context, fontSize, weight, options.color || '#73757d');
+    const width = Math.ceil(context.measureText(text).width + paddingX * 2);
+    return drawReportPill(context, text, rightX - width, y, options);
+  }
+
+  function drawReportCard(context, x, y, width, height, radius = 22) {
+    drawRoundRect(context, x, y, width, height, radius, '#fbfbfc', 'rgba(17, 17, 19, 0.07)');
+  }
+
+  function drawCenteredAmount(context, text, centerX, y, maxWidth, maxSize, minSize, weight = 760) {
+    setCanvasText(context, maxSize, weight, '#111113');
+    const size = fitFontSize(context, text, maxSize, minSize, maxWidth);
+    setCanvasText(context, size, weight, '#111113');
+    context.textAlign = 'center';
+    context.fillText(text, centerX, y);
+    const width = context.measureText(text).width;
+    context.textAlign = 'left';
+    return { width, right: centerX + width / 2 };
+  }
+
+  function drawRightAmount(context, text, rightX, y, maxWidth, maxSize, minSize, weight = 760) {
+    setCanvasText(context, maxSize, weight, '#111113');
+    const size = fitFontSize(context, text, maxSize, minSize, maxWidth);
+    setCanvasText(context, size, weight, '#111113');
+    context.textAlign = 'right';
+    context.fillText(text, rightX, y);
+    context.textAlign = 'left';
+  }
+
+  function drawCenteredStat(context, label, value, x, y, width, height) {
+    drawReportCard(context, x, y, width, height, 18);
+    context.textAlign = 'center';
+    setCanvasText(context, 12, 680, '#858790');
+    context.fillText(label, x + width / 2, y + 31);
+    setCanvasText(context, fitFontSize(context, value, 23, 17, width - 28), 760, '#111113');
+    context.fillText(value, x + width / 2, y + 62);
+    context.textAlign = 'left';
+  }
+
+  function drawUnifiedReportImageV63(context, data) {
+    const { width, height, title, date, total, deduction, people, average, transfers } = data;
+    const pagePadding = 24;
+    const cardX = pagePadding;
+    const cardY = pagePadding;
+    const cardW = width - pagePadding * 2;
+    const cardH = height - pagePadding * 2;
+    const inner = 24;
+    const contentX = cardX + inner;
+    const contentW = cardW - inner * 2;
+    const gap = 14;
+    const heroY = cardY + inner;
+    const heroH = 142;
+    const titleW = Math.max(340, Math.round(contentW * 0.56));
+    const totalW = contentW - titleW - gap;
+    const totalCardX = contentX + titleW + gap;
+
+    context.fillStyle = '#f4f4f5';
+    context.fillRect(0, 0, width, height);
+    drawRoundRect(context, cardX, cardY, cardW, cardH, 28, '#ffffff', 'rgba(17, 17, 19, 0.07)');
+
+    drawReportCard(context, contentX, heroY, titleW, heroH, 22);
+    drawReportCard(context, totalCardX, heroY, totalW, heroH, 22);
+
+    setCanvasText(context, 12, 760, '#81828a');
+    context.fillText(displayVersion, contentX + 22, heroY + 32);
+    drawReportPillRight(context, '공유용', contentX + titleW - 22, heroY + 22, {
+      height: 28,
+      fontSize: 11,
+      paddingX: 11,
+      color: '#6f727b',
+    });
+
+    setCanvasText(context, 34, 820, '#111113');
+    drawFittedText(context, title, contentX + 22, heroY + 86, titleW - 44, 34);
+    setCanvasText(context, 14, 690, '#8d8e96');
+    context.fillText(date, contentX + 22, heroY + 118);
+
+    const totalCenter = totalCardX + totalW / 2;
+    setCanvasText(context, 13, 700, '#858790');
+    context.textAlign = 'center';
+    context.fillText('총 지출', totalCenter, heroY + 43);
+    context.textAlign = 'left';
+    const amountMetrics = drawCenteredAmount(context, total, totalCenter, heroY + 80, totalW - 48, 34, 25, 760);
+    if (deduction) {
+      drawReportPillRight(context, `공제 ${deduction}`, amountMetrics.right, heroY + 98, {
+        height: 24,
+        fontSize: 11,
+        paddingX: 9,
+        color: '#6f727b',
+      });
+    }
+
+    const statsY = heroY + heroH + gap;
+    const statsH = 80;
+    const statsGap = 12;
+    const statsW = (contentW - statsGap) / 2;
+    [
+      ['참여자', people],
+      ['1인 평균', average],
+    ].forEach(([label, value], index) => {
+      drawCenteredStat(context, label, value, contentX + index * (statsW + statsGap), statsY, statsW, statsH);
+    });
+
+    const sectionY = statsY + statsH + gap;
+    const rowH = 64;
+    const rowGap = 9;
+    const rowsH = transfers.length ? transfers.length * rowH + (transfers.length - 1) * rowGap : 56;
+    const sectionH = 52 + rowsH + 22;
+    drawReportCard(context, contentX, sectionY, contentW, sectionH, 22);
+
+    setCanvasText(context, 20, 820, '#111113');
+    context.fillText('송금', contentX + 20, sectionY + 36);
+    setCanvasText(context, 12, 700, '#858790');
+    context.textAlign = 'right';
+    context.fillText('보낼 금액', contentX + contentW - 20, sectionY + 36);
+    context.textAlign = 'left';
+
+    if (!transfers.length) {
+      drawRoundRect(context, contentX + 20, sectionY + 52, contentW - 40, 56, 16, '#ffffff', 'rgba(17, 17, 19, 0.07)');
+      setCanvasText(context, 14, 680, '#8d8e96');
+      context.textAlign = 'center';
+      context.fillText('송금할 금액이 없습니다', contentX + contentW / 2, sectionY + 88);
+      context.textAlign = 'left';
+      return;
+    }
+
+    transfers.forEach((transfer, index) => {
+      const rowX = contentX + 20;
+      const rowY = sectionY + 52 + index * (rowH + rowGap);
+      const rowW = contentW - 40;
+      drawRoundRect(context, rowX, rowY, rowW, rowH, 16, '#ffffff', 'rgba(17, 17, 19, 0.07)');
+      drawRoundRect(context, rowX + 16, rowY + 16, 32, 32, 16, '#f3f4f6', 'rgba(17, 17, 19, 0.06)');
+      setCanvasText(context, 11, 760, '#111113');
+      context.textAlign = 'center';
+      context.fillText(String(index + 1).padStart(2, '0'), rowX + 32, rowY + 37);
+      context.textAlign = 'left';
+
+      setCanvasText(context, 16, 760, '#202126');
+      drawFittedText(context, `${transfer.from} → ${transfer.to}`, rowX + 64, rowY + 39, rowW - 230, 16);
+      drawRightAmount(context, money(transfer.amount), rowX + rowW - 18, rowY + 40, 160, 19, 15, 760);
+    });
+  }
+
+  makeReportScreenshotBlob = async function makeReportScreenshotBlobV63() {
+    await document.fonts?.ready?.catch?.(() => {});
+    renderReport();
+
+    const result = calculate();
+    const peopleCount = result.people.length;
+    const average = peopleCount ? result.totalExpense / peopleCount : 0;
+    const transfers = result.transfers;
+    const width = 720;
+    const pagePadding = 24;
+    const inner = 24;
+    const heroH = 142;
+    const gap = 14;
+    const statsH = 80;
+    const rowH = 64;
+    const rowGap = 9;
+    const rowsH = transfers.length ? transfers.length * rowH + (transfers.length - 1) * rowGap : 56;
+    const sectionH = 52 + rowsH + 22;
+    const cardH = inner + heroH + gap + statsH + gap + sectionH + inner;
+    const height = pagePadding * 2 + cardH;
+    const scale = Math.min(3, Math.max(2, window.devicePixelRatio || 2));
+    const canvas = document.createElement('canvas');
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+    const context = canvas.getContext('2d');
+    context.scale(scale, scale);
+
+    drawUnifiedReportImageV63(context, {
+      width,
+      height,
+      title: state.meetingTitle.trim() || '더치페이 정산',
+      date: formatDateForDisplay(state.meetingDate) || '일자 미입력',
+      total: money(result.grossExpense),
+      deduction: result.deductionTotal ? money(result.deductionTotal) : '',
+      people: `${peopleCount}명`,
+      average: money(average),
+      transfers,
+    });
+
+    return canvasToBlob(canvas);
+  };
+
+  setDisplayVersion();
+  document.addEventListener('click', () => requestAnimationFrame(setDisplayVersion), true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.63-report-centered-total-clean-people';
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-63-report-centered-total-clean-people')
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
 </body>
 </html>
