@@ -2,7 +2,7 @@
 
 
 <!doctype html>
-<!-- Dutch Pay v2.96 UI lock -->
+<!-- Dutch Pay v2.97 Satoshi numeric + report lock -->
 <!-- Dutch Pay v2.20 screen navigation -->
 <!-- Dutch Pay v2.23 hero cleanup -->
 <!-- Dutch Pay v2.22 person input IME fix -->
@@ -37,7 +37,9 @@
     <title>더치페이 계산기</title>
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest?v=2.96" />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,800,900&display=swap" rel="stylesheet" />
+    <link rel="manifest" href="./manifest.webmanifest?v=2.97" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -9161,7 +9163,7 @@ render();
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js?v=2.96").catch(() => {});
+          navigator.serviceWorker.register("./sw.js?v=2.97").catch(() => {});
         });
       }
     </script>
@@ -19120,6 +19122,29 @@ render();
     white-space: nowrap !important;
   }
 
+  #expenseEntryOverlay .expense-entry-current-card {
+    color: #ffffff !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card span,
+  #expenseEntryOverlay .expense-entry-current-card small {
+    color: rgba(255, 255, 255, 0.72) !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card strong {
+    color: #ffffff !important;
+    gap: 4px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card .entry-round-suffix {
+    display: inline !important;
+    color: rgba(255, 255, 255, 0.72) !important;
+    font-size: 0.66em !important;
+    font-weight: 560 !important;
+    line-height: 1 !important;
+    vertical-align: baseline !important;
+  }
+
   .dashboard-transfer-card .dashboard-inline-amount::before {
     content: "총 정산 금액" !important;
     position: static !important;
@@ -27157,6 +27182,704 @@ render();
     padding: 0 !important;
   }
 </style>
+
+<style id="v2-97-satoshi-report-lock">
+  :root {
+    --dp-number-font: "Satoshi", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+    --dp-korean-font: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    --dp-v297-ink: #111113;
+    --dp-v297-muted: #8f939c;
+    --dp-v297-unit: #a2a6af;
+    --dp-v297-line: rgba(17, 17, 19, 0.075);
+    --dp-v297-red: #ef3f3f;
+    --dp-v297-red-soft: rgba(239, 63, 63, 0.72);
+  }
+
+  body,
+  input,
+  select,
+  textarea,
+  button {
+    font-family: var(--dp-number-font), var(--dp-korean-font) !important;
+    letter-spacing: 0 !important;
+  }
+
+  .money-number,
+  .amount-number,
+  .deduction-number,
+  .report-index,
+  #expenseEntryAmount,
+  #expenseEntryCurrentRound,
+  #expenseEntryGrandTotal,
+  #expenseEntrySplitHint strong,
+  #totalExpense,
+  #totalPeople,
+  #averagePerPerson,
+  #dashboardTotalExpense,
+  #dashboardTotalPeople,
+  #dashboardAveragePerPerson,
+  #reportPeopleCount,
+  #reportAverage,
+  #reportTotal {
+    font-family: var(--dp-number-font), var(--dp-korean-font) !important;
+    font-variant-numeric: tabular-nums !important;
+    font-feature-settings: "tnum" 1, "kern" 1 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .money-display {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    justify-content: flex-end !important;
+    gap: 3px !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    vertical-align: baseline !important;
+  }
+
+  .money-display .money-number {
+    color: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .money-display .money-unit {
+    display: inline !important;
+    color: var(--dp-v297-unit) !important;
+    font-family: var(--dp-korean-font) !important;
+    font-size: 0.48em !important;
+    font-weight: 520 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .deduction-note,
+  .settlement-deduction {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    gap: 4px !important;
+    color: var(--dp-v297-muted) !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .deduction-note .deduction-number,
+  .settlement-deduction .deduction-number {
+    color: var(--dp-v297-red) !important;
+    font-family: var(--dp-number-font) !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+  }
+
+  .deduction-note .deduction-unit,
+  .settlement-deduction .deduction-unit {
+    color: var(--dp-v297-red-soft) !important;
+    font-family: var(--dp-korean-font) !important;
+    font-size: 0.68em !important;
+    font-weight: 520 !important;
+  }
+
+  #reportOverlay {
+    background: #f4f4f6 !important;
+  }
+
+  #reportOverlay .report-toolbar {
+    width: min(452px, calc(100vw - 24px)) !important;
+    margin-bottom: 14px !important;
+  }
+
+  #reportOverlay .final-report {
+    width: min(452px, calc(100vw - 24px)) !important;
+  }
+
+  #reportOverlay .report-total {
+    min-height: 132px !important;
+    padding: 24px 22px !important;
+    gap: 10px !important;
+    border-radius: 25px !important;
+  }
+
+  #reportOverlay .report-total > span {
+    color: var(--dp-v297-muted) !important;
+    font-size: 17px !important;
+    font-weight: 720 !important;
+  }
+
+  #reportOverlay .report-total-line {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: baseline !important;
+    justify-content: center !important;
+    gap: 13px !important;
+    overflow: visible !important;
+  }
+
+  #reportOverlay .report-total-line > strong {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    justify-content: center !important;
+    width: auto !important;
+    min-width: 0 !important;
+    color: var(--dp-v297-ink) !important;
+    font-size: clamp(38px, 9.2vw, 44px) !important;
+    font-weight: 780 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay .report-total-line > small,
+  #reportOverlay .report-total-line > small .deduction-note {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    color: var(--dp-v297-muted) !important;
+    font-size: 16px !important;
+    font-weight: 720 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay .report-stats {
+    gap: 12px !important;
+    margin: 12px 0 !important;
+  }
+
+  #reportOverlay .report-stats > div {
+    min-height: 96px !important;
+    gap: 9px !important;
+    padding: 18px 14px !important;
+    border-radius: 23px !important;
+  }
+
+  #reportOverlay .report-stats span {
+    color: var(--dp-v297-muted) !important;
+    font-size: 16px !important;
+    font-weight: 720 !important;
+  }
+
+  #reportOverlay .report-stats strong {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    justify-content: center !important;
+    max-width: 100% !important;
+    color: var(--dp-v297-ink) !important;
+    font-size: 30px !important;
+    font-weight: 760 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay .report-total-line > strong .money-display,
+  #reportOverlay .report-stats strong .money-display,
+  #reportOverlay .report-item .amount .money-display,
+  #reportOverlay .settlement-line > strong .money-display,
+  #reportOverlay .settlement-result strong .money-display,
+  #expenseEntryOverlay .expense-entry-current-card strong .money-display,
+  #expenseEntryOverlay .expense-entry-total-card strong .money-display,
+  #expenseEntryOverlay .expense-entry-split-card strong .money-display {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: baseline !important;
+    justify-content: inherit !important;
+    gap: 3px !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay .report-total-line > strong .money-number,
+  #reportOverlay .report-stats strong .money-number,
+  #reportOverlay .report-item .amount .money-number,
+  #reportOverlay .settlement-line > strong .money-number,
+  #reportOverlay .settlement-result strong .money-number,
+  #expenseEntryOverlay .expense-entry-current-card strong .money-number,
+  #expenseEntryOverlay .expense-entry-total-card strong .money-number,
+  #expenseEntryOverlay .expense-entry-split-card strong .money-number {
+    display: inline !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay .report-total-line > strong .money-unit,
+  #reportOverlay .report-stats strong .money-unit,
+  #reportOverlay .report-item .amount .money-unit,
+  #reportOverlay .settlement-line > strong .money-unit,
+  #reportOverlay .settlement-result strong .money-unit,
+  #expenseEntryOverlay .expense-entry-current-card strong .money-unit,
+  #expenseEntryOverlay .expense-entry-total-card strong .money-unit,
+  #expenseEntryOverlay .expense-entry-split-card strong .money-unit {
+    display: inline !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay .report-stats strong .money-display {
+    justify-content: center !important;
+  }
+
+  #reportOverlay .report-section {
+    margin-top: 12px !important;
+    padding: 26px 0 !important;
+    border-radius: 25px !important;
+  }
+
+  #reportOverlay .report-section-heading {
+    grid-template-columns: minmax(0, 1fr) 106px !important;
+    gap: 12px !important;
+    padding: 0 32px !important;
+    margin-bottom: 17px !important;
+  }
+
+  #reportOverlay .report-section-heading h3 {
+    font-size: 25px !important;
+    font-weight: 780 !important;
+    line-height: 1.15 !important;
+  }
+
+  #reportOverlay .report-section-heading span {
+    color: var(--dp-v297-muted) !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+  }
+
+  #reportOverlay .report-list {
+    padding: 0 32px !important;
+    gap: 12px !important;
+  }
+
+  #reportOverlay .report-transfer-item,
+  #reportOverlay .report-round-item {
+    grid-template-columns: minmax(0, 1fr) 106px !important;
+    min-height: 76px !important;
+    padding: 16px 18px !important;
+    gap: 12px !important;
+    border-radius: 21px !important;
+  }
+
+  #reportOverlay .report-item-main {
+    grid-template-columns: 42px minmax(0, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  #reportOverlay .report-index {
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 14px !important;
+    font-weight: 740 !important;
+  }
+
+  #reportOverlay .report-transfer-item .report-item-main strong,
+  #reportOverlay .report-round-item strong {
+    font-size: 19px !important;
+    font-weight: 740 !important;
+    line-height: 1.22 !important;
+  }
+
+  #reportOverlay .report-item .amount {
+    width: 106px !important;
+    display: inline-flex !important;
+    align-items: baseline !important;
+    justify-content: flex-end !important;
+    color: var(--dp-v297-ink) !important;
+    font-size: 22px !important;
+    font-weight: 750 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card {
+    grid-template-columns: minmax(0, 1fr) 112px !important;
+    gap: 14px !important;
+    min-height: 132px !important;
+    padding: 22px 26px !important;
+    border-radius: 22px !important;
+  }
+
+  #reportOverlay #reportPeople .settlement-name {
+    margin-bottom: 15px !important;
+    font-size: 21px !important;
+    font-weight: 760 !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-line {
+    grid-template-columns: 38px minmax(0, 1fr) 82px !important;
+    column-gap: 8px !important;
+    min-height: 22px !important;
+    color: #9da1aa !important;
+    font-size: 16px !important;
+    font-weight: 680 !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-line > strong {
+    width: 82px !important;
+    min-width: 82px !important;
+    max-width: 82px !important;
+    font-size: 16px !important;
+    font-weight: 680 !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-result {
+    width: 112px !important;
+    min-width: 112px !important;
+    max-width: 112px !important;
+    gap: 8px !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-result span {
+    min-height: 27px !important;
+    padding: 0 11px !important;
+    font-size: 13px !important;
+    font-weight: 720 !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-result strong {
+    max-width: 112px !important;
+    color: var(--dp-v297-ink) !important;
+    font-size: 22px !important;
+    font-weight: 750 !important;
+    line-height: 1 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-overview {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card,
+  #expenseEntryOverlay .expense-entry-total-card,
+  #expenseEntryOverlay .expense-entry-split-card {
+    min-height: 84px !important;
+    gap: 7px !important;
+    padding: 14px 15px !important;
+    border-radius: 19px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card span,
+  #expenseEntryOverlay .expense-entry-total-card span,
+  #expenseEntryOverlay .expense-entry-split-card span {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card strong,
+  #expenseEntryOverlay .expense-entry-total-card strong,
+  #expenseEntryOverlay .expense-entry-split-card strong {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    color: var(--dp-v297-ink) !important;
+    font-size: 24px !important;
+    font-weight: 750 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-amount-control {
+    min-height: 86px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+  }
+
+  #expenseEntryOverlay #expenseEntryAmount {
+    color: var(--dp-v297-ink) !important;
+    font-size: 38px !important;
+    font-weight: 760 !important;
+    line-height: 1 !important;
+    text-align: right !important;
+  }
+
+  #expenseEntryOverlay #expenseEntryAmount::placeholder {
+    color: var(--dp-v297-ink) !important;
+    opacity: 1 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-amount-control.is-empty .expense-entry-amount-unit,
+  #expenseEntryOverlay .expense-entry-amount-field span.expense-entry-amount-unit {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    color: var(--dp-v297-unit) !important;
+    font-size: 20px !important;
+    font-weight: 520 !important;
+    line-height: 1 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(128px, 148px) !important;
+    gap: 16px 12px !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-payer-field select {
+    min-width: 0 !important;
+    max-width: 148px !important;
+    text-align: left !important;
+    text-align-last: left !important;
+    padding-right: 34px !important;
+  }
+
+  @media (max-width: 520px) {
+    #reportOverlay .report-toolbar,
+    #reportOverlay .final-report {
+      width: min(100%, calc(100vw - 20px)) !important;
+    }
+
+    #reportOverlay .report-total {
+      min-height: 126px !important;
+      padding: 22px 18px !important;
+    }
+
+    #reportOverlay .report-total-line {
+      gap: 10px !important;
+    }
+
+    #reportOverlay .report-total-line > strong {
+      font-size: clamp(36px, 8.9vw, 40px) !important;
+      font-weight: 760 !important;
+    }
+
+    #reportOverlay .report-total-line > small,
+    #reportOverlay .report-total-line > small .deduction-note {
+      font-size: 15px !important;
+    }
+
+    #reportOverlay .report-stats > div {
+      min-height: 92px !important;
+      padding: 17px 12px !important;
+    }
+
+    #reportOverlay .report-stats strong {
+      font-size: 28px !important;
+    }
+
+    #reportOverlay .report-section-heading,
+    #reportOverlay .report-list {
+      padding-inline: 28px !important;
+    }
+
+    #reportOverlay .report-section-heading {
+      grid-template-columns: minmax(0, 1fr) 100px !important;
+    }
+
+    #reportOverlay .report-transfer-item,
+    #reportOverlay .report-round-item {
+      grid-template-columns: minmax(0, 1fr) 100px !important;
+      padding-inline: 14px !important;
+    }
+
+    #reportOverlay .report-transfer-item .report-item-main strong,
+    #reportOverlay .report-round-item strong {
+      font-size: 18px !important;
+    }
+
+    #reportOverlay .report-item .amount {
+      width: 100px !important;
+      font-size: 21px !important;
+    }
+
+    #reportOverlay #reportPeople .report-settlement-card {
+      grid-template-columns: minmax(0, 1fr) 108px !important;
+      padding: 21px 24px !important;
+    }
+
+    #reportOverlay #reportPeople .report-settlement-card .settlement-line {
+      grid-template-columns: 38px minmax(0, 1fr) 78px !important;
+      font-size: 15px !important;
+    }
+
+    #reportOverlay #reportPeople .report-settlement-card .settlement-line > strong {
+      width: 78px !important;
+      min-width: 78px !important;
+      max-width: 78px !important;
+      font-size: 15px !important;
+    }
+
+    #reportOverlay #reportPeople .report-settlement-card .settlement-result {
+      width: 108px !important;
+      min-width: 108px !important;
+      max-width: 108px !important;
+    }
+
+    #reportOverlay #reportPeople .report-settlement-card .settlement-result strong {
+      font-size: 21px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-overview {
+      gap: 8px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-current-card,
+    #expenseEntryOverlay .expense-entry-total-card,
+    #expenseEntryOverlay .expense-entry-split-card {
+      min-height: 82px !important;
+      padding: 13px 12px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-current-card strong,
+    #expenseEntryOverlay .expense-entry-total-card strong,
+    #expenseEntryOverlay .expense-entry-split-card strong {
+      font-size: 22px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(122px, 140px) !important;
+    }
+  }
+</style>
+
+<script id="v2-97-satoshi-report-lock-script">
+(function setupV297SatoshiReportLock() {
+  const displayVersion = 'Dutch Pay · v2.97 PWA';
+  const cacheName = 'dutch-pay-v2-97-satoshi-report-lock';
+
+  function setText(node, text) {
+    if (node && node.textContent !== text) node.textContent = text;
+  }
+
+  function applyVersion() {
+    window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+    window.DUTCH_PAY_APP_VERSION = 'v2.97-satoshi-report-lock';
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker, .side-brand .app-version-label').forEach((node) => {
+      setText(node, displayVersion);
+      node.setAttribute('aria-label', displayVersion);
+    });
+  }
+
+  function openNativeDatePicker(input) {
+    if (!input || input.dataset.v297DatePicker === '1') return;
+    input.dataset.v297DatePicker = '1';
+    input.addEventListener('click', () => {
+      input.focus();
+      if (typeof input.showPicker === 'function') {
+        try {
+          input.showPicker();
+        } catch (error) {}
+      }
+    });
+  }
+
+  function protectMultiNameInput() {
+    const personInput = document.getElementById('quickCreatePersonInput');
+    if (!personInput || personInput.dataset.v297MultiName === '1') return;
+    personInput.dataset.v297MultiName = '1';
+    personInput.placeholder = '이름 입력 · 쉼표/슬래시/줄바꿈';
+    personInput.addEventListener('keydown', (event) => {
+      if (event.key === ',' || event.key === '/' || event.key === 'Process') {
+        event.stopImmediatePropagation();
+      }
+    }, true);
+  }
+
+  function polishExpenseEntry() {
+    const amountInput = document.getElementById('expenseEntryAmount');
+    const amountUnit = document.querySelector('#expenseEntryOverlay .expense-entry-amount-unit');
+    const currentCard = document.querySelector('#expenseEntryOverlay .expense-entry-current-card');
+    const currentStrong = currentCard?.querySelector('strong');
+
+    if (amountInput && !amountInput.value) {
+      if (amountInput.placeholder !== '0') amountInput.placeholder = '0';
+      if (amountInput.style.getPropertyValue('width') !== '1ch') {
+        amountInput.style.setProperty('width', '1ch', 'important');
+      }
+      if (amountInput.style.getPropertyValue('min-width') !== '1ch') {
+        amountInput.style.setProperty('min-width', '1ch', 'important');
+      }
+    }
+
+    if (amountUnit && amountUnit.style.getPropertyValue('display') !== 'inline-flex') {
+      amountUnit.style.setProperty('display', 'inline-flex', 'important');
+    }
+
+    if (currentStrong) {
+      if (currentStrong.style.getPropertyValue('color') !== '#ffffff') {
+        currentStrong.style.setProperty('color', '#ffffff', 'important');
+      }
+      if (currentStrong.style.getPropertyValue('display') !== 'inline-flex') {
+        currentStrong.style.setProperty('display', 'inline-flex', 'important');
+      }
+      const suffix = currentStrong.querySelector('.entry-round-suffix');
+      if (suffix && suffix.style.getPropertyValue('display') !== 'inline') {
+        suffix.style.setProperty('display', 'inline', 'important');
+      }
+    }
+  }
+
+  function afterRender() {
+    applyVersion();
+    openNativeDatePicker(document.getElementById('quickCreateMeetingDate'));
+    openNativeDatePicker(document.getElementById('quickCreateMeetingEndDate'));
+    protectMultiNameInput();
+    polishExpenseEntry();
+  }
+
+  const previousRender = typeof render === 'function' ? render : null;
+  if (previousRender && previousRender.name !== 'renderV297') {
+    render = function renderV297(...args) {
+      const result = previousRender.apply(this, args);
+      window.setTimeout(afterRender, 0);
+      return result;
+    };
+  }
+
+  document.addEventListener('input', () => {
+    window.setTimeout(afterRender, 20);
+    window.setTimeout(afterRender, 100);
+  }, true);
+  document.addEventListener('change', () => {
+    window.setTimeout(afterRender, 20);
+    window.setTimeout(afterRender, 100);
+  }, true);
+  document.addEventListener('click', () => {
+    window.setTimeout(afterRender, 40);
+    window.setTimeout(afterRender, 120);
+    window.setTimeout(afterRender, 260);
+  }, true);
+
+  let guardQueued = false;
+  const queueGuard = () => {
+    if (guardQueued) return;
+    guardQueued = true;
+    window.setTimeout(() => {
+      guardQueued = false;
+      afterRender();
+    }, 0);
+  };
+
+  new MutationObserver(queueGuard).observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ['hidden', 'placeholder', 'style', 'class'],
+  });
+
+  try {
+    afterRender();
+    if (typeof render === 'function') render();
+  } catch (error) {
+    afterRender();
+  }
+
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== cacheName)
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-v2-96-ui-lock";
+const CACHE_NAME = "dutch-pay-v2-97-satoshi-report-lock";
 const ASSETS = [
   "./",
   "./index.html",
