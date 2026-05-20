@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-v2-95-clarity-report-deduction";
+const CACHE_NAME = "dutch-pay-v2-96-ui-lock";
 const ASSETS = [
   "./",
   "./index.html",

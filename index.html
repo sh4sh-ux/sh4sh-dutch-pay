@@ -2,7 +2,7 @@
 
 
 <!doctype html>
-<!-- Dutch Pay v2.95 clarity report deduction -->
+<!-- Dutch Pay v2.96 UI lock -->
 <!-- Dutch Pay v2.20 screen navigation -->
 <!-- Dutch Pay v2.23 hero cleanup -->
 <!-- Dutch Pay v2.22 person input IME fix -->
@@ -37,7 +37,7 @@
     <title>더치페이 계산기</title>
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest?v=2.95" />
+    <link rel="manifest" href="./manifest.webmanifest?v=2.96" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -9161,7 +9161,7 @@ render();
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js?v=2.95").catch(() => {});
+          navigator.serviceWorker.register("./sw.js?v=2.96").catch(() => {});
         });
       }
     </script>
@@ -9171,7 +9171,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9406,7 +9406,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9509,7 +9509,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9603,7 +9603,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9754,7 +9754,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9799,7 +9799,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9811,7 +9811,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9823,7 +9823,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9893,7 +9893,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9966,7 +9966,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9978,7 +9978,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9990,7 +9990,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10002,7 +10002,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10014,7 +10014,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10026,7 +10026,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10038,7 +10038,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10063,7 +10063,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10075,7 +10075,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10087,7 +10087,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10099,7 +10099,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10199,7 +10199,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10280,7 +10280,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10383,7 +10383,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10395,7 +10395,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10407,7 +10407,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10419,7 +10419,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10431,7 +10431,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10674,7 +10674,7 @@ render();
   if ("caches" in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-95-clarity-report-deduction")
+        .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-96-ui-lock")
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -10895,7 +10895,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11390,7 +11390,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11722,7 +11722,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11858,7 +11858,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12012,7 +12012,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12415,7 +12415,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12480,7 +12480,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12789,7 +12789,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12971,7 +12971,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13129,7 +13129,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13254,7 +13254,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13401,7 +13401,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13464,7 +13464,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13612,7 +13612,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13674,7 +13674,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13891,7 +13891,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14164,7 +14164,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14216,7 +14216,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14332,7 +14332,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14492,7 +14492,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14572,7 +14572,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14840,7 +14840,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -15193,7 +15193,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -15403,7 +15403,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -15483,7 +15483,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -16384,7 +16384,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -16909,7 +16909,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17276,7 +17276,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17520,7 +17520,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17785,7 +17785,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17829,7 +17829,7 @@ render();
 </style>
 <script id="v2-52-visible-version-label-script">
 (function setupV52VisibleVersionLabel() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow').forEach((node) => {
     node.textContent = displayVersion;
@@ -17851,7 +17851,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -18165,7 +18165,7 @@ render();
 </style>
 <script id="v2-53-simplified-records-nav-script">
 (function setupV53SimplifiedRecordsNav() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
   const recordIcon = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 3.8h9.1a2 2 0 0 1 2 2v13.9l-2.1-1.25-1.95 1.25-1.9-1.25-1.9 1.25-1.95-1.25-2.1 1.25V5.8a2 2 0 0 1 2-2Z"/><path d="M8.7 8.2h5.9"/><path d="M8.7 11.5h4.3"/><circle cx="16.7" cy="16.5" r="2.65"/></svg>';
 
   function setText(selector, text) {
@@ -18219,7 +18219,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -18721,7 +18721,7 @@ render();
 </style>
 <script id="v2-54-unified-report-polish-script">
 (function setupV54UnifiedReportPolish() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -18740,7 +18740,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19058,7 +19058,7 @@ render();
 </style>
 <script id="v2-55-member-meeting-layout-fix-script">
 (function setupV55MemberMeetingLayoutFix() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19074,7 +19074,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19179,7 +19179,7 @@ render();
 </style>
 <script id="v2-56-transfer-total-balance-script">
 (function setupV56TransferTotalBalance() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19195,7 +19195,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19228,7 +19228,7 @@ render();
 </style>
 <script id="v2-58-report-total-scale-script">
 (function setupV58ReportTotalScale() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19430,7 +19430,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19519,7 +19519,7 @@ render();
 </style>
 <script id="v2-59-member-panel-height-reset-script">
 (function setupV59MemberPanelHeightReset() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19535,7 +19535,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19777,7 +19777,7 @@ render();
 </style>
 <script id="v2-60-expense-entry-visual-balance-script">
 (function setupV60ExpenseEntryVisualBalance() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19793,7 +19793,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19948,7 +19948,7 @@ render();
 </style>
 <script id="v2-61-report-summary-balance-script">
 (function setupV61ReportSummaryBalance() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -20176,7 +20176,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -20475,7 +20475,7 @@ render();
 </style>
 <script id="v2-62-dashboard-compact-numeric-alignment-script">
 (function setupV62DashboardCompactNumericAlignment() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -20520,7 +20520,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -20775,7 +20775,7 @@ render();
 </style>
 <script id="v2-63-report-centered-total-clean-people-script">
 (function setupV63ReportCenteredTotalCleanPeople() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -21008,7 +21008,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21183,7 +21183,7 @@ render();
 </style>
 <script id="v2-64-person-labels-persistent-tabs-script">
 (function setupV64PersonLabelsPersistentTabs() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
   const navTargets = ['home', 'settlement', 'report', 'settings'];
 
   function setDisplayVersion() {
@@ -21318,7 +21318,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21420,7 +21420,7 @@ render();
 </style>
 <script id="v2-65-report-share-label-and-settlement-soften-script">
 (function setupV65ReportShareLabelAndSettlementSoften() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -21497,7 +21497,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21788,7 +21788,7 @@ render();
 </style>
 <script id="v2-66-mobile-summary-expense-simplify-script">
 (function setupV66MobileSummaryExpenseSimplify() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
   const navNames = new Set(['home', 'settlement', 'report', 'settings']);
 
   function setDisplayVersion() {
@@ -21860,7 +21860,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21971,7 +21971,7 @@ render();
 </style>
 <script id="v2-67-person-detail-tone-balance-script">
 (function setupV67PersonDetailToneBalance() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -21993,7 +21993,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22166,7 +22166,7 @@ render();
 </style>
 <script id="v2-68-share-choice-popup-script">
 (function setupV68ShareChoicePopup() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
   let lastShareTrigger = null;
 
   function setDisplayVersion() {
@@ -22386,7 +22386,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22505,7 +22505,7 @@ render();
 </style>
 <script id="v2-69-dashboard-person-tone-reset-script">
 (function setupV69DashboardPersonToneReset() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -22564,7 +22564,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22645,7 +22645,7 @@ render();
 <script id="v2-70-record-summary-centered-units-script">
 (function setupV70RecordSummaryCenteredUnits() {
   return;
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
   const unitSelectors = [
     '#totalExpense',
     '#totalPeople',
@@ -22752,7 +22752,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22784,7 +22784,7 @@ render();
 <script id="v2-71-navigation-order-people-first-script">
 (function setupV71NavigationOrderPeopleFirst() {
   return;
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
   const desktopOrder = ['home', 'meeting', 'settlement', 'report', 'settings'];
   const navLabels = {
     home: '대시보드',
@@ -22847,7 +22847,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22857,7 +22857,7 @@ render();
 <script id="v2-72-navigation-static-order-fix-script">
 (function setupV72NavigationStaticOrderFix() {
   return;
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
   const labels = {
     home: '대시보드',
     meeting: '인원',
@@ -22914,7 +22914,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22924,7 +22924,7 @@ render();
 <script id="v2-73-restore-mobile-nav-stability-script">
 (function setupV73RestoreMobileNavStability() {
   return;
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
   const labels = {
     home: '대시보드',
     meeting: '인원',
@@ -23014,7 +23014,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -23092,7 +23092,7 @@ render();
 </style>
 <script id="v2-74-stability-person-detail-tone-script">
 (function setupV74StabilityPersonDetailTone() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
   const labels = {
     home: '대시보드',
     meeting: '인원',
@@ -23150,7 +23150,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -23233,7 +23233,7 @@ render();
 </style>
 <script id="v2-75-restore-readable-amounts-script">
 (function setupV75RestoreReadableAmounts() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
 
   function setText(node, text) {
     if (!node || node.textContent === text) return;
@@ -23310,7 +23310,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-95-clarity-report-deduction')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-96-ui-lock')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -23529,8 +23529,8 @@ render();
 
 <script id="v2-81-phone-share-image-script">
 (function setupV80PhoneShareImage() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
-  const cacheName = 'dutch-pay-v2-95-clarity-report-deduction';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
+  const cacheName = 'dutch-pay-v2-96-ui-lock';
   const imageWidth = 1080;
   const imageHeight = 1920;
 
@@ -23923,8 +23923,8 @@ render();
 </style>
 <script id="v2-84-quick-create-flow-script">
 (function setupV84QuickCreateFlow() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
-  const cacheName = 'dutch-pay-v2-95-clarity-report-deduction';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
+  const cacheName = 'dutch-pay-v2-96-ui-lock';
   const overlay = document.getElementById('quickCreateOverlay');
   const modal = overlay?.querySelector('.quick-create-modal');
   const head = overlay?.querySelector('.quick-create-head');
@@ -24061,7 +24061,7 @@ render();
   }, true);
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.95-expense-summary-two-row';
+  window.DUTCH_PAY_APP_VERSION = 'v2.96-ui-lock';
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
@@ -24484,8 +24484,8 @@ render();
 </style>
 <script id="v2-83-remainder-callout-script">
 (function setupV283ExpenseEntrySimplify() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
-  const cacheName = 'dutch-pay-v2-95-clarity-report-deduction';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
+  const cacheName = 'dutch-pay-v2-96-ui-lock';
   const overlay = document.getElementById('expenseEntryOverlay');
   const sheet = overlay?.querySelector('.expense-entry-sheet');
   const amountInput = document.getElementById('expenseEntryAmount');
@@ -24661,7 +24661,7 @@ render();
   }
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.95-expense-summary-two-row';
+  window.DUTCH_PAY_APP_VERSION = 'v2.96-ui-lock';
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     setText(node, displayVersion);
     node.setAttribute('aria-label', displayVersion);
@@ -24904,8 +24904,8 @@ render();
 </style>
 <script id="v2-95-clarity-report-deduction-script">
 (function setupV85MobileDialogAndNameInput() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
-  const cacheName = 'dutch-pay-v2-95-clarity-report-deduction';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
+  const cacheName = 'dutch-pay-v2-96-ui-lock';
   const personInput = document.getElementById('quickCreatePersonInput');
 
   function setText(node, text) {
@@ -24933,7 +24933,7 @@ render();
   }
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.95-expense-summary-two-row';
+  window.DUTCH_PAY_APP_VERSION = 'v2.96-ui-lock';
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     setText(node, displayVersion);
     node.setAttribute('aria-label', displayVersion);
@@ -25027,8 +25027,8 @@ render();
 </style>
 <script id="v2-95-clarity-report-deduction-script">
 (function setupV87ExpenseSummaryRound() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
-  const cacheName = 'dutch-pay-v2-95-clarity-report-deduction';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
+  const cacheName = 'dutch-pay-v2-96-ui-lock';
 
   function setText(node, text) {
     if (node && node.textContent !== text) node.textContent = text;
@@ -25043,7 +25043,7 @@ render();
   document.addEventListener('click', () => window.setTimeout(keepExpenseCopy, 0), true);
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.95-expense-summary-two-row';
+  window.DUTCH_PAY_APP_VERSION = 'v2.96-ui-lock';
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     setText(node, displayVersion);
     node.setAttribute('aria-label', displayVersion);
@@ -25130,8 +25130,8 @@ render();
 </style>
 <script id="v2-95-clarity-report-deduction-script">
 (function setupV91TravelDateRange() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
-  const cacheName = 'dutch-pay-v2-95-clarity-report-deduction';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
+  const cacheName = 'dutch-pay-v2-96-ui-lock';
   const overlay = document.getElementById('quickCreateOverlay');
   const meetingDateInput = document.getElementById('quickCreateMeetingDate');
   const dateField = meetingDateInput?.closest('.quick-create-date-field');
@@ -25176,7 +25176,7 @@ render();
 
   function applyDisplayVersion() {
     window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-    window.DUTCH_PAY_APP_VERSION = 'v2.95-expense-summary-two-row';
+    window.DUTCH_PAY_APP_VERSION = 'v2.96-ui-lock';
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
       setText(node, displayVersion);
       node.setAttribute('aria-label', displayVersion);
@@ -25438,8 +25438,8 @@ render();
 </style>
 <script id="v2-95-clarity-report-deduction-script">
 (function setupV92DeductionCalloutMobileFix() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
-  const cacheName = 'dutch-pay-v2-95-clarity-report-deduction';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
+  const cacheName = 'dutch-pay-v2-96-ui-lock';
 
   function setText(node, text) {
     if (node && node.textContent !== text) node.textContent = text;
@@ -25455,7 +25455,7 @@ render();
   document.addEventListener('click', () => window.setTimeout(keepDeductionCopy, 0), true);
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.95-expense-summary-two-row';
+  window.DUTCH_PAY_APP_VERSION = 'v2.96-ui-lock';
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     setText(node, displayVersion);
     node.setAttribute('aria-label', displayVersion);
@@ -25575,8 +25575,8 @@ render();
 </style>
 <script id="v2-95-clarity-report-deduction-script">
 (function setupV93ExpenseSummaryMobilePolish() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
-  const cacheName = 'dutch-pay-v2-95-clarity-report-deduction';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
+  const cacheName = 'dutch-pay-v2-96-ui-lock';
 
   function setText(node, text) {
     if (node && node.textContent !== text) node.textContent = text;
@@ -25595,7 +25595,7 @@ render();
   document.addEventListener('click', () => window.setTimeout(keepExpenseSummaryCopy, 0), true);
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.95-expense-summary-two-row';
+  window.DUTCH_PAY_APP_VERSION = 'v2.96-ui-lock';
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     setText(node, displayVersion);
     node.setAttribute('aria-label', displayVersion);
@@ -25927,8 +25927,8 @@ render();
 </style>
 <script id="v2-95-clarity-report-deduction-script">
 (function setupV295ClarityReportDeduction() {
-  const displayVersion = 'Dutch Pay · v2.95 PWA';
-  const cacheName = 'dutch-pay-v2-95-clarity-report-deduction';
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
+  const cacheName = 'dutch-pay-v2-96-ui-lock';
 
   function setText(node, text) {
     if (node && node.textContent !== text) node.textContent = text;
@@ -26143,7 +26143,7 @@ render();
     applyMoneyUnitPolish(document);
     updateExpenseEntryGuidance();
     window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-    window.DUTCH_PAY_APP_VERSION = 'v2.95-clarity-report-deduction';
+    window.DUTCH_PAY_APP_VERSION = 'v2.96-ui-lock';
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
       setText(node, displayVersion);
       node.setAttribute('aria-label', displayVersion);
@@ -26199,6 +26199,964 @@ render();
   }
 })();
 </script>
+
+<style id="v2-96-ui-lock-final">
+  :root {
+    --dp-lock-ink: #111113;
+    --dp-lock-muted: #8f939c;
+    --dp-lock-soft: #f8f8fa;
+    --dp-lock-line: rgba(17, 17, 19, 0.075);
+    --dp-lock-red: #e53935;
+    --dp-lock-red-soft: rgba(229, 57, 53, 0.68);
+    --dp-lock-blue: #276ef1;
+    --dp-lock-blue-soft: #eaf2ff;
+  }
+
+  .money-display {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    justify-content: flex-end !important;
+    gap: 2px !important;
+    white-space: nowrap !important;
+    letter-spacing: 0 !important;
+  }
+
+  .money-display .money-number {
+    color: inherit !important;
+    font: inherit !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .money-display .money-unit {
+    color: #9da1aa !important;
+    font-size: 0.56em !important;
+    font-weight: 560 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .deduction-note,
+  .settlement-deduction {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    gap: 4px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #90949d !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: 1.1 !important;
+    white-space: nowrap !important;
+  }
+
+  .deduction-note .deduction-number,
+  .settlement-deduction .deduction-number {
+    color: var(--dp-lock-red) !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+  }
+
+  .deduction-note .deduction-unit,
+  .settlement-deduction .deduction-unit {
+    color: var(--dp-lock-red-soft) !important;
+    font-size: 0.72em !important;
+    font-weight: 560 !important;
+  }
+
+  #totalDeductionNote,
+  #dashboardDeductionNote,
+  #reportDeductionNote {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .side-nav-icon svg,
+  .mobile-tab-icon svg {
+    stroke-width: 1.85 !important;
+  }
+
+  .side-nav-button.is-active .side-nav-icon svg,
+  .mobile-tab-button.is-active .mobile-tab-icon svg {
+    stroke-width: 1.95 !important;
+  }
+
+  #reportOverlay {
+    padding: max(14px, env(safe-area-inset-top)) 12px calc(104px + env(safe-area-inset-bottom)) !important;
+    background: #f4f4f6 !important;
+  }
+
+  #reportOverlay .report-toolbar {
+    position: sticky !important;
+    top: max(10px, env(safe-area-inset-top)) !important;
+    z-index: 10 !important;
+    width: min(460px, calc(100vw - 24px)) !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+    margin: 0 auto 16px !important;
+    padding: 0 !important;
+    pointer-events: auto !important;
+  }
+
+  #reportOverlay .report-toolbar .ghost-button {
+    min-height: 46px !important;
+    padding: 0 18px !important;
+    border-radius: 15px !important;
+    font-size: 14px !important;
+    font-weight: 780 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #reportOverlay .report-toolbar #saveReportImageButton {
+    background: var(--dp-lock-ink) !important;
+    border-color: var(--dp-lock-ink) !important;
+    color: #fff !important;
+  }
+
+  #reportOverlay .final-report {
+    width: min(460px, calc(100vw - 24px)) !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  #reportOverlay .report-hero {
+    display: block !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  #reportOverlay .report-hero-main {
+    display: none !important;
+  }
+
+  #reportOverlay .report-total {
+    display: grid !important;
+    justify-items: center !important;
+    align-items: center !important;
+    gap: 12px !important;
+    min-height: 150px !important;
+    padding: 28px 22px !important;
+    border: 1px solid var(--dp-lock-line) !important;
+    border-radius: 26px !important;
+    background: #fbfbfc !important;
+    box-shadow: 0 14px 36px rgba(17, 17, 19, 0.045) !important;
+  }
+
+  #reportOverlay .report-total > span {
+    color: #8e929b !important;
+    font-size: 17px !important;
+    font-weight: 760 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #reportOverlay .report-total-line {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: baseline !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay .report-total-line > strong {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    color: var(--dp-lock-ink) !important;
+    font-size: clamp(36px, 10vw, 48px) !important;
+    font-weight: 820 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay .report-total-line > strong .money-display,
+  #reportOverlay .report-total-line > strong .money-number,
+  #reportOverlay .report-item .amount .money-display,
+  #reportOverlay .report-item .amount .money-number,
+  #reportOverlay .report-stats strong .money-display,
+  #reportOverlay .report-stats strong .money-number,
+  #reportOverlay .settlement-line > strong .money-display,
+  #reportOverlay .settlement-line > strong .money-number,
+  #reportOverlay .settlement-result strong .money-display,
+  #reportOverlay .settlement-result strong .money-number {
+    color: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #reportOverlay .report-total-line > strong .money-unit,
+  #reportOverlay .report-item .amount .money-unit,
+  #reportOverlay .report-stats strong .money-unit,
+  #reportOverlay .settlement-line > strong .money-unit,
+  #reportOverlay .settlement-result strong .money-unit {
+    color: #9da1aa !important;
+    font-size: 0.56em !important;
+    font-weight: 560 !important;
+    line-height: 1 !important;
+  }
+
+  #reportOverlay .report-total-line > small {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    color: #90949d !important;
+    font-size: 17px !important;
+    font-weight: 760 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay .report-stats {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    margin: 12px 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+  }
+
+  #reportOverlay .report-stats > div {
+    min-height: 104px !important;
+    display: grid !important;
+    align-content: center !important;
+    justify-items: center !important;
+    gap: 12px !important;
+    padding: 20px 14px !important;
+    border: 1px solid var(--dp-lock-line) !important;
+    border-radius: 24px !important;
+    background: #fbfbfc !important;
+    box-shadow: 0 12px 30px rgba(17, 17, 19, 0.035) !important;
+  }
+
+  #reportOverlay .report-stats > div:nth-child(3) {
+    display: none !important;
+  }
+
+  #reportOverlay .report-stats span {
+    color: #8f939c !important;
+    font-size: 15px !important;
+    font-weight: 750 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #reportOverlay .report-stats strong {
+    margin: 0 !important;
+    color: var(--dp-lock-ink) !important;
+    font-size: 32px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay .report-section {
+    margin: 12px 0 0 !important;
+    padding: 28px 0 !important;
+    border: 1px solid var(--dp-lock-line) !important;
+    border-radius: 26px !important;
+    background: #ffffff !important;
+    box-shadow: 0 14px 36px rgba(17, 17, 19, 0.04) !important;
+  }
+
+  #reportOverlay .report-section-heading {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 126px !important;
+    align-items: end !important;
+    gap: 16px !important;
+    margin: 0 0 18px !important;
+    padding: 0 36px !important;
+  }
+
+  #reportOverlay .report-section-heading h3 {
+    margin: 0 !important;
+    color: var(--dp-lock-ink) !important;
+    font-size: 25px !important;
+    font-weight: 820 !important;
+    line-height: 1.18 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #reportOverlay .report-section-heading span {
+    justify-self: end !important;
+    color: #8f939c !important;
+    font-size: 15px !important;
+    font-weight: 760 !important;
+    line-height: 1.2 !important;
+    text-align: right !important;
+    letter-spacing: 0 !important;
+  }
+
+  #reportOverlay .report-list {
+    display: grid !important;
+    gap: 12px !important;
+    padding: 0 36px !important;
+  }
+
+  #reportOverlay .report-item,
+  #reportOverlay .report-settlement-card {
+    border: 1px solid var(--dp-lock-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  #reportOverlay .report-transfer-item,
+  #reportOverlay .report-round-item {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 126px !important;
+    align-items: center !important;
+    gap: 16px !important;
+    min-height: 76px !important;
+    padding: 16px 20px !important;
+  }
+
+  #reportOverlay .report-item-main {
+    display: grid !important;
+    grid-template-columns: 42px minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 16px !important;
+    min-width: 0 !important;
+  }
+
+  #reportOverlay .report-index {
+    width: 42px !important;
+    height: 42px !important;
+    color: var(--dp-lock-ink) !important;
+    background: #f5f6f8 !important;
+    border: 1px solid rgba(17, 17, 19, 0.075) !important;
+    font-size: 14px !important;
+    font-weight: 780 !important;
+  }
+
+  #reportOverlay .report-transfer-item .report-item-main strong,
+  #reportOverlay .report-round-item strong {
+    color: var(--dp-lock-ink) !important;
+    font-size: 20px !important;
+    font-weight: 780 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+    word-break: keep-all !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  #reportOverlay .report-item .amount {
+    justify-self: end !important;
+    width: 126px !important;
+    color: var(--dp-lock-ink) !important;
+    font-size: 24px !important;
+    font-weight: 780 !important;
+    line-height: 1 !important;
+    text-align: right !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .settlement-card {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(118px, 132px) !important;
+    align-items: center !important;
+    gap: 16px !important;
+    min-width: 0 !important;
+  }
+
+  .settlement-main {
+    min-width: 0 !important;
+  }
+
+  .settlement-name {
+    display: block !important;
+    margin: 0 0 16px !important;
+    color: var(--dp-lock-ink) !important;
+    font-size: 23px !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+    letter-spacing: 0 !important;
+    word-break: keep-all !important;
+  }
+
+  .settlement-meta {
+    display: grid !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+  }
+
+  .settlement-line {
+    display: grid !important;
+    grid-template-columns: 38px minmax(0, 1fr) minmax(78px, auto) !important;
+    align-items: baseline !important;
+    column-gap: 10px !important;
+    min-width: 0 !important;
+    color: #9da1aa !important;
+    font-size: 16px !important;
+    font-weight: 720 !important;
+    line-height: 1.15 !important;
+  }
+
+  .settlement-line .settlement-label {
+    grid-column: 1 !important;
+    color: #9da1aa !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+  }
+
+  .settlement-line > strong {
+    grid-column: 3 !important;
+    justify-self: end !important;
+    color: #9da1aa !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: 1 !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+  }
+
+  .settlement-line-paid .settlement-deduction {
+    grid-column: 2 !important;
+    justify-self: end !important;
+    color: #9da1aa !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+  }
+
+  .settlement-result {
+    display: grid !important;
+    justify-items: end !important;
+    align-content: center !important;
+    gap: 10px !important;
+    min-width: 0 !important;
+    text-align: right !important;
+  }
+
+  .settlement-result span {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 30px !important;
+    padding: 0 12px !important;
+    border-radius: 999px !important;
+    font-size: 14px !important;
+    font-weight: 760 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .settlement-result.receive > span {
+    color: var(--dp-lock-blue) !important;
+    background: var(--dp-lock-blue-soft) !important;
+  }
+
+  .settlement-result.pay > span {
+    color: #f04444 !important;
+    background: #fff0f0 !important;
+  }
+
+  .settlement-result.done > span {
+    color: #8f939c !important;
+    background: #f1f2f4 !important;
+  }
+
+  .settlement-result strong {
+    color: var(--dp-lock-ink) !important;
+    font-size: 27px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay .report-settlement-card {
+    grid-template-columns: minmax(0, 1fr) 126px !important;
+    min-height: 138px !important;
+    padding: 24px 28px !important;
+  }
+
+  #reportOverlay .report-settlement-card .settlement-result {
+    width: 126px !important;
+  }
+
+  #reportOverlay .report-settlement-card .settlement-result strong {
+    font-size: 24px !important;
+  }
+
+  #reportOverlay .report-settlement-card .settlement-line {
+    grid-template-columns: 38px minmax(0, 1fr) 88px !important;
+  }
+
+  @media (max-width: 520px) {
+    #reportOverlay {
+      padding-inline: 10px !important;
+    }
+
+    #reportOverlay .report-toolbar,
+    #reportOverlay .final-report {
+      width: min(100%, calc(100vw - 20px)) !important;
+    }
+
+    #reportOverlay .report-total {
+      min-height: 144px !important;
+      padding: 24px 18px !important;
+    }
+
+    #reportOverlay .report-total-line {
+      gap: 9px !important;
+    }
+
+    #reportOverlay .report-total-line > small {
+      font-size: 15px !important;
+    }
+
+    #reportOverlay .report-section-heading,
+    #reportOverlay .report-list {
+      padding-inline: 28px !important;
+    }
+
+    #reportOverlay .report-section-heading {
+      grid-template-columns: minmax(0, 1fr) 112px !important;
+    }
+
+    #reportOverlay .report-transfer-item,
+    #reportOverlay .report-round-item {
+      grid-template-columns: minmax(0, 1fr) 112px !important;
+      padding-inline: 14px !important;
+    }
+
+    #reportOverlay .report-item .amount {
+      width: 112px !important;
+      font-size: 22px !important;
+    }
+
+    #reportOverlay .report-transfer-item .report-item-main strong,
+    #reportOverlay .report-round-item strong {
+      font-size: 18px !important;
+    }
+
+    #reportOverlay .report-settlement-card {
+      grid-template-columns: minmax(0, 1fr) 112px !important;
+      padding: 22px 26px !important;
+    }
+
+    #reportOverlay .report-settlement-card .settlement-result {
+      width: 112px !important;
+    }
+
+    #reportOverlay .report-settlement-card .settlement-line {
+      grid-template-columns: 38px minmax(0, 1fr) 78px !important;
+      column-gap: 8px !important;
+      font-size: 15px !important;
+    }
+
+    .settlement-name {
+      font-size: 21px !important;
+    }
+  }
+</style>
+
+<script id="v2-96-ui-lock-final-script">
+(function setupV296UiLock() {
+  const displayVersion = 'Dutch Pay · v2.96 PWA';
+  const cacheName = 'dutch-pay-v2-96-ui-lock';
+
+  function setText(node, text) {
+    if (node && node.textContent !== text) node.textContent = text;
+  }
+
+  function setHtml(node, html) {
+    if (node && node.innerHTML !== html) node.innerHTML = html;
+  }
+
+  function toAmount(value) {
+    return Math.round(Number(value) || 0);
+  }
+
+  function moneyHtml(value, className = '') {
+    const amount = toAmount(value);
+    return `<span class="money-display ${className}"><span class="money-number">${formatter.format(amount)}</span><span class="money-unit">원</span></span>`;
+  }
+
+  function deductionHtml(value) {
+    const amount = toAmount(value);
+    if (!amount) return '';
+    return `<span class="deduction-note"><span class="deduction-label">공제</span> <span class="deduction-number">${formatter.format(amount)}</span><span class="deduction-unit">원</span></span>`;
+  }
+
+  function settlementDeductionHtml(value) {
+    const amount = toAmount(value);
+    if (!amount) return '';
+    return `<span class="settlement-deduction"><span>공제</span> <span class="deduction-number">${formatter.format(amount)}</span><span class="deduction-unit">원</span></span>`;
+  }
+
+  function numericFromMoneyText(text) {
+    return Math.round(Number(String(text || '').replace(/[^\d.-]/g, '')) || 0);
+  }
+
+  function decorateMoneyNode(node) {
+    if (!node || node.querySelector?.('.money-display')) return;
+    const text = node.textContent.trim();
+    if (!/^-?[\d,]+원$/.test(text)) return;
+    setHtml(node, moneyHtml(numericFromMoneyText(text)));
+  }
+
+  function applyVersion() {
+    window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+    window.DUTCH_PAY_APP_VERSION = 'v2.96-ui-lock';
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      setText(node, displayVersion);
+      node.setAttribute('aria-label', displayVersion);
+    });
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => setText(node, displayVersion));
+  }
+
+  function applyMoneyPolish(root = document) {
+    [
+      '#totalExpense',
+      '#averagePerPerson',
+      '#dashboardTotalExpense',
+      '#dashboardAveragePerPerson',
+      '#dashboardTransferHeadline',
+      '#reportTotal',
+      '#reportAverage',
+      '#reportPeopleCount',
+      '.transfer-row > strong',
+      '.report-item .amount',
+      '.settlement-result strong',
+      '.settlement-line > strong',
+    ].forEach((selector) => {
+      root.querySelectorAll?.(selector).forEach((node) => {
+        if (node.id === 'reportPeopleCount' || /명$/.test(node.textContent.trim())) return;
+        decorateMoneyNode(node);
+      });
+    });
+  }
+
+  renderDeductionNote = function renderDeductionNoteV96(selector, deductionTotal) {
+    const note = typeof selector === 'string' ? document.querySelector(selector) : selector;
+    if (!note) return;
+    setHtml(note, deductionHtml(deductionTotal));
+  };
+
+  renderSettlementCard = function renderSettlementCardV96(person, balanceData, extraClass = '') {
+    const safeBalanceData = balanceData || { balance: 0, owed: 0 };
+    const balance = toAmount(safeBalanceData.balance);
+    const statusClass = balance > 0 ? 'receive' : balance < 0 ? 'pay' : 'done';
+    const statusLabel = balance > 0 ? '받을 금액' : balance < 0 ? '낼 금액' : '완료';
+    const paid = paidExpenseAmount(person.id);
+    const deduction = paidDeductionAmount(person.id);
+
+    return `
+      <div class="settlement-card ${extraClass}">
+        <div class="settlement-main">
+          <strong class="settlement-name">${escapeHtml(person.name)}</strong>
+          <div class="settlement-meta">
+            <div class="settlement-line"><span class="settlement-label">부담</span><span></span><strong>${moneyHtml(safeBalanceData.owed)}</strong></div>
+            <div class="settlement-line settlement-line-paid"><span class="settlement-label">결제</span>${settlementDeductionHtml(deduction) || '<span></span>'}<strong>${moneyHtml(paid)}</strong></div>
+          </div>
+        </div>
+        <div class="settlement-result ${statusClass}">
+          <span>${statusLabel}</span>
+          <strong>${moneyHtml(Math.abs(balance))}</strong>
+        </div>
+      </div>
+    `;
+  };
+
+  renderReport = function renderReportV96() {
+    const result = calculate();
+    const peopleCount = result.people.length;
+    const average = peopleCount ? result.totalExpense / peopleCount : 0;
+    const meetingTitle = window.dutchPaySettlementTitle?.() || state.meetingTitle.trim() || '정산 내역';
+    const meetingDate = window.dutchPaySettlementDateLabel?.() || formatDateForDisplay(state.meetingDate) || '일자 미입력';
+
+    setText(document.getElementById('reportTitle'), meetingTitle);
+    setText(document.getElementById('reportDate'), meetingDate);
+    setHtml(document.getElementById('reportTotal'), moneyHtml(result.grossExpense));
+    renderDeductionNote('#reportDeductionNote', result.deductionTotal);
+    setText(document.getElementById('reportPeopleCount'), `${peopleCount}명`);
+    setHtml(document.getElementById('reportAverage'), moneyHtml(average));
+    setText(document.getElementById('reportTransferCount'), `${result.transfers.length}건`);
+
+    const transfersNode = document.getElementById('reportTransfers');
+    if (transfersNode) {
+      transfersNode.innerHTML =
+        result.transfers
+          .map(
+            (transfer, index) => `
+              <div class="report-item report-transfer-item">
+                <div class="report-item-main">
+                  <span class="report-index">${String(index + 1).padStart(2, '0')}</span>
+                  <div><strong>${escapeHtml(transfer.from)} → ${escapeHtml(transfer.to)}</strong></div>
+                </div>
+                <div class="amount">${moneyHtml(transfer.amount)}</div>
+              </div>
+            `,
+          )
+          .join('') || '<div class="report-empty">송금할 금액이 없습니다</div>';
+    }
+
+    const roundsNode = document.getElementById('reportRounds');
+    if (roundsNode) {
+      roundsNode.innerHTML =
+        state.rounds
+          .map((round) => {
+            const total = result.roundTotals.get(round) || { amount: 0 };
+            const placeLabel = roundPlaceLabel(round);
+            return `
+              <div class="report-item report-round-item">
+                <div class="report-item-main">
+                  <span class="report-index">${escapeHtml(round)}</span>
+                  <div>
+                    <strong>${escapeHtml(placeLabel)}</strong>
+                  </div>
+                </div>
+                <div class="amount">${moneyHtml(total.amount)}</div>
+              </div>
+            `;
+          })
+          .join('') || '<div class="report-empty">지출을 추가하세요</div>';
+    }
+
+    const peopleNode = document.getElementById('reportPeople');
+    if (peopleNode) {
+      peopleNode.innerHTML =
+        result.people
+          .map((person) => renderSettlementCard(person, result.balances.get(person.id), 'report-settlement-card'))
+          .join('') || '<div class="report-empty">인원을 추가하세요</div>';
+    }
+  };
+
+  function openDatePickerOnClick(input) {
+    if (!input || input.dataset.v296DatePicker === '1') return;
+    input.dataset.v296DatePicker = '1';
+    input.addEventListener('click', () => {
+      input.focus();
+      if (typeof input.showPicker === 'function') {
+        try {
+          input.showPicker();
+        } catch (error) {}
+      }
+    });
+  }
+
+  function protectMultiNameTyping() {
+    const personInput = document.getElementById('quickCreatePersonInput');
+    if (!personInput || personInput.dataset.v296MultiName === '1') return;
+    personInput.dataset.v296MultiName = '1';
+    personInput.placeholder = '이름 입력 · 쉼표/슬래시/줄바꿈';
+    personInput.addEventListener('keydown', (event) => {
+      if (event.key === ',' || event.key === '/' || event.key === 'Process') {
+        event.stopPropagation();
+      }
+    }, true);
+  }
+
+  function afterRender() {
+    applyVersion();
+    renderDeductionNote('#totalDeductionNote', calculate().deductionTotal);
+    renderDeductionNote('#dashboardDeductionNote', calculate().deductionTotal);
+    applyMoneyPolish(document);
+    openDatePickerOnClick(document.getElementById('quickCreateMeetingDate'));
+    openDatePickerOnClick(document.getElementById('quickCreateMeetingEndDate'));
+    protectMultiNameTyping();
+  }
+
+  const previousRender = render;
+  render = function renderV296(...args) {
+    const result = previousRender.apply(this, args);
+    window.setTimeout(afterRender, 0);
+    return result;
+  };
+
+  document.addEventListener('input', () => window.setTimeout(afterRender, 30), true);
+  document.addEventListener('change', () => window.setTimeout(afterRender, 30), true);
+  document.addEventListener('click', () => window.setTimeout(afterRender, 60), true);
+
+  try {
+    render();
+    afterRender();
+  } catch (error) {
+    afterRender();
+  }
+
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== cacheName)
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-96-report-card-overlap-fix">
+  #reportOverlay #reportPeople .report-settlement-card {
+    grid-template-columns: minmax(0, 1fr) 112px !important;
+    align-items: center !important;
+    gap: 14px !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-main,
+  #reportOverlay #reportPeople .report-settlement-card .settlement-meta {
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-line {
+    grid-template-columns: 38px minmax(0, 1fr) 78px !important;
+    min-height: 22px !important;
+    height: auto !important;
+    align-items: center !important;
+    column-gap: 8px !important;
+    overflow: visible !important;
+    font-size: 15px !important;
+    line-height: 1.1 !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-line > strong {
+    grid-row: 1 !important;
+    display: inline-flex !important;
+    width: 78px !important;
+    min-width: 78px !important;
+    max-width: 78px !important;
+    align-items: baseline !important;
+    justify-content: flex-end !important;
+    justify-self: end !important;
+    color: #9da1aa !important;
+    font-size: 15px !important;
+    font-weight: 720 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-line > .settlement-label,
+  #reportOverlay #reportPeople .report-settlement-card .settlement-line > .settlement-deduction {
+    grid-row: 1 !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-line > span:not(.settlement-label):empty {
+    display: block !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    line-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-line > strong .money-display,
+  #reportOverlay #reportPeople .report-settlement-card .settlement-line > strong .money-number {
+    display: inline-flex !important;
+    width: auto !important;
+    min-width: 0 !important;
+    color: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-line > strong .money-unit {
+    display: inline !important;
+    color: #a8acb3 !important;
+    font-size: 0.58em !important;
+    font-weight: 560 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-result {
+    position: static !important;
+    width: 112px !important;
+    min-width: 112px !important;
+    max-width: 112px !important;
+    display: grid !important;
+    grid-template-rows: auto auto !important;
+    align-content: center !important;
+    justify-items: end !important;
+    gap: 8px !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-result span {
+    position: static !important;
+    grid-row: 1 !important;
+    transform: none !important;
+    max-width: 100% !important;
+    min-height: 28px !important;
+    padding: 0 11px !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-result strong {
+    position: static !important;
+    grid-row: 2 !important;
+    display: inline-flex !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 112px !important;
+    align-items: baseline !important;
+    justify-content: flex-end !important;
+    color: var(--dp-lock-ink) !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-result strong .money-display,
+  #reportOverlay #reportPeople .report-settlement-card .settlement-result strong .money-number {
+    color: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+
+  #reportOverlay #reportPeople .report-settlement-card .settlement-result strong .money-unit {
+    color: #9da1aa !important;
+    font-size: 0.56em !important;
+    font-weight: 560 !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+</style>
 
 </body>
 </html>
