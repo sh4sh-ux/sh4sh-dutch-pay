@@ -2,7 +2,7 @@
 
 
 <!doctype html>
-<!-- Dutch Pay v2.87 expense summary round -->
+<!-- Dutch Pay v2.88 name delimiters -->
 <!-- Dutch Pay v2.20 screen navigation -->
 <!-- Dutch Pay v2.23 hero cleanup -->
 <!-- Dutch Pay v2.22 person input IME fix -->
@@ -37,7 +37,7 @@
     <title>더치페이 계산기</title>
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest?v=2.87" />
+    <link rel="manifest" href="./manifest.webmanifest?v=2.88" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -7678,10 +7678,10 @@ body {
         <div class="quick-create-people-box">
           <div id="quickCreatePeopleList" class="quick-create-chip-list"></div>
           <div class="quick-create-add-row">
-            <textarea id="quickCreatePersonInput" rows="2" enterkeyhint="done" autocomplete="off" spellcheck="false" placeholder="이름 입력 / 쉼표·줄바꿈 가능"></textarea>
+            <textarea id="quickCreatePersonInput" rows="2" enterkeyhint="done" autocomplete="off" spellcheck="false" placeholder="이름 입력 · 쉼표/슬래시 가능"></textarea>
             <button type="button" id="quickCreateAddPersonButton">추가</button>
           </div>
-          <div class="quick-create-helper">쉼표(,) 또는 줄바꿈으로 여러 이름을 한 번에 넣을 수도 있어요.</div>
+          <div class="quick-create-helper">쉼표(,), 슬래시(/), 줄바꿈으로 여러 이름을 한 번에 넣을 수 있어요.</div>
         </div>
       </div>
       <label class="quick-create-field" hidden aria-hidden="true">
@@ -9159,7 +9159,7 @@ render();
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js?v=2.87").catch(() => {});
+          navigator.serviceWorker.register("./sw.js?v=2.88").catch(() => {});
         });
       }
     </script>
@@ -9169,7 +9169,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9404,7 +9404,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9507,7 +9507,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9601,7 +9601,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9752,7 +9752,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9797,7 +9797,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9809,7 +9809,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9821,7 +9821,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9891,7 +9891,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9964,7 +9964,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9976,7 +9976,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9988,7 +9988,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10000,7 +10000,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10012,7 +10012,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10024,7 +10024,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10036,7 +10036,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10061,7 +10061,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10073,7 +10073,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10085,7 +10085,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10097,7 +10097,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10197,7 +10197,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10278,7 +10278,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10381,7 +10381,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10393,7 +10393,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10405,7 +10405,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10417,7 +10417,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10429,7 +10429,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10468,9 +10468,19 @@ render();
 
   function parseNames(raw) {
     return String(raw || '')
-      .split(/[\n,，、]/)
+      .split(/[\n\r,，、/／|;；]+/)
       .map((name) => name.trim())
       .filter(Boolean);
+  }
+
+  function normalizeTempPeople() {
+    const names = [];
+    tempPeople.forEach((name) => {
+      parseNames(name).forEach((part) => {
+        if (!names.includes(part)) names.push(part);
+      });
+    });
+    tempPeople = names;
   }
 
   function shouldIgnoreImeTailName(name) {
@@ -10492,6 +10502,7 @@ render();
 
   function renderPeople() {
     if (!peopleList) return;
+    normalizeTempPeople();
     if (!tempPeople.length) {
       peopleList.innerHTML = '<div class="quick-create-chip-empty">아직 추가된 인원이 없습니다.</div>';
     } else {
@@ -10623,7 +10634,7 @@ render();
     setTimeout(addNamesFromInput, 0);
   });
   personInput?.addEventListener('keydown', (event) => {
-    const isDelimiter = (event.key === 'Enter' && !event.shiftKey) || event.key === ',' || event.key === '，';
+    const isDelimiter = (event.key === 'Enter' && !event.shiftKey) || event.key === ',' || event.key === '，' || event.key === '/' || event.key === '／';
     if (!isDelimiter) return;
     event.preventDefault();
     if (event.isComposing || event.keyCode === 229 || isPersonInputComposing) {
@@ -10634,7 +10645,7 @@ render();
   });
   personInput?.addEventListener('blur', () => {
     if (isPersonInputComposing) return;
-    if (personInput.value.includes(',') || personInput.value.includes('，') || personInput.value.includes('\n')) addNamesFromInput();
+    if (/[\n\r,，、/／|;；]/.test(personInput.value)) addNamesFromInput();
   });
   peopleList?.addEventListener('click', (event) => {
     const removeButton = event.target.closest('[data-remove-index]');
@@ -10657,7 +10668,7 @@ render();
   if ("caches" in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-87-expense-summary-round")
+        .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -10878,7 +10889,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11373,7 +11384,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11705,7 +11716,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11841,7 +11852,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11995,7 +12006,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12398,7 +12409,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12463,7 +12474,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12772,7 +12783,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12954,7 +12965,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13112,7 +13123,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13237,7 +13248,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13384,7 +13395,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13447,7 +13458,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13595,7 +13606,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13657,7 +13668,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13874,7 +13885,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14147,7 +14158,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14199,7 +14210,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14315,7 +14326,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14475,7 +14486,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14555,7 +14566,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14823,7 +14834,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -15176,7 +15187,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -15386,7 +15397,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -15466,7 +15477,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -16367,7 +16378,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -16892,7 +16903,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17259,7 +17270,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17503,7 +17514,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17768,7 +17779,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17812,7 +17823,7 @@ render();
 </style>
 <script id="v2-52-visible-version-label-script">
 (function setupV52VisibleVersionLabel() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow').forEach((node) => {
     node.textContent = displayVersion;
@@ -17834,7 +17845,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -18148,7 +18159,7 @@ render();
 </style>
 <script id="v2-53-simplified-records-nav-script">
 (function setupV53SimplifiedRecordsNav() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
   const recordIcon = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 3.8h9.1a2 2 0 0 1 2 2v13.9l-2.1-1.25-1.95 1.25-1.9-1.25-1.9 1.25-1.95-1.25-2.1 1.25V5.8a2 2 0 0 1 2-2Z"/><path d="M8.7 8.2h5.9"/><path d="M8.7 11.5h4.3"/><circle cx="16.7" cy="16.5" r="2.65"/></svg>';
 
   function setText(selector, text) {
@@ -18202,7 +18213,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -18704,7 +18715,7 @@ render();
 </style>
 <script id="v2-54-unified-report-polish-script">
 (function setupV54UnifiedReportPolish() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -18723,7 +18734,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19041,7 +19052,7 @@ render();
 </style>
 <script id="v2-55-member-meeting-layout-fix-script">
 (function setupV55MemberMeetingLayoutFix() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19057,7 +19068,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19162,7 +19173,7 @@ render();
 </style>
 <script id="v2-56-transfer-total-balance-script">
 (function setupV56TransferTotalBalance() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19178,7 +19189,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19211,7 +19222,7 @@ render();
 </style>
 <script id="v2-58-report-total-scale-script">
 (function setupV58ReportTotalScale() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19413,7 +19424,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19502,7 +19513,7 @@ render();
 </style>
 <script id="v2-59-member-panel-height-reset-script">
 (function setupV59MemberPanelHeightReset() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19518,7 +19529,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19760,7 +19771,7 @@ render();
 </style>
 <script id="v2-60-expense-entry-visual-balance-script">
 (function setupV60ExpenseEntryVisualBalance() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19776,7 +19787,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19931,7 +19942,7 @@ render();
 </style>
 <script id="v2-61-report-summary-balance-script">
 (function setupV61ReportSummaryBalance() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -20159,7 +20170,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -20458,7 +20469,7 @@ render();
 </style>
 <script id="v2-62-dashboard-compact-numeric-alignment-script">
 (function setupV62DashboardCompactNumericAlignment() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -20503,7 +20514,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -20758,7 +20769,7 @@ render();
 </style>
 <script id="v2-63-report-centered-total-clean-people-script">
 (function setupV63ReportCenteredTotalCleanPeople() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -20991,7 +21002,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21166,7 +21177,7 @@ render();
 </style>
 <script id="v2-64-person-labels-persistent-tabs-script">
 (function setupV64PersonLabelsPersistentTabs() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
   const navTargets = ['home', 'settlement', 'report', 'settings'];
 
   function setDisplayVersion() {
@@ -21301,7 +21312,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21403,7 +21414,7 @@ render();
 </style>
 <script id="v2-65-report-share-label-and-settlement-soften-script">
 (function setupV65ReportShareLabelAndSettlementSoften() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -21480,7 +21491,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21771,7 +21782,7 @@ render();
 </style>
 <script id="v2-66-mobile-summary-expense-simplify-script">
 (function setupV66MobileSummaryExpenseSimplify() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
   const navNames = new Set(['home', 'settlement', 'report', 'settings']);
 
   function setDisplayVersion() {
@@ -21843,7 +21854,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21954,7 +21965,7 @@ render();
 </style>
 <script id="v2-67-person-detail-tone-balance-script">
 (function setupV67PersonDetailToneBalance() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -21976,7 +21987,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22149,7 +22160,7 @@ render();
 </style>
 <script id="v2-68-share-choice-popup-script">
 (function setupV68ShareChoicePopup() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
   let lastShareTrigger = null;
 
   function setDisplayVersion() {
@@ -22368,7 +22379,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22487,7 +22498,7 @@ render();
 </style>
 <script id="v2-69-dashboard-person-tone-reset-script">
 (function setupV69DashboardPersonToneReset() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -22546,7 +22557,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22627,7 +22638,7 @@ render();
 <script id="v2-70-record-summary-centered-units-script">
 (function setupV70RecordSummaryCenteredUnits() {
   return;
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
   const unitSelectors = [
     '#totalExpense',
     '#totalPeople',
@@ -22734,7 +22745,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22766,7 +22777,7 @@ render();
 <script id="v2-71-navigation-order-people-first-script">
 (function setupV71NavigationOrderPeopleFirst() {
   return;
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
   const desktopOrder = ['home', 'meeting', 'settlement', 'report', 'settings'];
   const navLabels = {
     home: '대시보드',
@@ -22829,7 +22840,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22839,7 +22850,7 @@ render();
 <script id="v2-72-navigation-static-order-fix-script">
 (function setupV72NavigationStaticOrderFix() {
   return;
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
   const labels = {
     home: '대시보드',
     meeting: '인원',
@@ -22896,7 +22907,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22906,7 +22917,7 @@ render();
 <script id="v2-73-restore-mobile-nav-stability-script">
 (function setupV73RestoreMobileNavStability() {
   return;
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
   const labels = {
     home: '대시보드',
     meeting: '인원',
@@ -22996,7 +23007,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -23074,7 +23085,7 @@ render();
 </style>
 <script id="v2-74-stability-person-detail-tone-script">
 (function setupV74StabilityPersonDetailTone() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
   const labels = {
     home: '대시보드',
     meeting: '인원',
@@ -23132,7 +23143,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -23215,7 +23226,7 @@ render();
 </style>
 <script id="v2-75-restore-readable-amounts-script">
 (function setupV75RestoreReadableAmounts() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
 
   function setText(node, text) {
     if (!node || node.textContent === text) return;
@@ -23292,7 +23303,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-87-expense-summary-round')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -23511,8 +23522,8 @@ render();
 
 <script id="v2-81-phone-share-image-script">
 (function setupV80PhoneShareImage() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
-  const cacheName = 'dutch-pay-v2-87-expense-summary-round';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const cacheName = 'dutch-pay-v2-88-name-delimiters';
   const imageWidth = 1080;
   const imageHeight = 1920;
 
@@ -23904,8 +23915,8 @@ render();
 </style>
 <script id="v2-84-quick-create-flow-script">
 (function setupV84QuickCreateFlow() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
-  const cacheName = 'dutch-pay-v2-87-expense-summary-round';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const cacheName = 'dutch-pay-v2-88-name-delimiters';
   const overlay = document.getElementById('quickCreateOverlay');
   const modal = overlay?.querySelector('.quick-create-modal');
   const head = overlay?.querySelector('.quick-create-head');
@@ -24044,7 +24055,7 @@ render();
   });
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.87-expense-summary-round';
+  window.DUTCH_PAY_APP_VERSION = 'v2.88-name-delimiters';
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
@@ -24467,8 +24478,8 @@ render();
 </style>
 <script id="v2-83-remainder-callout-script">
 (function setupV283ExpenseEntrySimplify() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
-  const cacheName = 'dutch-pay-v2-87-expense-summary-round';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const cacheName = 'dutch-pay-v2-88-name-delimiters';
   const overlay = document.getElementById('expenseEntryOverlay');
   const sheet = overlay?.querySelector('.expense-entry-sheet');
   const amountInput = document.getElementById('expenseEntryAmount');
@@ -24644,7 +24655,7 @@ render();
   }
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.87-expense-summary-round';
+  window.DUTCH_PAY_APP_VERSION = 'v2.88-name-delimiters';
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     setText(node, displayVersion);
     node.setAttribute('aria-label', displayVersion);
@@ -24661,7 +24672,7 @@ render();
 })();
 </script>
 
-<style id="v2-87-expense-summary-round">
+<style id="v2-88-name-delimiters">
   /* v2.85: make multi-name entry reliable and make mobile sheets easier to scan */
   .quick-create-add-row textarea {
     width: 100% !important;
@@ -24885,10 +24896,10 @@ render();
     }
   }
 </style>
-<script id="v2-87-expense-summary-round-script">
+<script id="v2-88-name-delimiters-script">
 (function setupV85MobileDialogAndNameInput() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
-  const cacheName = 'dutch-pay-v2-87-expense-summary-round';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const cacheName = 'dutch-pay-v2-88-name-delimiters';
   const personInput = document.getElementById('quickCreatePersonInput');
   const addButton = document.getElementById('quickCreateAddPersonButton');
 
@@ -24911,14 +24922,14 @@ render();
   }
 
   if (personInput) {
-    personInput.placeholder = '이름 입력 / 쉼표·줄바꿈 가능';
+    personInput.placeholder = '이름 입력 · 쉼표/슬래시 가능';
     personInput.addEventListener('input', () => {
       normalizePersonInputHeight();
-      if (/[\n\r,，、]/.test(personInput.value)) addSoon();
+      if (/[\n\r,，、/／|;；]/.test(personInput.value)) addSoon();
     });
     personInput.addEventListener('paste', (event) => {
       const text = event.clipboardData?.getData('text') || '';
-      if (/[\n\r,，、]/.test(text)) addSoon();
+      if (/[\n\r,，、/／|;；]/.test(text)) addSoon();
     });
     personInput.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' && event.shiftKey) {
@@ -24929,7 +24940,7 @@ render();
   }
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.87-expense-summary-round';
+  window.DUTCH_PAY_APP_VERSION = 'v2.88-name-delimiters';
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     setText(node, displayVersion);
     node.setAttribute('aria-label', displayVersion);
@@ -24946,7 +24957,7 @@ render();
 })();
 </script>
 
-<style id="v2-87-expense-summary-round">
+<style id="v2-88-name-delimiters">
   /* v2.87: make expense summary cards larger and replace participant card with current round total */
   #expenseEntryOverlay .expense-entry-current-card,
   #expenseEntryOverlay .expense-entry-total-card,
@@ -25021,10 +25032,10 @@ render();
     }
   }
 </style>
-<script id="v2-87-expense-summary-round-script">
+<script id="v2-88-name-delimiters-script">
 (function setupV87ExpenseSummaryRound() {
-  const displayVersion = 'Dutch Pay · v2.87 PWA';
-  const cacheName = 'dutch-pay-v2-87-expense-summary-round';
+  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const cacheName = 'dutch-pay-v2-88-name-delimiters';
 
   function setText(node, text) {
     if (node && node.textContent !== text) node.textContent = text;
@@ -25039,7 +25050,7 @@ render();
   document.addEventListener('click', () => window.setTimeout(keepExpenseCopy, 0), true);
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.87-expense-summary-round';
+  window.DUTCH_PAY_APP_VERSION = 'v2.88-name-delimiters';
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     setText(node, displayVersion);
     node.setAttribute('aria-label', displayVersion);
