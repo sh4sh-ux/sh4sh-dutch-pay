@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-v2-84-quick-create-date-first";
+const CACHE_NAME = "dutch-pay-v2-87-expense-summary-round";
 const ASSETS = [
   "./",
   "./index.html",
