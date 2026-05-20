@@ -1,4 +1,4 @@
-const CACHE_NAME = "dutch-pay-v2-88-name-delimiters";
+const CACHE_NAME = "dutch-pay-v2-94-expense-summary-two-row";
 const ASSETS = [
   "./",
   "./index.html",

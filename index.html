@@ -2,7 +2,7 @@
 
 
 <!doctype html>
-<!-- Dutch Pay v2.88 name delimiters -->
+<!-- Dutch Pay v2.94 expense summary two row -->
 <!-- Dutch Pay v2.20 screen navigation -->
 <!-- Dutch Pay v2.23 hero cleanup -->
 <!-- Dutch Pay v2.22 person input IME fix -->
@@ -37,7 +37,7 @@
     <title>더치페이 계산기</title>
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="description" content="모임 지출을 기록하고 더치페이를 자동 계산하는 Dutch Pay 앱" />
-    <link rel="manifest" href="./manifest.webmanifest?v=2.88" />
+    <link rel="manifest" href="./manifest.webmanifest?v=2.94" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -7678,10 +7678,10 @@ body {
         <div class="quick-create-people-box">
           <div id="quickCreatePeopleList" class="quick-create-chip-list"></div>
           <div class="quick-create-add-row">
-            <textarea id="quickCreatePersonInput" rows="2" enterkeyhint="done" autocomplete="off" spellcheck="false" placeholder="이름 입력 · 쉼표/슬래시 가능"></textarea>
+            <textarea id="quickCreatePersonInput" rows="2" enterkeyhint="enter" autocomplete="off" spellcheck="false" placeholder="이름 입력 · 쉼표/슬래시/줄바꿈"></textarea>
             <button type="button" id="quickCreateAddPersonButton">추가</button>
           </div>
-          <div class="quick-create-helper">쉼표(,), 슬래시(/), 줄바꿈으로 여러 이름을 한 번에 넣을 수 있어요.</div>
+          <div class="quick-create-helper">여러 이름을 입력한 뒤 추가를 누르면 한 번에 등록돼요.</div>
         </div>
       </div>
       <label class="quick-create-field" hidden aria-hidden="true">
@@ -7761,7 +7761,7 @@ body {
       </div>
       <div class="expense-entry-deduction-callout" id="expenseEntryDeductionCallout" hidden>
         <div>
-          <strong>딱 나누어지지 않아요</strong>
+          <strong>차액이 있어요</strong>
           <p id="expenseEntryDeductionText">남는 금액은 차액 조정으로 맞출 수 있습니다.</p>
         </div>
         <button type="button" id="expenseEntryOpenDeductionButton">차액 조정</button>
@@ -7858,6 +7858,7 @@ const today = new Date().toISOString().slice(0, 10);
 const sampleState = {
   meetingTitle: "",
   meetingDate: "",
+  meetingDateEnd: "",
   activeRound: overallRound,
   rounds: [...defaultRounds],
   people: [],
@@ -7896,6 +7897,7 @@ function normalizeState(nextState) {
   return {
     meetingTitle: nextState.meetingTitle || "",
     meetingDate: nextState.meetingDate || "",
+    meetingDateEnd: nextState.meetingDateEnd || "",
     activeRound,
     rounds: roundList,
     people: Array.isArray(nextState.people) ? nextState.people : [],
@@ -9159,7 +9161,7 @@ render();
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js?v=2.88").catch(() => {});
+          navigator.serviceWorker.register("./sw.js?v=2.94").catch(() => {});
         });
       }
     </script>
@@ -9169,7 +9171,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9404,7 +9406,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9507,7 +9509,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9601,7 +9603,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9752,7 +9754,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9797,7 +9799,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9809,7 +9811,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9821,7 +9823,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9891,7 +9893,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9964,7 +9966,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9976,7 +9978,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -9988,7 +9990,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10000,7 +10002,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10012,7 +10014,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10024,7 +10026,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10036,7 +10038,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10061,7 +10063,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10073,7 +10075,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10085,7 +10087,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10097,7 +10099,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10197,7 +10199,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10278,7 +10280,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10381,7 +10383,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10393,7 +10395,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10405,7 +10407,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10417,7 +10419,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10429,7 +10431,7 @@ render();
       if ("caches" in window) {
         caches.keys().then((keys) => {
           keys
-            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+            .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
             .forEach((key) => caches.delete(key));
         }).catch(() => {});
       }
@@ -10553,7 +10555,15 @@ render();
   function createMeetingFromQuickCreate() {
     addNamesFromInput();
     const meetingTitle = meetingTitleInput.value.trim();
-    const meetingDate = meetingDateInput.value || today;
+    let meetingDate = meetingDateInput.value || today;
+    const meetingDateEndInput = document.getElementById('quickCreateMeetingEndDate');
+    const isPeriodMode = document.getElementById('quickCreatePeriodToggle')?.getAttribute('aria-pressed') === 'true';
+    let meetingDateEnd = isPeriodMode ? (meetingDateEndInput?.value || meetingDate) : '';
+    if (meetingDateEnd && meetingDateEnd < meetingDate) {
+      const startDate = meetingDateEnd;
+      meetingDateEnd = meetingDate;
+      meetingDate = startDate;
+    }
     const roundCount = Math.max(1, Math.min(10, Number(roundCountInput.value || 1) || 1));
 
     if (!tempPeople.length) {
@@ -10565,6 +10575,7 @@ render();
     state = clone(sampleState);
     state.meetingTitle = meetingTitle;
     state.meetingDate = meetingDate;
+    state.meetingDateEnd = isPeriodMode ? meetingDateEnd : '';
     state.activeRound = overallRound;
     state.people = tempPeople.map((name) => ({ id: newId('p'), name }));
     state.rounds = Array.from({ length: roundCount }, (_, index) => `${index + 1}차`);
@@ -10634,18 +10645,13 @@ render();
     setTimeout(addNamesFromInput, 0);
   });
   personInput?.addEventListener('keydown', (event) => {
-    const isDelimiter = (event.key === 'Enter' && !event.shiftKey) || event.key === ',' || event.key === '，' || event.key === '/' || event.key === '／';
-    if (!isDelimiter) return;
+    if (event.key !== 'Enter' || (!event.metaKey && !event.ctrlKey)) return;
     event.preventDefault();
     if (event.isComposing || event.keyCode === 229 || isPersonInputComposing) {
       pendingPersonInputAdd = true;
       return;
     }
     addNamesFromInput();
-  });
-  personInput?.addEventListener('blur', () => {
-    if (isPersonInputComposing) return;
-    if (/[\n\r,，、/／|;；]/.test(personInput.value)) addNamesFromInput();
   });
   peopleList?.addEventListener('click', (event) => {
     const removeButton = event.target.closest('[data-remove-index]');
@@ -10668,7 +10674,7 @@ render();
   if ("caches" in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-88-name-delimiters")
+        .filter((key) => key.startsWith("dutch-pay") && key !== "dutch-pay-v2-94-expense-summary-two-row")
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -10889,7 +10895,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11384,7 +11390,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11716,7 +11722,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -11852,7 +11858,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12006,7 +12012,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12409,7 +12415,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12474,7 +12480,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12783,7 +12789,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -12965,7 +12971,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13123,7 +13129,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13248,7 +13254,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13395,7 +13401,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13458,7 +13464,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13606,7 +13612,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13668,7 +13674,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -13885,7 +13891,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14158,7 +14164,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14210,7 +14216,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14326,7 +14332,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14486,7 +14492,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14566,7 +14572,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -14834,7 +14840,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -15187,7 +15193,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -15397,7 +15403,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -15477,7 +15483,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -16023,7 +16029,7 @@ render();
     const showDeduction = !draft.isDeduction && Boolean(grandTotal) && Boolean(grandRemainder);
     if (deductionCallout) deductionCallout.hidden = !showDeduction;
     if (deductionTextEl && showDeduction) {
-      deductionTextEl.textContent = `전체 합계 ${money(grandTotal)}을 ${activeCount}명으로 나누면 ${grandRemainder}원이 남아요. 차액을 맞추면 1인 금액이 깔끔해집니다.`;
+      deductionTextEl.textContent = `${activeCount}명 기준 ${formatter.format(grandRemainder)}원이 남아요. 차액 조정으로 맞출 수 있어요.`;
     }
 
     if (roundTotalsEl) {
@@ -16378,7 +16384,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -16903,7 +16909,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17270,7 +17276,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17514,7 +17520,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17779,7 +17785,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -17823,7 +17829,7 @@ render();
 </style>
 <script id="v2-52-visible-version-label-script">
 (function setupV52VisibleVersionLabel() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow').forEach((node) => {
     node.textContent = displayVersion;
@@ -17845,7 +17851,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -18159,7 +18165,7 @@ render();
 </style>
 <script id="v2-53-simplified-records-nav-script">
 (function setupV53SimplifiedRecordsNav() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
   const recordIcon = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 3.8h9.1a2 2 0 0 1 2 2v13.9l-2.1-1.25-1.95 1.25-1.9-1.25-1.9 1.25-1.95-1.25-2.1 1.25V5.8a2 2 0 0 1 2-2Z"/><path d="M8.7 8.2h5.9"/><path d="M8.7 11.5h4.3"/><circle cx="16.7" cy="16.5" r="2.65"/></svg>';
 
   function setText(selector, text) {
@@ -18213,7 +18219,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -18715,7 +18721,7 @@ render();
 </style>
 <script id="v2-54-unified-report-polish-script">
 (function setupV54UnifiedReportPolish() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -18734,7 +18740,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19052,7 +19058,7 @@ render();
 </style>
 <script id="v2-55-member-meeting-layout-fix-script">
 (function setupV55MemberMeetingLayoutFix() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19068,7 +19074,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19173,7 +19179,7 @@ render();
 </style>
 <script id="v2-56-transfer-total-balance-script">
 (function setupV56TransferTotalBalance() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19189,7 +19195,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19222,7 +19228,7 @@ render();
 </style>
 <script id="v2-58-report-total-scale-script">
 (function setupV58ReportTotalScale() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19424,7 +19430,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19513,7 +19519,7 @@ render();
 </style>
 <script id="v2-59-member-panel-height-reset-script">
 (function setupV59MemberPanelHeightReset() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19529,7 +19535,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19771,7 +19777,7 @@ render();
 </style>
 <script id="v2-60-expense-entry-visual-balance-script">
 (function setupV60ExpenseEntryVisualBalance() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -19787,7 +19793,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -19942,7 +19948,7 @@ render();
 </style>
 <script id="v2-61-report-summary-balance-script">
 (function setupV61ReportSummaryBalance() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     node.textContent = displayVersion;
@@ -20170,7 +20176,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -20469,7 +20475,7 @@ render();
 </style>
 <script id="v2-62-dashboard-compact-numeric-alignment-script">
 (function setupV62DashboardCompactNumericAlignment() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -20514,7 +20520,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -20769,7 +20775,7 @@ render();
 </style>
 <script id="v2-63-report-centered-total-clean-people-script">
 (function setupV63ReportCenteredTotalCleanPeople() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -21002,7 +21008,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21177,7 +21183,7 @@ render();
 </style>
 <script id="v2-64-person-labels-persistent-tabs-script">
 (function setupV64PersonLabelsPersistentTabs() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
   const navTargets = ['home', 'settlement', 'report', 'settings'];
 
   function setDisplayVersion() {
@@ -21312,7 +21318,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21414,7 +21420,7 @@ render();
 </style>
 <script id="v2-65-report-share-label-and-settlement-soften-script">
 (function setupV65ReportShareLabelAndSettlementSoften() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -21491,7 +21497,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21782,7 +21788,7 @@ render();
 </style>
 <script id="v2-66-mobile-summary-expense-simplify-script">
 (function setupV66MobileSummaryExpenseSimplify() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
   const navNames = new Set(['home', 'settlement', 'report', 'settings']);
 
   function setDisplayVersion() {
@@ -21854,7 +21860,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -21965,7 +21971,7 @@ render();
 </style>
 <script id="v2-67-person-detail-tone-balance-script">
 (function setupV67PersonDetailToneBalance() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -21987,7 +21993,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22160,7 +22166,7 @@ render();
 </style>
 <script id="v2-68-share-choice-popup-script">
 (function setupV68ShareChoicePopup() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
   let lastShareTrigger = null;
 
   function setDisplayVersion() {
@@ -22177,7 +22183,8 @@ render();
   function buildShareText() {
     const result = calculate();
     const meetingTitle = state.meetingTitle?.trim() || '더치페이 정산';
-    const title = state.meetingDate ? `${meetingTitle} (${state.meetingDate})` : meetingTitle;
+    const dateLabel = window.dutchPaySettlementDateLabel?.('text') || state.meetingDate;
+    const title = dateLabel ? `${meetingTitle} (${dateLabel})` : meetingTitle;
     return [
       title,
       `총 지출: ${money(result.grossExpense)}${result.deductionTotal ? ` (공제금액 ${money(result.deductionTotal)})` : ''}`,
@@ -22379,7 +22386,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22498,7 +22505,7 @@ render();
 </style>
 <script id="v2-69-dashboard-person-tone-reset-script">
 (function setupV69DashboardPersonToneReset() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   function setDisplayVersion() {
     document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
@@ -22557,7 +22564,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22638,7 +22645,7 @@ render();
 <script id="v2-70-record-summary-centered-units-script">
 (function setupV70RecordSummaryCenteredUnits() {
   return;
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
   const unitSelectors = [
     '#totalExpense',
     '#totalPeople',
@@ -22745,7 +22752,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22777,7 +22784,7 @@ render();
 <script id="v2-71-navigation-order-people-first-script">
 (function setupV71NavigationOrderPeopleFirst() {
   return;
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
   const desktopOrder = ['home', 'meeting', 'settlement', 'report', 'settings'];
   const navLabels = {
     home: '대시보드',
@@ -22840,7 +22847,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22850,7 +22857,7 @@ render();
 <script id="v2-72-navigation-static-order-fix-script">
 (function setupV72NavigationStaticOrderFix() {
   return;
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
   const labels = {
     home: '대시보드',
     meeting: '인원',
@@ -22907,7 +22914,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -22917,7 +22924,7 @@ render();
 <script id="v2-73-restore-mobile-nav-stability-script">
 (function setupV73RestoreMobileNavStability() {
   return;
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
   const labels = {
     home: '대시보드',
     meeting: '인원',
@@ -23007,7 +23014,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -23085,7 +23092,7 @@ render();
 </style>
 <script id="v2-74-stability-person-detail-tone-script">
 (function setupV74StabilityPersonDetailTone() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
   const labels = {
     home: '대시보드',
     meeting: '인원',
@@ -23143,7 +23150,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -23226,7 +23233,7 @@ render();
 </style>
 <script id="v2-75-restore-readable-amounts-script">
 (function setupV75RestoreReadableAmounts() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
 
   function setText(node, text) {
     if (!node || node.textContent === text) return;
@@ -23303,7 +23310,7 @@ render();
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
-        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-88-name-delimiters')
+        .filter((key) => key.startsWith('dutch-pay') && key !== 'dutch-pay-v2-94-expense-summary-two-row')
         .forEach((key) => caches.delete(key));
     }).catch(() => {});
   }
@@ -23522,8 +23529,8 @@ render();
 
 <script id="v2-81-phone-share-image-script">
 (function setupV80PhoneShareImage() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
-  const cacheName = 'dutch-pay-v2-88-name-delimiters';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
+  const cacheName = 'dutch-pay-v2-94-expense-summary-two-row';
   const imageWidth = 1080;
   const imageHeight = 1920;
 
@@ -23729,7 +23736,7 @@ render();
 
     drawShareLabel(context, data.date, 76, 112, 32, 730, '#80838b');
     setCanvasText(context, 76, 850, '#111113');
-    context.fillText('정산 내역', 72, 196);
+    context.fillText(data.title || '정산 내역', 72, 196);
 
     drawShareSummary(context, data);
     drawShareTransfers(context, data.transfers);
@@ -23753,7 +23760,8 @@ render();
     const context = canvas.getContext('2d');
 
     drawPhoneShareImage(context, {
-      date: formatDateForDisplay(state.meetingDate) || '일자 미입력',
+      title: window.dutchPaySettlementTitle?.() || '정산 내역',
+      date: window.dutchPaySettlementDateLabel?.() || formatDateForDisplay(state.meetingDate) || '일자 미입력',
       total: money(result.grossExpense),
       deduction: result.deductionTotal ? money(result.deductionTotal) : '',
       people: `${peopleCount}명`,
@@ -23915,8 +23923,8 @@ render();
 </style>
 <script id="v2-84-quick-create-flow-script">
 (function setupV84QuickCreateFlow() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
-  const cacheName = 'dutch-pay-v2-88-name-delimiters';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
+  const cacheName = 'dutch-pay-v2-94-expense-summary-two-row';
   const overlay = document.getElementById('quickCreateOverlay');
   const modal = overlay?.querySelector('.quick-create-modal');
   const head = overlay?.querySelector('.quick-create-head');
@@ -24048,14 +24056,8 @@ render();
     window.requestAnimationFrame(setDisplayVersion);
   }, true);
 
-  personInput?.addEventListener('input', () => {
-    if (/[\n,，、]/.test(personInput.value)) {
-      window.setTimeout(() => document.getElementById('quickCreateAddPersonButton')?.click(), 0);
-    }
-  });
-
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.88-name-delimiters';
+  window.DUTCH_PAY_APP_VERSION = 'v2.94-expense-summary-two-row';
   if ('caches' in window) {
     caches.keys().then((keys) => {
       keys
@@ -24478,8 +24480,8 @@ render();
 </style>
 <script id="v2-83-remainder-callout-script">
 (function setupV283ExpenseEntrySimplify() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
-  const cacheName = 'dutch-pay-v2-88-name-delimiters';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
+  const cacheName = 'dutch-pay-v2-94-expense-summary-two-row';
   const overlay = document.getElementById('expenseEntryOverlay');
   const sheet = overlay?.querySelector('.expense-entry-sheet');
   const amountInput = document.getElementById('expenseEntryAmount');
@@ -24555,7 +24557,7 @@ render();
     if (placeInput) placeInput.placeholder = '선택 입력';
     setText(saveNextButton, '계속 입력');
     setText(saveButton, '저장');
-    setText(deductionTitle, '딱 나누어지지 않아요');
+    setText(deductionTitle, '차액이 있어요');
     setText(deductionButton, '차액 조정');
   }
 
@@ -24596,7 +24598,7 @@ render();
     }
     const remainder = peopleCount ? Math.round(total) % peopleCount : 0;
     if (deductionText && total && remainder) {
-      deductionText.textContent = `전체 합계를 ${peopleCount}명으로 나누면 ${formatter.format(remainder)}원이 남아요. 차액을 맞추면 1인 금액이 깔끔해집니다.`;
+      deductionText.textContent = `${peopleCount}명 기준 ${formatter.format(remainder)}원이 남아요. 차액 조정으로 맞출 수 있어요.`;
     }
 	    setText(saveNextButton, '계속 입력');
     setText(saveButton, '저장');
@@ -24655,7 +24657,7 @@ render();
   }
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.88-name-delimiters';
+  window.DUTCH_PAY_APP_VERSION = 'v2.94-expense-summary-two-row';
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     setText(node, displayVersion);
     node.setAttribute('aria-label', displayVersion);
@@ -24672,7 +24674,7 @@ render();
 })();
 </script>
 
-<style id="v2-88-name-delimiters">
+<style id="v2-94-expense-summary-two-row">
   /* v2.85: make multi-name entry reliable and make mobile sheets easier to scan */
   .quick-create-add-row textarea {
     width: 100% !important;
@@ -24896,12 +24898,11 @@ render();
     }
   }
 </style>
-<script id="v2-88-name-delimiters-script">
+<script id="v2-94-expense-summary-two-row-script">
 (function setupV85MobileDialogAndNameInput() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
-  const cacheName = 'dutch-pay-v2-88-name-delimiters';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
+  const cacheName = 'dutch-pay-v2-94-expense-summary-two-row';
   const personInput = document.getElementById('quickCreatePersonInput');
-  const addButton = document.getElementById('quickCreateAddPersonButton');
 
   function setText(node, text) {
     if (node && node.textContent !== text) node.textContent = text;
@@ -24914,25 +24915,13 @@ render();
     personInput.style.height = `${Math.min(personInput.scrollHeight, maxHeight)}px`;
   }
 
-  function addSoon() {
-    window.setTimeout(() => {
-      addButton?.click();
-      normalizePersonInputHeight();
-    }, 0);
-  }
-
   if (personInput) {
-    personInput.placeholder = '이름 입력 · 쉼표/슬래시 가능';
+    personInput.placeholder = '이름 입력 · 쉼표/슬래시/줄바꿈';
     personInput.addEventListener('input', () => {
       normalizePersonInputHeight();
-      if (/[\n\r,，、/／|;；]/.test(personInput.value)) addSoon();
-    });
-    personInput.addEventListener('paste', (event) => {
-      const text = event.clipboardData?.getData('text') || '';
-      if (/[\n\r,，、/／|;；]/.test(text)) addSoon();
     });
     personInput.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' && event.shiftKey) {
+      if (event.key === 'Enter') {
         window.setTimeout(normalizePersonInputHeight, 0);
       }
     });
@@ -24940,7 +24929,7 @@ render();
   }
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.88-name-delimiters';
+  window.DUTCH_PAY_APP_VERSION = 'v2.94-expense-summary-two-row';
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     setText(node, displayVersion);
     node.setAttribute('aria-label', displayVersion);
@@ -24957,7 +24946,7 @@ render();
 })();
 </script>
 
-<style id="v2-88-name-delimiters">
+<style id="v2-94-expense-summary-two-row">
   /* v2.87: make expense summary cards larger and replace participant card with current round total */
   #expenseEntryOverlay .expense-entry-current-card,
   #expenseEntryOverlay .expense-entry-total-card,
@@ -25032,10 +25021,10 @@ render();
     }
   }
 </style>
-<script id="v2-88-name-delimiters-script">
+<script id="v2-94-expense-summary-two-row-script">
 (function setupV87ExpenseSummaryRound() {
-  const displayVersion = 'Dutch Pay · v2.88 PWA';
-  const cacheName = 'dutch-pay-v2-88-name-delimiters';
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
+  const cacheName = 'dutch-pay-v2-94-expense-summary-two-row';
 
   function setText(node, text) {
     if (node && node.textContent !== text) node.textContent = text;
@@ -25050,7 +25039,559 @@ render();
   document.addEventListener('click', () => window.setTimeout(keepExpenseCopy, 0), true);
 
   window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
-  window.DUTCH_PAY_APP_VERSION = 'v2.88-name-delimiters';
+  window.DUTCH_PAY_APP_VERSION = 'v2.94-expense-summary-two-row';
+  document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+    setText(node, displayVersion);
+    node.setAttribute('aria-label', displayVersion);
+  });
+  document.querySelectorAll('.side-brand .app-version-label').forEach((node) => setText(node, displayVersion));
+
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== cacheName)
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-94-expense-summary-two-row">
+  .quick-create-period-field {
+    order: 2 !important;
+    display: grid !important;
+    gap: 10px !important;
+    grid-column: 1 / -1 !important;
+  }
+
+  .quick-create-period-toggle {
+    width: 100%;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 16px;
+    border: 1px solid rgba(17, 17, 19, 0.08);
+    border-radius: 16px;
+    background: #fcfcfd;
+    color: #22242a;
+    font-size: 14px;
+    font-weight: 760;
+  }
+
+  .quick-create-period-toggle::after {
+    content: "끔";
+    color: #9a9da5;
+    font-size: 12px;
+    font-weight: 760;
+  }
+
+  .quick-create-period-toggle[aria-pressed="true"] {
+    border-color: rgba(17, 17, 19, 0.16);
+    background: #111113;
+    color: #ffffff;
+  }
+
+  .quick-create-period-toggle[aria-pressed="true"]::after {
+    content: "켬";
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .quick-create-period-dates {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .quick-create-period-dates[hidden] {
+    display: none !important;
+  }
+
+  .quick-create-period-field .quick-create-helper {
+    margin-top: 0 !important;
+  }
+
+  .quick-create-field-full {
+    order: 3 !important;
+  }
+
+  @media (max-width: 720px) {
+    .quick-create-period-toggle {
+      min-height: 46px;
+      border-radius: 15px;
+      font-size: 13.5px;
+    }
+  }
+</style>
+<script id="v2-94-expense-summary-two-row-script">
+(function setupV91TravelDateRange() {
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
+  const cacheName = 'dutch-pay-v2-94-expense-summary-two-row';
+  const overlay = document.getElementById('quickCreateOverlay');
+  const meetingDateInput = document.getElementById('quickCreateMeetingDate');
+  const dateField = meetingDateInput?.closest('.quick-create-date-field');
+
+  function setText(node, text) {
+    if (node && node.textContent !== text) node.textContent = text;
+  }
+
+  function formatShortEndDate(value) {
+    const match = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!match) return '';
+    return `${Number(match[2])}. ${Number(match[3])}.`;
+  }
+
+  function normalizedRangeDates() {
+    const start = state.meetingDate || '';
+    const end = state.meetingDateEnd || '';
+    if (!start && !end) return { start: '', end: '' };
+    if (start && end && end < start) return { start: end, end: start };
+    return { start, end };
+  }
+
+  window.dutchPaySettlementDateLabel = function dutchPaySettlementDateLabel() {
+    const { start, end } = normalizedRangeDates();
+    const startLabel = formatDateForDisplay(start);
+    const endLabel = formatDateForDisplay(end);
+    if (!startLabel && !endLabel) return '';
+    if (!endLabel || end === start) return startLabel || endLabel;
+    const startYear = String(start).slice(0, 4);
+    const endYear = String(end).slice(0, 4);
+    return startYear && startYear === endYear
+      ? `${startLabel} - ${formatShortEndDate(end)}`
+      : `${startLabel} - ${endLabel}`;
+  };
+
+  window.dutchPaySettlementTitle = function dutchPaySettlementTitle() {
+    const customTitle = state.meetingTitle?.trim();
+    if (customTitle) return customTitle;
+    const { start, end } = normalizedRangeDates();
+    return end && end !== start ? '여행 정산 내역' : '정산 내역';
+  };
+
+  function applyDisplayVersion() {
+    window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+    window.DUTCH_PAY_APP_VERSION = 'v2.94-expense-summary-two-row';
+    document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+      setText(node, displayVersion);
+      node.setAttribute('aria-label', displayVersion);
+    });
+    document.querySelectorAll('.side-brand .app-version-label').forEach((node) => setText(node, displayVersion));
+  }
+
+  function openNativeDatePicker(input) {
+    if (!input) return;
+    input.focus();
+    if (typeof input.showPicker === 'function') {
+      try {
+        input.showPicker();
+      } catch (error) {
+        // Safari and some mobile browsers open the picker through the native input tap.
+      }
+    }
+  }
+
+  function attachDatePicker(input) {
+    if (!input || input.dataset.v291Picker === '1') return;
+    input.dataset.v291Picker = '1';
+    input.addEventListener('click', () => openNativeDatePicker(input));
+    input.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      openNativeDatePicker(input);
+    });
+  }
+
+  function ensurePeriodControls() {
+    if (!dateField || document.getElementById('quickCreatePeriodField')) return;
+    const periodField = document.createElement('div');
+    periodField.id = 'quickCreatePeriodField';
+    periodField.className = 'quick-create-period-field';
+    periodField.innerHTML = `
+      <button type="button" id="quickCreatePeriodToggle" class="quick-create-period-toggle" aria-pressed="false">기간 정산</button>
+      <div id="quickCreatePeriodDates" class="quick-create-period-dates" hidden>
+        <label class="quick-create-field quick-create-end-date-field">
+          <span class="quick-create-label">종료일</span>
+          <input id="quickCreateMeetingEndDate" type="date" />
+        </label>
+      </div>
+      <div class="quick-create-helper" id="quickCreatePeriodHelper">여행처럼 며칠짜리 정산이면 기간 정산을 켜세요.</div>
+    `;
+    dateField.after(periodField);
+  }
+
+  function setPeriodMode(enabled) {
+    const toggle = document.getElementById('quickCreatePeriodToggle');
+    const dates = document.getElementById('quickCreatePeriodDates');
+    const endInput = document.getElementById('quickCreateMeetingEndDate');
+    const helper = document.getElementById('quickCreatePeriodHelper');
+    const dateLabel = dateField?.querySelector('.quick-create-label');
+    if (toggle) {
+      toggle.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+      toggle.textContent = enabled ? '기간 정산 사용 중' : '기간 정산';
+    }
+    if (dates) dates.hidden = !enabled;
+    setText(dateLabel, enabled ? '시작일' : '일자');
+    setText(helper, enabled ? '공유 이미지에는 시작일 - 종료일로 표시돼요.' : '여행처럼 며칠짜리 정산이면 기간 정산을 켜세요.');
+    if (enabled && endInput && !endInput.value) endInput.value = meetingDateInput?.value || today;
+  }
+
+  function hydratePeriodControls() {
+    ensurePeriodControls();
+    const endInput = document.getElementById('quickCreateMeetingEndDate');
+    const hasPeriod = Boolean(state.meetingDateEnd);
+    if (meetingDateInput) meetingDateInput.value = state.meetingDate || today;
+    if (endInput) endInput.value = state.meetingDateEnd || state.meetingDate || today;
+    setPeriodMode(hasPeriod);
+    attachDatePicker(meetingDateInput);
+    attachDatePicker(endInput);
+  }
+
+  function finalizePeriodInputs() {
+    const toggle = document.getElementById('quickCreatePeriodToggle');
+    const endInput = document.getElementById('quickCreateMeetingEndDate');
+    const enabled = toggle?.getAttribute('aria-pressed') === 'true';
+    if (meetingDateInput && !meetingDateInput.value) meetingDateInput.value = today;
+    if (enabled && endInput && !endInput.value) endInput.value = meetingDateInput?.value || today;
+  }
+
+  function applyReportDateRange() {
+    const dateText = window.dutchPaySettlementDateLabel?.() || '일자 미입력';
+    const titleText = window.dutchPaySettlementTitle?.() || '정산 내역';
+    setText(document.getElementById('reportDate'), dateText);
+    setText(document.getElementById('reportTitle'), titleText);
+    const display = document.getElementById('meetingDateDisplay');
+    if (display) {
+      setText(display, dateText === '일자 미입력' ? '연도. 월. 일.' : dateText);
+      display.classList.toggle('empty', dateText === '일자 미입력');
+    }
+  }
+
+  const originalRenderReport = window.renderReport;
+  if (typeof originalRenderReport === 'function' && !window.renderReport?.v291Wrapped) {
+    const wrapped = function renderReportV91(...args) {
+      const result = originalRenderReport.apply(this, args);
+      applyReportDateRange();
+      return result;
+    };
+    wrapped.v291Wrapped = true;
+    window.renderReport = wrapped;
+  }
+
+  const originalRenderMeetingDateDisplay = window.renderMeetingDateDisplay;
+  if (typeof originalRenderMeetingDateDisplay === 'function' && !window.renderMeetingDateDisplay?.v291Wrapped) {
+    const wrapped = function renderMeetingDateDisplayV91(...args) {
+      const result = originalRenderMeetingDateDisplay.apply(this, args);
+      applyReportDateRange();
+      return result;
+    };
+    wrapped.v291Wrapped = true;
+    window.renderMeetingDateDisplay = wrapped;
+  }
+
+  window.copySummary = function copySummaryV91() {
+    const result = calculate();
+    const meetingTitle = state.meetingTitle?.trim() || '더치페이 정산';
+    const dateLabel = window.dutchPaySettlementDateLabel?.();
+    const title = dateLabel ? `${meetingTitle} (${dateLabel})` : meetingTitle;
+    const lines = [
+      title,
+      `총 지출: ${money(result.grossExpense)}${result.deductionTotal ? ` (공제금액 ${money(result.deductionTotal)})` : ''}`,
+      '',
+      '송금',
+      ...(result.transfers.length ? result.transfers.map((item) => `${item.from} → ${item.to}: ${money(item.amount)}`) : ['송금할 금액 없음']),
+    ];
+    navigator.clipboard?.writeText(lines.join('\n'));
+    const saveStatus = document.getElementById('saveStatus');
+    if (saveStatus) saveStatus.textContent = '복사됨';
+  };
+
+  ensurePeriodControls();
+  hydratePeriodControls();
+  applyDisplayVersion();
+  applyReportDateRange();
+
+  document.addEventListener('click', (event) => {
+    const toggle = event.target.closest?.('#quickCreatePeriodToggle');
+    if (toggle) {
+      event.preventDefault();
+      const enabled = toggle.getAttribute('aria-pressed') !== 'true';
+      setPeriodMode(enabled);
+      if (enabled) window.setTimeout(() => openNativeDatePicker(document.getElementById('quickCreateMeetingEndDate')), 0);
+      return;
+    }
+    if (event.target.closest?.('#quickCreateSubmitButton, #quickCreateSubmitExpenseButton')) {
+      finalizePeriodInputs();
+    }
+    if (event.target.closest?.('#quickCreateResetInputButton')) {
+      window.setTimeout(() => {
+        const endInput = document.getElementById('quickCreateMeetingEndDate');
+        if (endInput) endInput.value = '';
+        if (state) state.meetingDateEnd = '';
+        setPeriodMode(false);
+        applyReportDateRange();
+      }, 0);
+    }
+  }, true);
+
+  meetingDateInput?.addEventListener('change', () => {
+    const endInput = document.getElementById('quickCreateMeetingEndDate');
+    const enabled = document.getElementById('quickCreatePeriodToggle')?.getAttribute('aria-pressed') === 'true';
+    if (enabled && endInput && (!endInput.value || endInput.value < meetingDateInput.value)) {
+      endInput.value = meetingDateInput.value;
+    }
+  });
+
+  if (overlay) {
+    new MutationObserver(() => {
+      if (!overlay.hidden) window.setTimeout(hydratePeriodControls, 20);
+    }).observe(overlay, { attributes: true, attributeFilter: ['hidden'] });
+  }
+
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== cacheName)
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-94-expense-summary-two-row">
+  #expenseEntryOverlay .expense-entry-deduction-callout {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 10px 12px !important;
+    padding: 12px 13px !important;
+    border-radius: 16px !important;
+    background: #fbfbfc !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-deduction-callout[hidden] {
+    display: none !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-deduction-callout > div {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-deduction-callout strong,
+  #expenseEntryOverlay .expense-entry-deduction-callout p {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+    letter-spacing: 0 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-deduction-callout strong {
+    color: #4b4e56 !important;
+    font-size: 13px !important;
+    font-weight: 780 !important;
+    line-height: 1.25 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-deduction-callout p {
+    margin: 4px 0 0 !important;
+    color: #858892 !important;
+    font-size: 12.5px !important;
+    font-weight: 640 !important;
+    line-height: 1.42 !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-deduction-callout button {
+    width: auto !important;
+    min-width: 96px !important;
+    max-width: 180px !important;
+    justify-self: end !important;
+    flex: none !important;
+    white-space: nowrap !important;
+  }
+
+  @media (max-width: 720px) {
+    #expenseEntryOverlay .expense-entry-deduction-callout {
+      grid-template-columns: minmax(0, 1fr) !important;
+      align-items: stretch !important;
+      padding: 12px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-deduction-callout button {
+      width: 100% !important;
+      max-width: none !important;
+      justify-self: stretch !important;
+    }
+  }
+</style>
+<script id="v2-94-expense-summary-two-row-script">
+(function setupV92DeductionCalloutMobileFix() {
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
+  const cacheName = 'dutch-pay-v2-94-expense-summary-two-row';
+
+  function setText(node, text) {
+    if (node && node.textContent !== text) node.textContent = text;
+  }
+
+  function keepDeductionCopy() {
+    const title = document.querySelector('#expenseEntryDeductionCallout strong');
+    setText(title, '차액이 있어요');
+  }
+
+  keepDeductionCopy();
+  document.addEventListener('input', () => window.setTimeout(keepDeductionCopy, 0), true);
+  document.addEventListener('click', () => window.setTimeout(keepDeductionCopy, 0), true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.94-expense-summary-two-row';
+  document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
+    setText(node, displayVersion);
+    node.setAttribute('aria-label', displayVersion);
+  });
+  document.querySelectorAll('.side-brand .app-version-label').forEach((node) => setText(node, displayVersion));
+
+  if ('caches' in window) {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('dutch-pay') && key !== cacheName)
+        .forEach((key) => caches.delete(key));
+    }).catch(() => {});
+  }
+})();
+</script>
+
+<style id="v2-94-expense-summary-two-row">
+  #expenseEntryOverlay .expense-entry-current-card,
+  #expenseEntryOverlay .expense-entry-total-card,
+  #expenseEntryOverlay .expense-entry-split-card {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card span,
+  #expenseEntryOverlay .expense-entry-total-card span,
+  #expenseEntryOverlay .expense-entry-split-card span,
+  #expenseEntryOverlay .expense-entry-current-card small,
+  #expenseEntryOverlay .expense-entry-total-card small,
+  #expenseEntryOverlay .expense-entry-split-card small {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  #expenseEntryOverlay .expense-entry-current-card strong,
+  #expenseEntryOverlay .expense-entry-total-card strong,
+  #expenseEntryOverlay .expense-entry-split-card strong {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    letter-spacing: 0 !important;
+  }
+
+  #expenseEntryOverlay .money-inline {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #expenseEntryOverlay .money-number {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+  }
+
+  @media (max-width: 900px) {
+    #expenseEntryOverlay .expense-entry-overview {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 9px !important;
+      margin-bottom: 14px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-current-card {
+      grid-column: 1 / -1 !important;
+      min-height: 78px !important;
+      padding: 12px 14px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-total-card,
+    #expenseEntryOverlay .expense-entry-split-card {
+      min-height: 74px !important;
+      padding: 11px 12px !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-current-card strong {
+      font-size: clamp(24px, 7vw, 32px) !important;
+      font-weight: 820 !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-total-card strong,
+    #expenseEntryOverlay .expense-entry-split-card strong {
+      font-size: clamp(18px, 5.4vw, 23px) !important;
+      font-weight: 800 !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-current-card span,
+    #expenseEntryOverlay .expense-entry-total-card span,
+    #expenseEntryOverlay .expense-entry-split-card span {
+      font-size: 12px !important;
+      font-weight: 760 !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-current-card small,
+    #expenseEntryOverlay .expense-entry-total-card small,
+    #expenseEntryOverlay .expense-entry-split-card small {
+      display: block !important;
+      font-size: 10.5px !important;
+      font-weight: 620 !important;
+    }
+  }
+
+  @media (max-width: 360px) {
+    #expenseEntryOverlay .expense-entry-overview {
+      grid-template-columns: 1fr !important;
+    }
+
+    #expenseEntryOverlay .expense-entry-current-card,
+    #expenseEntryOverlay .expense-entry-total-card,
+    #expenseEntryOverlay .expense-entry-split-card {
+      grid-column: 1 / -1 !important;
+    }
+  }
+</style>
+<script id="v2-94-expense-summary-two-row-script">
+(function setupV93ExpenseSummaryMobilePolish() {
+  const displayVersion = 'Dutch Pay · v2.94 PWA';
+  const cacheName = 'dutch-pay-v2-94-expense-summary-two-row';
+
+  function setText(node, text) {
+    if (node && node.textContent !== text) node.textContent = text;
+  }
+
+  function keepExpenseSummaryCopy() {
+    const overlay = document.getElementById('expenseEntryOverlay');
+    if (!overlay) return;
+    setText(overlay.querySelector('.expense-entry-current-card > span'), '총 지출');
+    setText(overlay.querySelector('.expense-entry-total-card > span'), '이번 차수');
+    setText(document.querySelector('#expenseEntrySplitHint > span'), '1인 예상');
+  }
+
+  keepExpenseSummaryCopy();
+  document.addEventListener('input', () => window.setTimeout(keepExpenseSummaryCopy, 0), true);
+  document.addEventListener('click', () => window.setTimeout(keepExpenseSummaryCopy, 0), true);
+
+  window.DUTCH_PAY_DISPLAY_VERSION = displayVersion;
+  window.DUTCH_PAY_APP_VERSION = 'v2.94-expense-summary-two-row';
   document.querySelectorAll('.dashboard-kicker, .topbar .eyebrow, .report-kicker').forEach((node) => {
     setText(node, displayVersion);
     node.setAttribute('aria-label', displayVersion);
